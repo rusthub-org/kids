@@ -1,0 +1,15 @@
+query ArticlesList {
+  articles {
+    id
+    userId
+    subject
+    slug
+    uri
+    content
+    createdAt
+    updatedAt
+    published
+    top
+    recommended
+  }
+}

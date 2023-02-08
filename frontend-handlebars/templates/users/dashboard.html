@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <title>{{ user.nickname }} - Dashboard - 若耨 - ruonou.com</title>
+    <meta name="description"
+      content="{{ user.introduction }} - 若耨，纯粹 Rust 技术栈开发的博客。budshome, the Blog built on pure Rust stack.">
+    {{> head }}
+    <link href="/static/css/sidebar.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="container-xxl">
+      {{> header }}
+      {{> nav }}
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        {{> sidebar }}
+
+        <main class="col-md-9 ms-sm-auto col-xxl-10 px-md-4">
+          <h2>Statistics</h2>
+          Coming soon ...
+        </main>
+      </div>
+    </div>
+
+    {{> footer }}
+  </body>
+
+</html>

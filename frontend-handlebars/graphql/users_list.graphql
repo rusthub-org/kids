@@ -1,0 +1,17 @@
+query UsersList(
+  $token: String!
+) {
+  users(
+    token: $token
+  ) {
+    id
+    email
+    username
+    nickname
+    blogName
+    website
+    banned
+    createdAt
+    updatedAt
+  }
+}

@@ -1,0 +1,46 @@
+query CategoryData(
+  $slug: String!
+) {
+  randomWish(
+    username: "-"
+  ) {
+    aphorism
+    author
+
+    user {
+      username
+      nickname
+      blogName
+    }
+  }
+  
+  categoryBySlug(
+    slug: $slug
+  ) {
+    name
+    quotes
+    
+    articles {
+      subject
+      summary
+      uri
+      updatedAt
+
+      user {
+        username
+        nickname
+        blogName
+      }
+
+      category {
+        name
+        uri
+      }
+
+      topics {
+        name
+        uri
+      }
+    }
+  }
+}

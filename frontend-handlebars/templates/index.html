@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh">
+
+  <head>
+    <title>若耨博客 - blog.ruonou.com</title>
+    <meta name="description" content="若耨，纯粹 Rust 技术栈开发的博客。budshome, the Blog built on pure Rust stack.">
+    {{> head }}
+  </head>
+
+  <body>
+    <div class="container-xxl">
+      {{> header }}
+      {{> nav }}
+    </div>
+
+    <main class="container-xxl">
+      <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+        {{#each top_articles as |top_article| }}
+          <div class="px-0">
+            <h1 class="display-4 font-italic">{{ top_article.subject}}</h1>
+            <p class="lead my-3">{{ top_article.summary }}</p>
+            <div class="row lead mb-0">
+              <div class="col-md-6">
+                <a href="{{ top_article.user.username }}/{{ top_article.slug }}" class="text-white fw-bold"
+                  target="_blank">Continue reading...</a>
+              </div>
+              <div class="col-md-6 text-end">{{ top_article.updatedAt }}</div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+
+      <div class="row mb-2">
+        {{#each recommended_articles as |recommended_article| }}
+          <div class="col-md-6">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+              <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 text-primary">
+                  <a href="{{ recommended_article.category.uri }}" target="_blank">
+                    {{ recommended_article.category.name }}
+                  </a>
+                </strong>
+                <h3 class="mb-0">{{ str-trc recommended_article.subject 44 }}</h3>
+                <div class="mb-1 text-muted">{{ recommended_article.updatedAt }}</div>
+                <p class="card-text mb-auto">
+                  {{ str-trc recommended_article.summary 50 }}
+                </p>
+                <a href="{{ recommended_article.user.username }}/{{ recommended_article.slug }}"
+                  target="_blank">Continue reading</a>
+              </div>
+
+              <div class="col-auto d-none d-lg-block">
+                <a href="/{{ recommended_article.user.username }}" target="_blank">
+                  <img width="200" height="250" src="{{ recommended_article.user.picture }}"
+                    alt="{{ recommended_article.user.nickname }}" title="{{ recommended_article.user.nickname }}"
+                    aria-label="{{ recommended_article.user.nickname }}">
+                </a>
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+
+      <div class="row">
+        <div class="col-md-8">
+          <h6>{{ wish.user.nickname }}
+            (blog: <a href="/{{wish.user.username}}" target="_blank">{{ wish.user.blogName }}</a>)
+            shared the aphorism --
+          </h6>
+          <h5 class="pb-4 mb-4 font-italic border-bottom text-primary">
+            {{ wish.aphorism }} -- {{ wish.author }}
+          </h5>
+
+          {{#each articles as |article| }}
+            <article class="blog-post">
+              <h2 class="blog-post-title">{{ article.subject }}</h2>
+              <p class="blog-post-meta">{{ article.updatedAt }} by
+                <a href="/{{ article.user.username }}" target="_blank">{{ article.user.nickname }}</a>
+              </p>
+              <p>{{ article.summary }}</p>
+              <a href="{{ article.user.username }}/{{ article.slug }}" target="_blank">Continue reading</a>
+            </article>
+          {{/each}}
+
+          {{> pagination }}
+        </div>
+
+        <div class="col-md-4">
+          {{> introduction }}
+          {{> topic }}
+          {{> elsewhere }}
+        </div>
+
+      </div><!-- /.row -->
+    </main><!-- /.container-xxl -->
+
+    {{> footer }}
+  </body>
+
+</html>

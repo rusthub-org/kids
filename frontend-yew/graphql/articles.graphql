@@ -1,0 +1,38 @@
+query ArticlesData {
+  randomWish(
+    username: "-"
+  ) {
+    aphorism
+    author
+
+    user {
+      username
+      nickname
+      blogName
+    }
+  }
+
+  articles(
+    published: 1
+  ) {
+    subject
+    summary
+    slug
+    updatedAt
+    
+    user {
+      username
+      nickname
+      blogName
+    }
+    category {
+      name
+      uri
+    }
+
+    topics {
+      name
+      uri
+    }
+  }
+}
