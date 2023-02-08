@@ -13,5 +13,5 @@
 ## 功能
 
 示例站点：
-- [piexue.com - Project Matchmaking](https://piexue.com)
-- [niqin.com - Books Platform](https://niqin.com)
+- [piexue.com - 项目对接](https://piexue.com)
+- [niqin.com - 开源书馆](https://niqin.com)

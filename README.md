@@ -2,7 +2,7 @@
 
 [中文](./README-ZH.md)
 
-[PieXue | 丿雪](https://piexue.com) aims to build a multi-language CMS(content management system) based on Rust Web stacks, with long-term upgrade and maintenance.
+[PieXue | 丿雪](https://piexue.com) aims to build a multi-language CMS(Content Management System) based on Rust Web stacks, with long-term upgrade and maintenance.
 
 At present, [demo site - piexue.com](https://piexue.com) is an aggregation site for projects, developers & teams, which gathered some part-time information required by the employers. It's an Internet Intelligent Matchmaking Service Platform with complete and free services, which aims to match the projects and developers.
 
