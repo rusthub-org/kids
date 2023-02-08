@@ -6,7 +6,8 @@ use std::collections::HashMap;
 pub type GqlResult<T> = std::result::Result<T, async_graphql::Error>;
 
 // datetime format
-pub const DT_F: &str = "%Y-%m-%d %H:%M:%S%Z";
+pub const DTF_YMD: &str = "%Y-%m-%d";
+pub const DTF_YMDHMSZ: &str = "%Y-%m-%d %H:%M:%S%Z";
 
 lazy_static! {
     // CFG variables defined in .env file
@@ -23,7 +24,15 @@ lazy_static! {
             "PORT",
             dotenv::var("PORT").expect("Expected PORT to be set in env!"),
         );
+        map.insert(
+            "LOG_LEVEL",
+            dotenv::var("LOG_LEVEL").expect("Expected LOG_LEVEL to be set in env!"),
+        );
 
+        map.insert(
+            "SITE_KID",
+            dotenv::var("SITE_KID").expect("Expected SITE_KID to be set in env!"),
+        );
         map.insert(
             "SITE_KEY",
             dotenv::var("SITE_KEY").expect("Expected SITE_KEY to be set in env!"),
@@ -53,6 +62,10 @@ lazy_static! {
         map.insert(
             "MONGODB_NAME",
             dotenv::var("MONGODB_NAME").expect("Expected MONGODB_NAME to be set in env!"),
+        );
+        map.insert(
+            "PAGE_SIZE",
+            dotenv::var("PAGE_SIZE").expect("Expected PAGE_SIZE to be set in env!"),
         );
 
         map

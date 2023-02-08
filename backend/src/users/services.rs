@@ -2,7 +2,8 @@ use futures::stream::StreamExt;
 use mongodb::{
     Database,
     bson::{
-        oid::ObjectId, DateTime, Document, doc, to_document, from_document,
+        oid::ObjectId, DateTime, Document, doc, from_document, to_document,
+        from_bson,
     },
 };
 use async_graphql::{Error, ErrorExtensions};
@@ -12,210 +13,185 @@ use regex::Regex;
 use crate::util::{
     constant::{CFG, GqlResult},
     cred::{cred_encode, cred_verify, Claims, token_data},
+    pagination::{
+        UsersResult, PageInfo, ResCount, count_pages_and_total,
+        calculate_current_filter_skip, find_options,
+    },
 };
 
 use super::models::{User, UserNew, SignInfo, Wish, WishNew};
 
-// get user info by id
-pub async fn user_by_id(db: Database, id: ObjectId) -> GqlResult<User> {
-    let coll = db.collection::<Document>("users");
-
-    let user_document = coll
-        .find_one(doc! {"_id": id}, None)
-        .await
-        .expect("Document not found")
-        .unwrap();
-
-    let user: User = from_document(user_document)?;
-    Ok(user)
-}
-
-// get user info by email
-pub async fn user_by_email(db: Database, email: &str) -> GqlResult<User> {
-    let coll = db.collection::<Document>("users");
-
-    let exist_document = coll.find_one(doc! {"email": email}, None).await;
-
-    if let Ok(user_document_exist) = exist_document {
-        if let Some(user_document) = user_document_exist {
-            let user: User = from_document(user_document)?;
-            Ok(user)
-        } else {
-            Err(Error::new("Email not found").extend_with(|err, eev| {
-                eev.set("details", err.message.as_str())
-            }))
-        }
-    } else {
-        Err(Error::new("Error searching mongodb")
-            .extend_with(|err, eev| eev.set("details", err.message.as_str())))
-    }
-}
-
-// get user info by username
-pub async fn user_by_username(db: Database, username: &str) -> GqlResult<User> {
-    let coll = db.collection::<Document>("users");
-
-    let exist_document = coll.find_one(doc! {"username": username}, None).await;
-
-    if let Ok(user_document_exist) = exist_document {
-        if let Some(user_document) = user_document_exist {
-            let user: User = from_document(user_document)?;
-            Ok(user)
-        } else {
-            Err(Error::new("Username not found").extend_with(|err, eev| {
-                eev.set("details", err.message.as_str())
-            }))
-        }
-    } else {
-        Err(Error::new("Error searching mongodb")
-            .extend_with(|err, eev| eev.set("details", err.message.as_str())))
-    }
-}
+const USERS_STUFF: &str = "users";
 
 pub async fn user_register(
-    db: Database,
+    db: &Database,
     mut user_new: UserNew,
 ) -> GqlResult<User> {
     let coll = db.collection::<Document>("users");
 
-    user_new.email.make_ascii_lowercase();
-    user_new.username.make_ascii_lowercase();
+    user_new.email = user_new.email.trim().to_lowercase();
+    user_new.username = user_new.username.trim().to_lowercase();
 
-    if self::user_by_email(db.clone(), &user_new.email).await.is_ok() {
-        Err(Error::new("email exists")
-            .extend_with(|err, eev| eev.set("details", err.message.as_str())))
-    } else if self::user_by_username(db.clone(), &user_new.username)
-        .await
-        .is_ok()
+    if user_by_email(db, user_new.email.to_owned()).await.is_err()
+        && user_by_username(db, user_new.username.to_owned()).await.is_err()
     {
-        Err(Error::new("username exists")
-            .extend_with(|err, eev| eev.set("details", err.message.as_str())))
-    } else {
         user_new.cred = cred_encode(&user_new.username, &user_new.cred).await;
-        user_new.banned = false;
 
-        let mut user_new_document = to_document(&user_new)?;
+        let mut new_document = to_document(&user_new)?;
         let now = DateTime::now();
-        user_new_document.insert("created_at", now);
-        user_new_document.insert("updated_at", now);
+        new_document.insert("created_at", now);
+        new_document.insert("updated_at", now);
 
-        // Insert into a MongoDB collection
-        coll.insert_one(user_new_document, None)
-            .await
-            .expect("Failed to insert into a MongoDB collection!");
+        let user_res =
+            coll.insert_one(new_document, None).await.expect("写入未成功");
+        let user_id = from_bson(user_res.inserted_id)?;
 
-        self::user_by_email(db.clone(), &user_new.email).await
+        user_by_id(db, user_id).await
+    } else {
+        Err(Error::new("register-failed-username-email-exists"))
     }
 }
 
 pub async fn user_sign_in(
-    db: Database,
-    signature: &str,
-    password: &str,
+    db: &Database,
+    signature: String,
+    password: String,
 ) -> GqlResult<SignInfo> {
     let signature = &signature.to_lowercase();
 
     let user_res;
     let is_email = Regex::new(r"(@)")?.is_match(signature);
     if is_email {
-        user_res = self::user_by_email(db.clone(), signature).await;
+        user_res = user_by_email(db, signature.to_owned()).await;
     } else {
-        user_res = self::user_by_username(db.clone(), signature).await;
+        user_res = user_by_username(db, signature.to_owned()).await;
     }
 
     if let Ok(user) = user_res {
-        let is_verified =
-            cred_verify(&user.username, password, &user.cred).await;
-        if is_verified {
-            let mut header = Header::default();
-            // header.kid = Some("signing_key".to_owned());
-            header.alg = Algorithm::HS512;
+        match user.status {
+            1..=10 => {
+                let is_verified =
+                    cred_verify(&user.username, &password, &user.cred).await;
+                if is_verified {
+                    let site_kid = CFG.get("SITE_KID").unwrap();
+                    let site_key = CFG.get("SITE_KEY").unwrap().as_bytes();
+                    let claim_exp =
+                        CFG.get("CLAIM_EXP").unwrap().parse::<usize>()?;
 
-            let site_key = CFG.get("SITE_KEY").unwrap().as_bytes();
-            let claim_exp =
-                CFG.get("CLAIM_EXP").unwrap().parse::<usize>().unwrap();
-            let claims = Claims {
-                email: user.email.to_owned(),
-                username: user.username.to_owned(),
-                exp: claim_exp,
-            };
+                    let mut header = Header::default();
+                    header.kid = Some(String::from(site_kid));
+                    header.alg = Algorithm::HS512;
 
-            let token = match encode(
-                &header,
-                &claims,
-                &EncodingKey::from_secret(site_key),
-            ) {
-                Ok(t) => t,
-                Err(error) => Err(Error::new("Error to encode token")
-                    .extend_with(|_, e| {
-                        e.set("details", format!("{}", error))
-                    }))?,
-            };
+                    let claims = Claims {
+                        email: user.email,
+                        username: user.username.clone(),
+                        exp: claim_exp,
+                    };
 
-            let sign_info = SignInfo {
-                email: user.email,
-                username: user.username,
-                token: token,
-            };
-            Ok(sign_info)
-        } else {
-            Err(Error::new("Invalid credential").extend_with(|err, eev| {
-                eev.set("details", err.message.as_str())
-            }))
+                    let mut sign_info = SignInfo {
+                        username: user.username,
+                        token: String::from("无令牌！"),
+                    };
+                    sign_info.token = encode(
+                        &header,
+                        &claims,
+                        &EncodingKey::from_secret(site_key),
+                    )?;
+
+                    Ok(sign_info)
+                } else {
+                    Err(Error::new("sign-in-incorrect"))
+                }
+            }
+            0 => Err(Error::new("sign-in-not-activation")
+                .extend_with(|_, e| e.set("user_id", user._id.to_string()))),
+            -1 => Err(Error::new("sign-in-banned")),
+            _ => Err(Error::new("sign-in-security-problem")),
         }
     } else {
-        Err(Error::new("User not exist")
-            .extend_with(|err, eev| eev.set("details", err.message.as_str())))
+        Err(Error::new("sign-in-not-registration"))
     }
 }
 
-pub async fn users(db: Database, token: &str) -> GqlResult<Vec<User>> {
-    let token_data = token_data(token).await;
-    if token_data.is_ok() {
-        let coll = db.collection::<Document>("users");
+// get user info by id
+pub async fn user_by_id(db: &Database, id: ObjectId) -> GqlResult<User> {
+    let coll = db.collection::<Document>("users");
 
-        let mut users: Vec<User> = vec![];
+    let user_document = coll
+        .find_one(doc! {"_id": id}, None)
+        .await
+        .expect("账户不存在")
+        .unwrap();
 
-        // Query all documents in the collection.
-        let mut cursor = coll.find(None, None).await.unwrap();
-        // Iterate over the results of the cursor.
-        while let Some(result) = cursor.next().await {
-            match result {
-                Ok(document) => {
-                    let user = from_document(document)?;
-                    users.push(user);
-                }
-                Err(error) => Err(Error::new("Error to find doc")
-                    .extend_with(|_, e| {
-                        e.set(
-                            "details",
-                            format!("Error to find doc: {}", error),
-                        )
-                    }))?,
-            }
+    let user: User = from_document(user_document)?;
+    Ok(user)
+}
+
+pub async fn user_update_one_field_by_id(
+    db: &Database,
+    user_id: ObjectId,
+    field_name: String,
+    field_val: String,
+) -> GqlResult<User> {
+    let coll = db.collection::<Document>("users");
+
+    let query_doc = doc! {"_id": user_id};
+    let update_doc = match field_name.as_str() {
+        "status" => {
+            doc! {"$set": {field_name: field_val.parse::<i32>()?}}
         }
+        _ => doc! {},
+    };
 
-        Ok(users)
+    coll.update_one(query_doc, update_doc, None).await?;
+
+    user_by_id(db, user_id).await
+}
+
+// get user info by email
+pub async fn user_by_email(db: &Database, email: String) -> GqlResult<User> {
+    let coll = db.collection::<Document>("users");
+
+    let exist_document = coll.find_one(doc! {"email": &email}, None).await?;
+    if exist_document.is_some() {
+        let user: User = from_document(exist_document.unwrap())?;
+        Ok(user)
     } else {
-        Err(Error::new("No token")
-            .extend_with(|err, eev| eev.set("details", err.message.as_str())))
+        Err(Error::new(format!("{} - 未注册", email)))
+    }
+}
+
+// get user info by username
+pub async fn user_by_username(
+    db: &Database,
+    username: String,
+) -> GqlResult<User> {
+    let coll = db.collection::<Document>("users");
+
+    let exist_document =
+        coll.find_one(doc! {"username": &username}, None).await?;
+    if exist_document.is_some() {
+        let user: User = from_document(exist_document.unwrap())?;
+        Ok(user)
+    } else {
+        Err(Error::new(format!("{} - 未注册", username)))
     }
 }
 
 // Change user password
 pub async fn user_change_password(
-    db: Database,
-    pwd_cur: &str,
-    pwd_new: &str,
-    token: &str,
+    db: &Database,
+    pwd_cur: String,
+    pwd_new: String,
+    token: String,
 ) -> GqlResult<User> {
-    let token_data = token_data(token).await;
+    let token_data = token_data(&token).await;
     if let Ok(data) = token_data {
         let email = data.claims.email;
-        let user_res = self::user_by_email(db.clone(), &email).await;
+        let user_res = user_by_email(db, email).await;
         if let Ok(mut user) = user_res {
-            if cred_verify(&user.username, pwd_cur, &user.cred).await {
-                user.cred = cred_encode(&user.username, pwd_new).await;
+            if cred_verify(&user.username, &pwd_cur, &user.cred).await {
+                user.cred = cred_encode(&user.username, &pwd_new).await;
 
                 let coll = db.collection::<Document>("users");
                 coll.update_one(
@@ -224,35 +200,30 @@ pub async fn user_change_password(
                     None,
                 )
                 .await
-                .expect("Failed to update a MongoDB collection!");
+                .expect("更新未成功");
 
                 Ok(user)
             } else {
-                Err(Error::new("user_change_password").extend_with(|_, e| {
-                    e.set("details", "Error verifying current passwordd")
-                }))
+                Err(Error::new("密码验证失败"))
             }
         } else {
-            Err(Error::new("User not exist").extend_with(|err, eev| {
-                eev.set("details", err.message.as_str())
-            }))
+            Err(Error::new("账户未注册"))
         }
     } else {
-        Err(Error::new("No token")
-            .extend_with(|err, eev| eev.set("details", err.message.as_str())))
+        Err(Error::new("令牌验证失败"))
     }
 }
 
 // update user profile
 pub async fn user_update_profile(
-    db: Database,
+    db: &Database,
     user_new: UserNew,
-    token: &str,
+    token: String,
 ) -> GqlResult<User> {
-    let token_data = token_data(token).await;
+    let token_data = token_data(&token).await;
     if let Ok(data) = token_data {
         let email = data.claims.email;
-        let user_res = self::user_by_email(db.clone(), &email).await;
+        let user_res = user_by_email(db, email).await;
         if let Ok(mut user) = user_res {
             let coll = db.collection::<Document>("users");
 
@@ -260,28 +231,165 @@ pub async fn user_update_profile(
             user.username = user_new.username.to_lowercase();
 
             let user_document = to_document(&user)?;
+
             coll.find_one_and_replace(
                 doc! {"_id": &user._id},
                 user_document,
                 None,
             )
             .await
-            .expect("Failed to replace a MongoDB collection!");
+            .expect("更新未成功");
 
             Ok(user)
         } else {
-            Err(Error::new("User not exist").extend_with(|err, eev| {
-                eev.set("details", err.message.as_str())
-            }))
+            Err(Error::new("账户未注册"))
         }
     } else {
-        Err(Error::new("No token")
-            .extend_with(|err, eev| eev.set("details", err.message.as_str())))
+        Err(Error::new("令牌验证失败"))
     }
 }
 
+// Get all Users
+pub async fn users(
+    db: &Database,
+    from_page: u32,
+    first_oid: String,
+    last_oid: String,
+    status: i8,
+) -> GqlResult<UsersResult> {
+    let coll = db.collection::<Document>("users");
+
+    let mut filter_doc = doc! {
+        "status": {
+            "$gte": status as i32,
+            "$lte": 12
+        }
+    };
+
+    let (pages_count, total_count) =
+        count_pages_and_total(&coll, Some(filter_doc.clone()), None).await;
+    let (current_page, skip_x) = calculate_current_filter_skip(
+        from_page,
+        first_oid,
+        last_oid,
+        &mut filter_doc,
+    )
+    .await;
+
+    let sort_doc = doc! {"_id": -1};
+    let find_options = find_options(Some(sort_doc), skip_x).await;
+
+    let mut cursor = coll.find(filter_doc, find_options).await?;
+
+    let mut users: Vec<User> = vec![];
+    while let Some(result) = cursor.next().await {
+        match result {
+            Ok(document) => {
+                let user = from_document(document)?;
+                users.push(user);
+            }
+            Err(error) => {
+                println!("\n\n\n{}\n\n\n", error);
+            }
+        }
+    }
+
+    let users_result = UsersResult {
+        page_info: PageInfo {
+            current_stuff: Some(String::from(USERS_STUFF)),
+            current_page: Some(current_page),
+            first_cursor: match users.first() {
+                Some(user) => Some(user._id),
+                _ => None,
+            },
+            last_cursor: match users.last() {
+                Some(user) => Some(user._id),
+                _ => None,
+            },
+            has_previous_page: current_page > 1,
+            has_next_page: current_page < pages_count,
+        },
+        res_count: ResCount {
+            pages_count: Some(pages_count),
+            total_count: Some(total_count),
+        },
+        current_items: users,
+    };
+
+    Ok(users_result)
+}
+
+// Get all Users by worker_quality or boss_quality
+pub async fn users_by_quality(
+    db: &Database,
+    quality_field: String,
+    from_page: u32,
+    first_oid: String,
+    last_oid: String,
+    status: i8,
+) -> GqlResult<UsersResult> {
+    let coll = db.collection::<Document>("users");
+
+    let mut filter_doc = doc! {
+        "status": {"$gte": status as i32, "$lte": 12},
+        &quality_field: {"$gt": 0}
+    };
+
+    let (pages_count, total_count) =
+        count_pages_and_total(&coll, Some(filter_doc.clone()), None).await;
+    let (current_page, skip_x) = calculate_current_filter_skip(
+        from_page,
+        first_oid,
+        last_oid,
+        &mut filter_doc,
+    )
+    .await;
+
+    let sort_doc = doc! {quality_field: -1, "_id": -1};
+    let find_options = find_options(Some(sort_doc), skip_x).await;
+
+    let mut cursor = coll.find(filter_doc, find_options).await?;
+
+    let mut users: Vec<User> = vec![];
+    while let Some(result) = cursor.next().await {
+        match result {
+            Ok(document) => {
+                let user = from_document(document)?;
+                users.push(user);
+            }
+            Err(error) => {
+                println!("\n\n\n{}\n\n\n", error);
+            }
+        }
+    }
+
+    let users_result = UsersResult {
+        page_info: PageInfo {
+            current_stuff: Some(String::from(USERS_STUFF)),
+            current_page: Some(current_page),
+            first_cursor: match users.first() {
+                Some(user) => Some(user._id),
+                _ => None,
+            },
+            last_cursor: match users.last() {
+                Some(user) => Some(user._id),
+                _ => None,
+            },
+            has_previous_page: current_page > 1,
+            has_next_page: current_page < pages_count,
+        },
+        res_count: ResCount {
+            pages_count: Some(pages_count),
+            total_count: Some(total_count),
+        },
+        current_items: users,
+    };
+
+    Ok(users_result)
+}
+
 // Create new wish
-pub async fn wish_new(db: Database, wish_new: WishNew) -> GqlResult<Wish> {
+pub async fn wish_new(db: &Database, wish_new: WishNew) -> GqlResult<Wish> {
     let coll = db.collection::<Document>("wishes");
 
     let exist_document = coll
@@ -290,27 +398,31 @@ pub async fn wish_new(db: Database, wish_new: WishNew) -> GqlResult<Wish> {
             None,
         )
         .await?;
-    if let Some(_document) = exist_document {
-        println!("MongoDB document is exist!");
-    } else {
-        let mut wish_new_document = to_document(&wish_new)?;
-        let now = DateTime::now();
-        wish_new_document.insert("created_at", now);
-        wish_new_document.insert("updated_at", now);
 
-        // Insert into a MongoDB collection
-        coll.insert_one(wish_new_document, None)
-            .await
-            .expect("Failed to insert into a MongoDB collection!");
+    if exist_document.is_none() {
+        let mut new_document = to_document(&wish_new)?;
+        let now = DateTime::now();
+        new_document.insert("created_at", now);
+        new_document.insert("updated_at", now);
+
+        let wish_res =
+            coll.insert_one(new_document, None).await.expect("写入未成功");
+        let wish_id = from_bson(wish_res.inserted_id)?;
+
+        wish_by_id(db, wish_id).await
+    } else {
+        Err(Error::new("记录已存在"))
     }
+}
+
+// get wish by its id
+async fn wish_by_id(db: &Database, id: ObjectId) -> GqlResult<Wish> {
+    let coll = db.collection::<Document>("wishes");
 
     let wish_document = coll
-        .find_one(
-            doc! {"user_id": &wish_new.user_id, "aphorism": &wish_new.aphorism},
-            None,
-        )
+        .find_one(doc! {"_id": id}, None)
         .await
-        .expect("Document not found")
+        .expect("查询未成功")
         .unwrap();
 
     let wish: Wish = from_document(wish_document)?;
@@ -318,15 +430,15 @@ pub async fn wish_new(db: Database, wish_new: WishNew) -> GqlResult<Wish> {
 }
 
 // get all wishes
-pub async fn wishes(db: Database, published: i32) -> GqlResult<Vec<Wish>> {
-    let mut find_doc = doc! {};
+pub async fn wishes(db: &Database, published: i8) -> GqlResult<Vec<Wish>> {
+    let mut filter_doc = doc! {};
     if published > 0 {
-        find_doc.insert("published", true);
+        filter_doc.insert("published", true);
     } else if published < 0 {
-        find_doc.insert("published", false);
+        filter_doc.insert("published", false);
     }
     let coll = db.collection::<Document>("wishes");
-    let mut cursor = coll.find(find_doc, None).await?;
+    let mut cursor = coll.find(filter_doc, None).await?;
 
     let mut wishes: Vec<Wish> = vec![];
     while let Some(result) = cursor.next().await {
@@ -336,7 +448,7 @@ pub async fn wishes(db: Database, published: i32) -> GqlResult<Vec<Wish>> {
                 wishes.push(wish);
             }
             Err(error) => {
-                println!("Error to find doc: {}", error);
+                println!("\n\n\n{}\n\n\n", error);
             }
         }
     }
@@ -345,33 +457,32 @@ pub async fn wishes(db: Database, published: i32) -> GqlResult<Vec<Wish>> {
 }
 
 // get random wish
-pub async fn random_wish(db: Database, username: &str) -> GqlResult<Wish> {
-    let mut find_doc = doc! {"published": true};
+pub async fn wish_random(db: &Database, username: String) -> GqlResult<Wish> {
+    let mut filter_doc = doc! {"published": true};
     if "".ne(username.trim()) && "-".ne(username.trim()) {
-        let user = self::user_by_username(db.clone(), username).await?;
-        find_doc.insert("user_id", &user._id);
+        let user = user_by_username(db, username).await?;
+        filter_doc.insert("user_id", &user._id);
     }
-    let match_doc = doc! {"$match": find_doc};
+    let match_doc = doc! {"$match": filter_doc};
 
-    let one_wish = self::one_wish(db.clone(), match_doc).await;
-    if one_wish.is_ok() {
-        one_wish
+    let wish_one_res = wish_one(db, match_doc).await;
+    if wish_one_res.is_ok() {
+        wish_one_res
     } else {
-        self::one_wish(db, doc! {"$match": {"published": true}}).await
+        wish_one(db, doc! {"$match": {"published": true}}).await
     }
 }
 
-async fn one_wish(db: Database, match_doc: Document) -> GqlResult<Wish> {
+async fn wish_one(db: &Database, match_doc: Document) -> GqlResult<Wish> {
     let coll = db.collection::<Document>("wishes");
     let mut cursor = coll
         .aggregate(vec![doc! {"$sample": {"size": 1}}, match_doc], None)
         .await?;
 
-    if let Some(result) = cursor.next().await {
-        let wish = from_document(result?)?;
+    if let Some(document_res) = cursor.next().await {
+        let wish = from_document(document_res?)?;
         Ok(wish)
     } else {
-        Err(Error::new("No records")
-            .extend_with(|err, eev| eev.set("details", err.message.as_str())))
+        Err(Error::new("查询未成功"))
     }
 }

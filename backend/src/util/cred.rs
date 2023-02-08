@@ -1,9 +1,8 @@
 use std::num::NonZeroU32;
 use ring::{digest, pbkdf2};
+use base64::{Engine, engine::general_purpose::STANDARD};
 use serde::{Serialize, Deserialize};
-use jsonwebtoken::{
-    decode, TokenData, Algorithm, DecodingKey, Validation, errors::Error,
-};
+use jsonwebtoken::{TokenData, Algorithm, DecodingKey, Validation, errors::Error};
 
 use crate::util::constant::CFG;
 
@@ -42,7 +41,7 @@ pub async fn cred_encode(username: &str, password: &str) -> String {
         &mut cred,
     );
 
-    base64::encode(&cred)
+    STANDARD.encode(&cred)
 }
 
 pub async fn cred_verify(
@@ -51,7 +50,7 @@ pub async fn cred_verify(
     actual_cred: &str,
 ) -> bool {
     let salt = salt(username).await;
-    let actual_cred_decode = base64::decode(actual_cred.as_bytes()).unwrap();
+    let actual_cred_decode = STANDARD.decode(actual_cred.as_bytes()).unwrap();
 
     pbkdf2::verify(
         PBKDF2_ALG,
@@ -73,7 +72,7 @@ pub struct Claims {
 pub async fn token_data(token: &str) -> Result<TokenData<Claims>, Error> {
     let site_key = CFG.get("SITE_KEY").unwrap().as_bytes();
 
-    let data = decode::<Claims>(
+    let data = jsonwebtoken::decode::<Claims>(
         token,
         &DecodingKey::from_secret(site_key),
         &Validation::new(Algorithm::HS512),

@@ -2,172 +2,161 @@ use serde::{Serialize, Deserialize};
 use mongodb::bson::{oid::ObjectId, DateTime};
 use chrono::FixedOffset;
 
-use crate::util::constant::{GqlResult, DT_F};
 use crate::dbs::mongo::DataSource;
-use crate::articles::{models::Article, services::articles_by_user_id};
+use crate::util::{
+    constant::{GqlResult, DTF_YMDHMSZ},
+    pagination::ProjectsResult,
+};
 
-#[derive(Serialize, Deserialize, Clone)]
+use crate::{
+    topics::{self, models::Topic},
+    projects::services::projects_by_user_id,
+};
+
+#[derive(async_graphql::SimpleObject, Serialize, Deserialize, Clone, Debug)]
+#[graphql(complex)]
 pub struct User {
     pub _id: ObjectId,
-    pub email: String,
     pub username: String,
-    pub nickname: String,
-    pub picture: String,
+    pub email: String,
     pub cred: String,
-    pub blog_name: String,
+    pub nickname: String,
+    pub phone_number: String,
+    pub phone_public: bool,
+    pub im_account: String,
+    pub im_public: bool,
     pub website: String,
     pub introduction: String,
+    pub worker_quality: i8,
+    pub boss_quality: i8,
     pub created_at: DateTime,
     pub updated_at: DateTime,
-    pub banned: bool,
+    pub status: i8,
 }
 
-#[async_graphql::Object]
+#[async_graphql::ComplexObject]
 impl User {
-    pub async fn id(&self) -> ObjectId {
-        self._id.clone()
+    pub async fn introduction_html(&self) -> String {
+        use pulldown_cmark::{Parser, Options, html};
+
+        let mut options = Options::empty();
+        options.insert(Options::ENABLE_TABLES);
+        options.insert(Options::ENABLE_FOOTNOTES);
+        options.insert(Options::ENABLE_STRIKETHROUGH);
+        options.insert(Options::ENABLE_TASKLISTS);
+        options.insert(Options::ENABLE_SMART_PUNCTUATION);
+
+        let parser = Parser::new_ext(&self.introduction, options);
+
+        let mut introduction_html = String::new();
+        html::push_html(&mut introduction_html, parser);
+
+        introduction_html
     }
 
-    pub async fn email(&self) -> &str {
-        self.email.as_str()
-    }
-
-    pub async fn username(&self) -> &str {
-        self.username.as_str()
-    }
-
-    pub async fn nickname(&self) -> &str {
-        self.nickname.as_str()
-    }
-
-    pub async fn picture(&self) -> &str {
-        self.picture.as_str()
-    }
-
-    pub async fn blog_name(&self) -> &str {
-        self.blog_name.as_str()
-    }
-
-    pub async fn website(&self) -> &str {
-        self.website.as_str()
-    }
-
-    pub async fn introduction(&self) -> &str {
-        self.introduction.as_str()
-    }
-
-    pub async fn created_at(&self) -> String {
+    pub async fn created_at_nyrsq(&self) -> String {
         self.created_at
             .to_chrono()
-            .with_timezone(&FixedOffset::east(8 * 3600))
-            .format(DT_F)
+            .with_timezone(&FixedOffset::east_opt(8 * 3600).unwrap())
+            .format(DTF_YMDHMSZ)
             .to_string()
     }
 
-    pub async fn updated_at(&self) -> String {
+    pub async fn updated_at_nyrsq(&self) -> String {
         self.updated_at
             .to_chrono()
-            .with_timezone(&FixedOffset::east(8 * 3600))
-            .format(DT_F)
+            .with_timezone(&FixedOffset::east_opt(8 * 3600).unwrap())
+            .format(DTF_YMDHMSZ)
             .to_string()
     }
 
-    pub async fn banned(&self) -> bool {
-        self.banned
-    }
-
-    pub async fn articles(
+    pub async fn keywords(
         &self,
         ctx: &async_graphql::Context<'_>,
-        published: i32,
-    ) -> GqlResult<Vec<Article>> {
-        let db = ctx.data_unchecked::<DataSource>().db.clone();
-        articles_by_user_id(db, self._id, published).await
+    ) -> GqlResult<Vec<Topic>> {
+        let db = &ctx.data_unchecked::<DataSource>().db;
+        topics::services::keywords_by_user_id(db, self._id).await
+    }
+
+    pub async fn topics(
+        &self,
+        ctx: &async_graphql::Context<'_>,
+    ) -> GqlResult<Vec<Topic>> {
+        let db = &ctx.data_unchecked::<DataSource>().db;
+        topics::services::topics_by_user_id(db, self._id).await
+    }
+
+    pub async fn projects(
+        &self,
+        ctx: &async_graphql::Context<'_>,
+        status: i8,
+    ) -> GqlResult<ProjectsResult> {
+        let db = &ctx.data_unchecked::<DataSource>().db;
+        projects_by_user_id(
+            db,
+            self._id,
+            1,
+            String::from("-"),
+            String::from("-"),
+            status,
+        )
+        .await
     }
 }
 
-#[derive(Serialize, Deserialize, async_graphql::InputObject)]
+#[derive(async_graphql::InputObject, Serialize, Deserialize)]
 pub struct UserNew {
-    pub email: String,
     pub username: String,
-    pub nickname: String,
-    pub picture: String,
+    pub email: String,
     pub cred: String,
-    pub blog_name: String,
+    pub nickname: String,
+    pub phone_number: String,
+    pub phone_public: bool,
+    pub im_account: String,
+    pub im_public: bool,
     pub website: String,
     pub introduction: String,
     #[graphql(skip)]
-    pub banned: bool,
+    pub worker_quality: i8,
+    #[graphql(skip)]
+    pub boss_quality: i8,
+    #[graphql(skip)]
+    pub status: i8,
 }
 
-#[derive(Serialize, Deserialize, Clone)]
+#[derive(async_graphql::SimpleObject, Serialize, Deserialize, Clone, Debug)]
 pub struct SignInfo {
-    pub email: String,
     pub username: String,
     pub token: String,
 }
 
-#[async_graphql::Object]
-impl SignInfo {
-    pub async fn email(&self) -> &str {
-        self.email.as_str()
-    }
-
-    pub async fn username(&self) -> &str {
-        self.username.as_str()
-    }
-
-    pub async fn token(&self) -> &str {
-        self.token.as_str()
-    }
-}
-
-#[derive(Serialize, Deserialize, Clone)]
+#[derive(async_graphql::SimpleObject, Serialize, Deserialize, Clone, Debug)]
+#[graphql(complex)]
 pub struct Wish {
     pub _id: ObjectId,
     pub user_id: ObjectId,
     pub aphorism: String,
     pub author: String,
-    pub published: bool,
     pub created_at: DateTime,
     pub updated_at: DateTime,
+    pub published: bool,
 }
 
-#[async_graphql::Object]
+#[async_graphql::ComplexObject]
 impl Wish {
-    pub async fn id(&self) -> ObjectId {
-        self._id.clone()
-    }
-
-    pub async fn user_id(&self) -> ObjectId {
-        self.user_id.clone()
-    }
-
-    pub async fn aphorism(&self) -> &str {
-        self.aphorism.as_str()
-    }
-
-    pub async fn author(&self) -> &str {
-        self.author.as_str()
-    }
-
-    pub async fn published(&self) -> bool {
-        self.published
-    }
-
-    pub async fn created_at(&self) -> String {
+    pub async fn created_at_nyrsq(&self) -> String {
         self.created_at
             .to_chrono()
-            .with_timezone(&FixedOffset::east(8 * 3600))
-            .format(DT_F)
+            .with_timezone(&FixedOffset::east_opt(8 * 3600).unwrap())
+            .format(DTF_YMDHMSZ)
             .to_string()
     }
 
-    pub async fn updated_at(&self) -> String {
+    pub async fn updated_at_nyrsq(&self) -> String {
         self.updated_at
             .to_chrono()
-            .with_timezone(&FixedOffset::east(8 * 3600))
-            .format(DT_F)
+            .with_timezone(&FixedOffset::east_opt(8 * 3600).unwrap())
+            .format(DTF_YMDHMSZ)
             .to_string()
     }
 
@@ -175,12 +164,12 @@ impl Wish {
         &self,
         ctx: &async_graphql::Context<'_>,
     ) -> GqlResult<User> {
-        let db = ctx.data_unchecked::<DataSource>().db.clone();
+        let db = &ctx.data_unchecked::<DataSource>().db;
         super::services::user_by_id(db, self.user_id).await
     }
 }
 
-#[derive(Serialize, Deserialize, async_graphql::InputObject)]
+#[derive(async_graphql::InputObject, Serialize, Deserialize)]
 pub struct WishNew {
     pub user_id: ObjectId,
     pub aphorism: String,

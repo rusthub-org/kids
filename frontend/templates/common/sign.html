@@ -1,0 +1,19 @@
+{{!-- 注：使用在 2 处位置 --}}
+{{#if user }}
+    <button class="s-btn s-btn__dropdown" role="button" aria-controls="user-dashboard" data-controller="s-popover"
+        data-action="s-popover#toggle" data-s-popover-placement="bottom-start"
+        data-s-popover-toggle-class="is-selected">
+        <div class="s-avatar s-avatar__32 va-middle">
+            <span class="s-avatar--letter fc-orange-600">{{ str-cut user.nickname 1 }}</span>
+            <img src="/static/imgs/svgs/ShieldXSm.svg" class="native s-avatar--badge">
+        </div>
+        <span class="fw-bold ff-sans fs-body2 va-middle">{{ user.nickname }}</span>
+    </button>
+{{else}}
+    <a class="p6 s-btn {{ sign-in-nav-selected }}" href="/{{ language }}/sign-in">
+        {{ lang "sign-in" }}
+    </a>
+    <a class="p6 s-btn {{ register-nav-selected }}" href="/{{ language }}/register">
+        {{ lang "register" }}
+    </a>
+{{/if}}

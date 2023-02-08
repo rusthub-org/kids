@@ -3,7 +3,7 @@ mod dbs;
 mod gql;
 
 mod users;
-mod articles;
+mod projects;
 mod categories;
 mod topics;
 
@@ -15,10 +15,6 @@ use crate::gql::{build_schema, graphql, graphiql};
 
 #[async_std::main]
 async fn main() -> Result<(), std::io::Error> {
-    // tide logger
-    tide::log::start();
-
-    // Initialize the application with state.
     let schema = build_schema().await;
     let app_state = State { schema: schema };
     let mut app = tide::with_state(app_state);
@@ -34,6 +30,11 @@ async fn main() -> Result<(), std::io::Error> {
         .allow_credentials(false);
     app.with(cors);
 
+    let log_level = CFG.get("LOG_LEVEL").unwrap();
+    use std::str::FromStr;
+    femme::with_level(femme::LevelFilter::from_str(log_level).unwrap());
+    app.with(tide::log::LogMiddleware::new());
+
     app.listen(format!(
         "{}:{}",
         CFG.get("ADDR").unwrap(),
@@ -44,7 +45,6 @@ async fn main() -> Result<(), std::io::Error> {
     Ok(())
 }
 
-//  Tide application scope state.
 #[derive(Clone)]
 pub struct State {
     pub schema: async_graphql::Schema<

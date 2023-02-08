@@ -1,0 +1,64 @@
+site-name = 丿雪
+site-slogan = 互联网智能对接服务平台
+site-intro = 免费服务，旨在连接需求方与开发者。
+    本网站基于 Rust web 技术栈构建。
+
+nav-projects = 项目需求
+nav-projects-tip = 项目需求描述、招募要求，以及参考文档和案例等
+nav-users = 人员团队
+nav-users-tip = 接包人员/团队的实力、优势展示，以供发包方甄选
+nav-prototypes = 原型展示
+nav-prototypes-tip = 优秀项目的案例展示，合作流程的良好实践
+nav-statistics = 数据统计
+nav-statistics-tip = 项目资金走势、技术潮流分析，项目发包方/接包方统计
+nav-niqin = 泥芹书馆
+nav-niqin-tip = 开源知识和技术的书籍及文档
+nav-ideas = 创意思维
+nav-ideas-tip = 发散您的思维，实现您的创意
+nav-blog = 博客资讯
+nav-g = 全局导航
+
+switch-theme = 切换色彩模式
+random = 逛
+random-project = 试试手气
+shared-aphorism = 分享格言：
+
+more = 更多 ……
+projects-managed = 最新管控
+projects-recommended = 最新推荐
+projects-published = 最新发布
+
+register = 注册
+sign-in = 签入
+sign-in-intro = 签入丿雪
+sign-out = 签出
+
+user-profile = 用户资料
+user-general = 基本信息
+user-contact = 联系方式
+user-finance = 财务中心
+
+projects-center = 项目中心
+projects-matching = 项目匹配
+projects-management = 项目管理
+
+currency-type = 币种？
+currency-cny = 人民币
+currency-eur = 欧元
+currency-usd = 美元
+currency-jpy = 日元
+
+days = 天
+workdays = 工作日
+
+all = 全部
+search = 查询
+secret = 保密
+not-setting = 未设定
+user-risk-tip = 本网站仅提供数据聚合，不负任何法律责任。
+    请自行甄别风险，谨防上当受骗。
+    
+based-on = 基于 
+    <a href="https://github.com/zzy/surfer" target="_blank">zzy/surfer</a> 
+    定制
+copyright = 版权所有

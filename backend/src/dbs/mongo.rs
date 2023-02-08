@@ -20,8 +20,8 @@ impl DataSource {
             ClientOptions::parse(CFG.get("MONGODB_URI").unwrap())
                 .await
                 .expect("Failed to parse options!");
-        // Manually set an option.
-        client_options.app_name = Some("surfer".to_string());
+        client_options.app_name =
+            Some(String::from(CFG.get("SITE_KID").unwrap()));
 
         // Get a handle to the deployment.
         let client = Client::with_options(client_options)

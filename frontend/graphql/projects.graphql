@@ -1,0 +1,316 @@
+fragment projects_result_fragment on ProjectsResult {
+  pageInfo {
+    currentStuff
+    currentPage
+    firstCursor
+    lastCursor
+    hasPreviousPage
+    hasNextPage
+  }
+  resCount {
+    pagesCount
+    totalCount
+  }
+  currentItems {
+    id
+    subject
+    investment
+    currencyType
+    negotiated
+    content
+    updatedAtNyrsq
+    hits
+    external
+    thirdPartyLink
+    status
+
+    user {
+      username
+      nickname
+    }
+
+    category {
+      nameZh
+      nameEn
+      slug
+    }
+
+    topics {
+      name
+      slug
+    }
+  }
+}
+
+query ProjectsData(
+  $fromPage: Int!
+  $firstOid: String!
+  $lastOid: String!
+  $status: Int!
+) {
+  projects(
+    fromPage: $fromPage
+    firstOid: $firstOid
+    lastOid: $lastOid
+    status: $status
+  ) {
+    ...projects_result_fragment
+  }
+}
+
+query ProjectsByUserData(
+  $username: String!
+  $fromPage: Int!
+  $firstOid: String!
+  $lastOid: String!
+  $status: Int!
+) {
+  projectsByUsername(
+    username: $username
+    fromPage: $fromPage
+    firstOid: $firstOid
+    lastOid: $lastOid
+    status: $status
+  ) {
+    ...projects_result_fragment
+  }
+}
+
+query ProjectsByCategoryData(
+  $categorySlug: String!
+  $fromPage: Int!
+  $firstOid: String!
+  $lastOid: String!
+  $status: Int!
+) {
+  projectsByCategorySlug(
+    categorySlug: $categorySlug
+    fromPage: $fromPage
+    firstOid: $firstOid
+    lastOid: $lastOid
+    status: $status
+  ) {
+    ...projects_result_fragment
+  }
+}
+
+query ProjectsByTopicData(
+  $topicSlug: String!
+  $fromPage: Int!
+  $firstOid: String!
+  $lastOid: String!
+  $status: Int!
+) {
+  projectsByTopicSlug(
+    topicSlug: $topicSlug
+    fromPage: $fromPage
+    firstOid: $firstOid
+    lastOid: $lastOid
+    status: $status
+  ) {
+    ...projects_result_fragment
+  }
+}
+
+query ProjectsByInvestmentData(
+  $investmentMin: Int!
+  $investmentMax: Int!
+  $fromPage: Int!
+  $firstOid: String!
+  $lastOid: String!
+  $status: Int!
+) {
+  projectsByInvestment(
+    investmentMin: $investmentMin
+    investmentMax: $investmentMax
+    fromPage: $fromPage
+    firstOid: $firstOid
+    lastOid: $lastOid
+    status: $status
+  ) {
+    ...projects_result_fragment
+  }
+}
+
+query ProjectsByWorkerTypeData(
+  $workerType: String!
+  $fromPage: Int!
+  $firstOid: String!
+  $lastOid: String!
+  $status: Int!
+) {
+  projectsByWorkerType(
+    workerType: $workerType
+    fromPage: $fromPage
+    firstOid: $firstOid
+    lastOid: $lastOid
+    status: $status
+  ) {
+    ...projects_result_fragment
+  }
+}
+
+query ProjectsByExternalData(
+  $external: Boolean!
+  $fromPage: Int!
+  $firstOid: String!
+  $lastOid: String!
+  $status: Int!
+) {
+  projectsByExternal(
+    external: $external
+    fromPage: $fromPage
+    firstOid: $firstOid
+    lastOid: $lastOid
+    status: $status
+  ) {
+    ...projects_result_fragment
+  }
+}
+
+mutation ProjectNewData(
+  $userId: ObjectId!
+  $categoryId: ObjectId!
+  $subject: String!
+  $investment: Int!
+  $currencyType: String!
+  $negotiated: Boolean!
+  $duration: Int!
+  $workday: Boolean!
+  $content: String!
+  $examples: String!
+  $workerType: String!
+  $workerInfo: String!
+  $contactUser: String!
+  $contactPhone: String!
+  $contactEmail: String!
+  $contactIm: String!
+  $language: String!
+) {
+  projectNew(
+    projectNew: {
+      userId: $userId
+      categoryId: $categoryId
+      subject: $subject
+      investment: $investment
+      currencyType: $currencyType
+      negotiated: $negotiated
+      duration: $duration
+      workday: $workday
+      content: $content
+      examples: $examples
+      workerType: $workerType
+      workerInfo: $workerInfo
+      contactUser: $contactUser
+      contactPhone: $contactPhone
+      contactEmail: $contactEmail
+      contactIm: $contactIm
+      language: $language
+    }
+  ) {
+    id
+    subject
+  }
+}
+
+query ProjectData(
+  $projectId: ObjectId!
+) {
+  projectById(
+    projectId: $projectId
+  ) {
+    id
+    subject
+    investment
+    currencyType
+    negotiated
+    duration
+    workday
+    content
+    contentHtml
+    examples
+    workerType
+    workerInfoHtml
+    contactUser
+    contactPhone
+    contactEmail
+    contactIm
+    external
+    thirdPartyLink
+    updatedAtNyrsq
+    hits
+    applicants
+    status
+
+    user {
+      username
+      nickname
+    }
+
+    category {
+      nameZh
+      descriptionZh
+      nameEn
+      descriptionEn
+      slug
+    }
+
+    topics {
+      name
+      slug
+    }
+    
+    files {
+      name
+      location
+    }
+  }
+}
+
+mutation ProjectUpdateOneFieldByIdData(
+  $projectId: ObjectId!
+  $fieldName: String!
+  $fieldVal: String!
+) {
+  projectUpdateOneFieldById(
+    projectId: $projectId
+    fieldName: $fieldName
+    fieldVal: $fieldVal
+    ) {
+      id
+  }
+}
+
+query ProjectRandomData {
+  projectRandomId
+}
+
+mutation FileNewData(
+  $name: String!
+  $location: String!
+) {
+  fileNew(
+    fileNew: {
+      name: $name
+      location: $location
+    }
+  ) {
+    id
+  }
+}
+
+mutation ProjectFileNewData(
+  $userId: ObjectId!
+  $projectId: ObjectId!
+  $fileId: ObjectId!
+) {
+  projectFileNew(
+    projectFileNew: {
+      userId: $userId
+      projectId: $projectId
+      fileId: $fileId
+    }
+  ) {
+    id
+  }
+}

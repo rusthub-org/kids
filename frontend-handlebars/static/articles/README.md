@@ -1,1 +1,0 @@
-Illustrations for articles.

@@ -1,26 +1,20 @@
-# surfer
+# PieXue | 丿雪
 
-The **Blog** built on *pure Rust stack*. 
+[中文](./README-ZH.md)
 
-Backend for graphql services using tide, async-graphql, jsonwebtoken, mongodb and so on. 
+[PieXue | 丿雪](https://piexue.com) aims to build a multi-language CMS(content management system) based on Rust Web stacks, with long-term upgrade and maintenance.
 
-There are two options for web frontend:
-- Frontend-yew for web application using yew, graphql_client, cookie and so on.
-- Frontend-handlebars for web application using tide, yew, rhai, surf, graphql_client, handlebars-rust, cookie and so on.
+At present, [demo site - piexue.com](https://piexue.com) is an aggregation site for projects, developers & teams, which gathered some part-time information required by the employers. It's an Internet Intelligent Matchmaking Service Platform with complete and free services, which aims to match the projects and developers.
+
+See also:
+- https://github.com/zzy/tide-async-graphql-mongodb - Clean boilerplate for graphql services, wasm/yew & handlebars frontend. 
+- https://github.com/zzy/surfer - Simple WIP blog & upcoming upgrades.
 
 ## Features
 
 Demo site:
-- [niqin.com - NiQin Books Platform | 泥芹书馆](https://niqin.com)
-- [gaidun.com - Project Matchmaking | 项目对接](https://gaidun.com)
-
-See also: https://github.com/zzy/tide-async-graphql-mongodb
-
-## MongoDB data
-
-MongoDB data(include structure & documents) file is `/data/surfer-dev.sql`.
-
-If you need mongodb cloud count, please send email to me.
+- [piexue.com - Project Matchmaking](https://piexue.com)
+- [niqin.com - Books Platform](https://niqin.com)
 
 ## Stacks
 
@@ -35,14 +29,14 @@ If you need mongodb cloud count, please send email to me.
 - [handlebars-rust](https://crates.io/crates/handlebars)
 - [jsonwebtoken](https://crates.io/crates/jsonwebtoken)
 - [cookie-rs](https://crates.io/crates/cookie)
+- [fluent-rs](https://crates.io/crates/fluent) - A collection of Rust crates implementing Project Fluent.
 
 ## How to Build & Run?
 
 Please read:
 
-- [**Backend: graphql servies server**](./backend/README.md)
-- [**Frontend-yew: web application server**](./frontend-yew/README.md)
-- [**Frontend-handlebars: web application server**](./frontend-handlebars/README.md)
+- [Backend: graphql servies server](./backend/README.md)
+- [Frontend: web application server](./frontend/README.md)
 
 ## Contributing
 

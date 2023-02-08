@@ -1,0 +1,93 @@
+query HomeData(
+  $username: String!
+) {
+  managedProjects: projectsInPosition(
+    username: $username
+    position: "managed"
+    limit: 4
+  ) {
+    ...projects_in_position_fragment
+  }
+
+  recommendedProjects: projectsInPosition(
+    username: $username
+    position: "recommended"
+    limit: 6
+  ) {
+    ...projects_in_position_fragment
+  }
+
+  publishedProjects: projectsInPosition(
+    username: $username
+    position: "published"
+    limit: 10
+  ) {
+    ...projects_in_position_fragment
+  }
+}
+
+fragment projects_in_position_fragment on Project {
+  id
+  subject
+  content
+  investment
+  currencyType
+  duration
+  
+  category {
+    nameZh
+    nameEn
+    slug
+  }
+
+  topics {
+    name
+    slug
+  }
+}
+
+mutation RegisterData(
+  $username: String!
+  $email: String!
+  $cred: String!
+  $nickname: String!
+  $phoneNumber: String!
+  $phonePublic: Boolean!
+  $imAccount: String!
+  $imPublic: Boolean!
+  $website: String!
+  $introduction: String!
+) {
+  userRegister(
+    userNew: {
+      username: $username
+      email: $email
+      cred: $cred
+      nickname: $nickname
+      phoneNumber: $phoneNumber
+      phonePublic: $phonePublic
+      imAccount: $imAccount
+      imPublic: $imPublic
+      website: $website
+      introduction: $introduction
+    }
+  ) {
+    id
+    username
+    email
+    nickname
+  }
+}
+
+query SignInData(
+  $signature: String!
+  $password: String!
+) {
+  userSignIn(
+    signature: $signature
+    password: $password
+  ) {
+    username
+    token
+  }
+}

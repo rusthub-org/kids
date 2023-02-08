@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="{{ language }}">
+
+    <head>
+        <title>
+            {{ author_user.nickname }} ({{ author_user.username }}) - {{lang "user-intro" }} - {{lang "users-teams" }} -
+            {{ lang "site-name" }} | {{ lang "site-slogan" }}
+        </title>
+
+        <meta name="keywords"
+            content="{{ author_user.nickname }},{{ author_user.username }},{{#each author_user.keywords as |keyword|}}{{ keyword.name }}{{#unless @last }},{{/unless}}{{/each}}">
+        <meta name="description" content="{{ str-cut author_user.introduction 100 }}">
+
+        {{> head }}
+        <link rel="stylesheet" href="/static/css/night-owl.min.css">
+    </head>
+
+    <body class="theme-system">
+        {{> header }}
+
+        <main class="ps-relative t64">
+            {{> wish-random }}
+
+            <div class="mt16 mb96 mx24 sm:ml4 sm:mr4">
+
+                <article class="s-card my12">
+                    <h2 class="mb6">
+                        <a href="/{{ language }}/user/{{ author_user.username }}" target="_blank">
+                            {{ author_user.nickname }}
+                            <sup class="fw-normal fs-fine">No.{{ author_user.id }}</sup>
+                        </a>
+                        {{#with (add-op author_user.workerQuality author_user.bossQuality) as |quality| }}
+                            {{#if (str-cmp quality 120 "gte") }}
+                                <span class="ml8 s-tag s-tag__moderator fw-normal fs-body1">
+                                    {{ lang (level-op quality) }}
+                                </span>
+                            {{/if}}
+                        {{/with}}
+                    </h2>
+                    <p class="my6 fs-body1">
+                        <strong>{{ lang "registration-time" }}</strong>
+                        {{ author_user.createdAtNyrsq }}
+                    </p>
+                    <p class="my6 p4 fw-bold bg-blue-100 fc-blue-900">
+                        💥 {{ lang "user-intro" }}
+                    </p>
+                    <section class="my6 pl16 py12 ba bar-lg bc-black-200 fs-body2">
+                        {{{ author_user.introductionHtml }}}
+                    </section>
+                    <p class="my6 fs-body1">
+                        <strong>{{ lang "user-website" }}</strong>
+                        {{#if author_user.website }}
+                            <a href="{{ author_user.website }}" target="_blank">
+                                {{ author_user.website }}
+                            </a>
+                        {{else}}
+                            {{ lang "not-setting" }}
+                        {{/if}}
+                    </p>
+                    <p class="my6 p4 fw-bold bg-blue-100 fc-blue-900">
+                        💥 {{ lang "user-contact" }}
+                    </p>
+                    {{#if sign-in }}
+                        <p class="my6 fs-body1">
+                            <strong>{{ lang "user-phone" }}</strong>
+                            {{#if author_user.phonePublic }}
+                                {{ author_user.phoneNumber }}
+                            {{else}}
+                                {{ lang "secret" }}
+                            {{/if}}
+                        </p>
+                        <p class="my6 fs-body1">
+                            <strong>{{ lang "user-im" }}</strong>
+                            {{#if author_user.imPublic }}
+                                {{ author_user.imAccount }}
+                            {{else}}
+                                {{ lang "secret" }}
+                            {{/if}}
+                        </p>
+                    {{else}}
+                        <p class="my6 fs-body1">
+                            {{ lang "user-view-contact" }}
+                            <a class="fw-bold" href="/{{ language }}/sign-in" target="_blank">
+                                {{ lang "sign-in-intro" }}
+                            </a>
+                        </p>
+                    {{/if}}
+                    <p class="my6 p4 fw-bold bg-blue-100 fc-blue-900">
+                        💥 {{ lang "user-statistics" }}
+                    </p>
+                    <p class="my6 fs-body1">
+                        <strong>{{ lang "worker-quality" }}</strong>
+                        {{#if author_user.workerQuality }}
+                            {{ author_user.workerQuality }}
+                        {{else}}
+                            {{ lang "no-statistics" }}
+                        {{/if}}
+                    </p>
+                    <p class="my6 fs-body1">
+                        <strong>{{ lang "boss-quality" }}</strong>
+                        {{#if author_user.bossQuality }}
+                            {{ author_user.bossQuality }}
+                        {{else}}
+                            {{ lang "no-statistics" }}
+                        {{/if}}
+                    </p>
+                    <p class="my6 fs-body1">
+                        <strong>{{ lang "features-keys-tags" }}</strong>
+                        {{#if author_user.keywords }}
+                            {{#each author_user.keywords as |keyword|}}
+                                <a class="s-badge ml4 mb2 fs-body1"
+                                    href="/{{ ../language }}/topic/{{ keyword.slug }}/projects" target="_blank">
+                                    {{ keyword.name }}
+                                </a>
+                            {{/each}}
+                        {{else}}
+                            {{ lang "not-setting" }}
+                        {{/if}}
+                    </p>
+                    <p class="my6 fs-body1">
+                        <strong>{{ lang "related-keys-tags" }}</strong>
+                        {{#if author_user.topics }}
+                            {{#each author_user.topics as |topic|}}
+                                <a class="s-badge ml4 mb2 fs-body1"
+                                    href="/{{ ../language }}/topic/{{ topic.slug }}/projects" target="_blank">
+                                    {{ topic.name }}
+                                </a>
+                            {{/each}}
+                        {{else}}
+                            {{ lang "not-setting" }}
+                        {{/if}}
+                    </p>
+                    <p class="my6 fs-body1">
+                        <strong>{{ lang "related-projects" }}</strong>
+                        <a href="/{{ language }}/user/{{ author_user.username }}/projects" target="_blank">
+                            {{ lang "user-view-projects" }}
+                        </a>
+                    </p>
+                    <br>
+                    <span class="fc-danger fs-fine">{{ lang "user-risk-tip" }}</span>
+                </article>
+
+            </div>
+
+        </main>
+
+        {{> footer }}
+        <script src="/static/js/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
+    </body>
+
+</html>

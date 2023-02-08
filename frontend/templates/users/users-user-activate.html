@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="{{ language }}">
+
+    <head>
+        <title>{{ lang "user-activate" }} - {{ lang "site-name" }} | {{ lang "site-slogan" }}</title>
+
+        <meta name="keywords" content='{{ lang "user-activate" }},{{ lang "site-name" }},{{ lang "site-slogan" }}'>
+        <meta name="description"
+            content='{{ lang "user-activate" }},{{ lang "site-slogan" }},{{ lang "site-intro" }}'>
+
+        {{> head }}
+    </head>
+
+    <body class="theme-system">
+        {{> header }}
+
+        <main class="ps-relative t64">
+            {{> wish-random }}
+
+            <div class="ta-center mt16 mb96 mx64">
+
+                <a href="/{{ language }}">
+                    <img class="mt32" src="/static/imgs/icons/logo-{{ language }}.svg" width="160" height="53"
+                        alt='{{ lang "site-name" }}' title='{{ lang "site-name" }}' aria-label='{{ lang "site-name" }}'>
+                </a>
+                <h2 class="mt16 mb32">
+                    {{#if user_activate }}
+                        {{ lang "user-activated" }}
+                    {{/if}}
+
+                    {{#if user_resend }}
+                        {{ lang "user-re-activate" }}
+                    {{/if}}
+                </h2>
+
+                <p class="fs-body2">
+                    {{#if user_activate }}
+                        {{ lang "user-activated-result" user_activate }}
+                        <br><br>
+                        <a href="/{{ language }}/sign-in" class="fw-bold">{{ lang "sign-in-intro" }}</a>
+                    {{/if}}
+
+                    {{#if user_resend }}
+                        {{ lang "user-re-activate-result" user_resend }}
+                    {{/if}}
+                    <br><br>
+                    {{ lang "user-activate-problem" }}
+                </p>
+
+            </div>
+        </main>
+
+        {{> footer }}
+    </body>
+
+</html>

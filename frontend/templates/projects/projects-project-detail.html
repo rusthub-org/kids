@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="{{ language }}">
+
+    <head>
+        <title>{{ project.subject }} -
+            {{#if (str-cmp language "zh-cn") }}{{ project.category.descriptionZh }}{{else}}{{ project.category.descriptionEn }}{{/if}}
+            - {{ lang "projects-requirements" }} - {{ lang "site-name" }} | {{ lang "site-slogan" }}
+        </title>
+
+        <meta name="keywords"
+            content='{{#if (str-cmp language "zh-cn") }}{{ project.category.nameZh }}{{else}}{{ project.category.nameEn }}{{/if}},{{#each project.topics as |topic|}}{{ topic.name }}{{#unless @last }},{{/unless}}{{/each}}'>
+        <meta name="description" content="{{ str-cut project.content 100 }}">
+
+        {{> head }}
+        <link rel="stylesheet" href="/static/css/night-owl.min.css">
+    </head>
+
+    <body class="theme-system">
+        {{> header }}
+
+        <main class="ps-relative t64">
+            {{> wish-random }}
+
+            <div class="mt16 mb96 mx24 sm:ml4 sm:mr4">
+
+                {{#if project.external }}
+                    <span class="ml8 fc-danger fs-fine">{{ lang "project-risk-tip" }}</span>
+                {{/if }}
+
+                <article class="s-card my12">
+                    <h2 class="mb6">
+                        <a class="s-tag mr6" href="/{{ language }}/category/{{ project.category.slug }}/projects"
+                            target="_blank">
+                            {{#if (str-cmp language "zh-cn") }}
+                                {{ project.category.nameZh }}
+                            {{else}}
+                                {{ project.category.nameEn }}
+                            {{/if}}
+                        </a>
+                        <a href="/{{ language }}/project/{{ project.id }}" target="_blank">
+                            {{ project.subject }}
+                            {{#unless project.external }}
+                                <sup class="fw-normal fs-fine">No.{{ project.id }}</sup>
+                            {{else}}
+                                <span class="ml8 s-badge s-badge__rep fc-blue-700 fs-caption">
+                                    {{#if (str-cmp project.thirdPartyLink "codemart" "ct") }}
+                                        码市
+                                    {{/if}}
+                                    {{#if (str-cmp project.thirdPartyLink "dribbble" "ct") }}
+                                        dribbble
+                                    {{/if}}
+                                    {{#if (str-cmp project.thirdPartyLink "freelancer" "ct") }}
+                                        freelancer
+                                    {{/if}}
+                                    {{#if (str-cmp project.thirdPartyLink "oschina" "ct") }}
+                                        开源众包
+                                    {{/if}}
+                                    {{#if (str-cmp project.thirdPartyLink "taskcity" "ct") }}
+                                        智城
+                                    {{/if}}
+                                </span>
+                            {{/unless }}
+                        </a>
+                        {{#if (str-cmp project.status 2 "gte") }}
+                            <span class="ml8 s-tag s-tag__moderator fw-normal fs-body1">
+                                {{ lang "project-recommended" }}
+                            </span>
+                        {{/if}}
+                        {{#unless project.external }}
+                            <span class="ml8 s-tag s-tag__moderator fw-normal fs-body1">
+                                {{ lang "project-verified" }}
+                            </span>
+                        {{/unless }}
+                        {{#if (str-cmp project.status 6) }}
+                            <span class="ml8 s-tag s-tag__moderator fw-normal fs-body1">
+                                {{ lang "project-managed" }}
+                            </span>
+                        {{/if}}
+                    </h2>
+                    <p class="my6 fs-body1">
+                        {{#unless (str-cmp project.user.username "spider") }}
+                            <a class="s-link fw-bold" href="/{{ language }}/user/{{ project.user.username }}"
+                                target="_blank">
+                                {{ project.user.nickname }}
+                            </a>
+                            {{ lang "project-posted" }}
+                        {{else}}
+                            {{ lang "project-data-aggregation" }}
+                        {{/unless}}
+                        {{ project.updatedAtNyrsq }}
+                    </p>
+                    <p class="my6 fs-body1">
+                        <strong>{{ lang "project-hits" }}</strong>
+                        {{ project.hits }}
+                    </p>
+                    {{!-- <p class="my6 fs-body1">
+                        <strong>{{ lang "project-applicants"}}</strong>
+                        {{ project.applicants }}
+                    </p> --}}
+
+                    <p class="my6 p4 fw-bold bg-blue-100 fc-blue-900">
+                        💥 {{ lang "project-description" }}
+                    </p>
+
+                    <p class="my6 fs-body1">
+                        <strong>{{ lang "project-investment" }}</strong>
+                        {{ project.investment }}
+                        {{ lang project.currencyType }}
+                        <strong>{{#if project.negotiated }} - {{ lang "project-negotiated" }}{{/if}}</strong>
+                    </p>
+                    <p class="my6 fs-body1">
+                        <strong>{{ lang "project-duration" }}</strong>
+                        {{ project.duration }}
+                        {{ lang "days" }}
+                        <strong>{{#if project.workday }} - {{ lang "workdays" }}{{/if}}</strong>
+                    </p>
+                    <p class="my6 fs-body1">
+                        <strong>{{ lang "project-keys-tags" }}</strong>
+                        {{#if project.topics }}
+                            {{#each project.topics as |topic|}}
+                                <a class="s-badge ml4 mb2 fs-body1"
+                                    href="/{{ ../language }}/topic/{{ topic.slug }}/projects" target="_blank">
+                                    {{ topic.name }}
+                                </a>
+                            {{/each}}
+                        {{else}}
+                            {{ lang "not-setting" }}
+                        {{/if}}
+                    </p>
+                    <section class="my6 pl16 py12 ba bar-lg bc-black-200 fs-body2">
+                        {{{ project.contentHtml }}}
+                    </section>
+                    <p class="d-flex my6 fs-body1">
+                        <strong class="flex--item ws-nowrap">{{ lang "project-examples" }}</strong>
+                        <span class="flex--item pl4">
+                            {{#if project.examples }}
+                                {{ project.examples }}
+                            {{else}}
+                                {{ lang "not-setting" }}
+                            {{/if}}
+                        </span>
+                    </p>
+                    <p class="d-flex my6 fs-body1">
+                        <strong class="flex--item ws-nowrap">{{ lang "project-files" }}</strong>
+                        <span class="flex--item pl4">
+                            {{#if sign-in }}
+                                {{#if project.files }}
+                                    {{#each project.files as |file| }}
+                                        <a href="/static/files/{{ file.location }}" target="_blank"
+                                            download='{{ lang "site-name" }}-{{ ../project.subject }}-{{ file.name }}'>
+                                            {{ add-op @index 1 }}
+                                            {{ file.name }}
+                                            <br>
+                                        </a>
+                                    {{/each}}
+                                {{else}}
+                                    {{ lang "not-setting" }}
+                                {{/if}}
+                            {{else}}
+                                {{ lang "project-download-file" }}
+                                <a class="fw-bold" href="/{{ language }}/sign-in" target="_blank">
+                                    {{ lang "sign-in-intro" }}
+                                </a>
+                            {{/if}}
+                        </span>
+                    </p>
+
+                    <p class="my6 p4 fw-bold bg-blue-100 fc-blue-900">
+                        💥 {{ lang "project-recruitment" }}
+                    </p>
+
+                    <p class="my6 fs-body1">
+                        <strong>{{ lang "project-recruitment-role" }}</strong>
+                        <span class="pl2">{{ lang project.workerType }}</span>
+                    </p>
+                    <p class="d-flex my6 fs-body1">
+                        <strong class="flex--item ws-nowrap">{{ lang "project-recruitment-desc" }}</strong>
+                        <span class="flex--item pl4">{{{ project.workerInfoHtml }}}</span>
+                    </p>
+
+                    <p class="my6 p4 fw-bold bg-blue-100 fc-blue-900">
+                        💥 {{ lang "user-contact" }}
+                    </p>
+
+                    <p class="my6 fs-body1">
+                        <strong>{{ lang "project-contact-person" }}</strong>
+                        {{ project.contactUser }}
+                    </p>
+
+                    {{#if sign-in }}
+                        {{#unless project.external }}
+                            <p class="my6 fs-body1">
+                                <strong>{{ lang "project-contact-phone" }}</strong>
+                                {{ project.contactPhone }}
+                            </p>
+                            <p class="my6 fs-body1">
+                                <strong>{{ lang "project-contact-email" }}</strong>
+                                {{ project.contactEmail }}
+                            </p>
+                            <p class="my6 fs-body1">
+                                <strong>{{ lang "project-contact-im" }}</strong>
+                                {{ project.contactIm }}
+                            </p>
+                        {{else}}
+                            <p class="my6 fs-body1">
+                                {{ lang "project-external" }}
+                                <a href="{{ project.thirdPartyLink }}" target="_blank">
+                                    {{ lang "project-third-link" }}
+                                </a>
+                            </p>
+                        {{/unless }}
+                    {{else}}
+                        <p class="my6 fs-body1">
+                            {{ lang "project-view-contact" }}
+                            <a class="fw-bold" href="/{{ language }}/sign-in" target="_blank">
+                                {{ lang "sign-in-intro" }}
+                            </a>
+                        </p>
+                    {{/if}}
+                    <br>
+                    <span class="fc-danger fs-fine">{{ lang "user-risk-tip" }}</span>
+                </article>
+
+            </div>
+
+        </main>
+
+        {{> footer }}
+        <script src="/static/js/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
+    </body>
+
+</html>

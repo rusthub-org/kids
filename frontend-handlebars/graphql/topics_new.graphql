@@ -1,9 +1,0 @@
-mutation TopicsNewData(
-  $topicNames: String!
-) {
-  topicsNew(
-    topicNames: $topicNames
-  ) {
-    id
-  }
-}
