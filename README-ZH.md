@@ -9,3 +9,9 @@
 另请参考：
 - https://github.com/zzy/tide-async-graphql-mongodb - 清洁模板，包括 gaphql 服务后端，wasm/yew 以及 handlebars 前端。 
 - https://github.com/zzy/surfer -简单的博客系统，即将升级。
+
+## 功能
+
+示例站点：
+- [piexue.com - Project Matchmaking](https://piexue.com)
+- [niqin.com - Books Platform](https://niqin.com)
