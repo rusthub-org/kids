@@ -40,4 +40,4 @@ Please read:
 
 ## Contributing
 
-You are welcome in contributing to the surfer project. 
+You are welcome in contributing to the piexue.com. 
