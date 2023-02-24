@@ -40,7 +40,7 @@ pub async fn project_new(
     let filter_doc = doc! {
         "user_id": &project_new.user_id,
         "subject": &project_new.subject,
-        "created_at": {"$gte": now2ago, "$lte": now}
+        "created_at": {"$gte": now2ago} // "$lte": now
     };
     let exist_document = coll.find_one(filter_doc, None).await?;
 
@@ -109,7 +109,7 @@ pub async fn project_random_id(db: &Database) -> GqlResult<ObjectId> {
     let coll = db.collection::<Document>("projects");
 
     let now = DateTime::now();
-    let days_before = now.to_chrono() + Duration::days(-250);
+    let days_before = now.to_chrono() + Duration::days(-7);
     let filter_doc = doc! {
         "status": {"$gte": 1},
         "updated_at": {"$gte": days_before}
