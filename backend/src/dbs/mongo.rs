@@ -31,6 +31,6 @@ impl DataSource {
         let db = client.database(CFG.get("MONGODB_NAME").unwrap());
 
         // return mongodb datasource.
-        DataSource { client: client, db }
+        DataSource { client, db }
     }
 }

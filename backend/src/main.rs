@@ -16,7 +16,7 @@ use crate::gql::{build_schema, graphql, graphiql};
 #[async_std::main]
 async fn main() -> Result<(), std::io::Error> {
     let schema = build_schema().await;
-    let app_state = State { schema: schema };
+    let app_state = State { schema };
     let mut app = tide::with_state(app_state);
 
     //environment variables defined in .env file
