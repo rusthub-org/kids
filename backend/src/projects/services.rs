@@ -150,7 +150,7 @@ pub async fn projects(
     )
     .await;
 
-    let sort_doc = doc! {"_id": -1}; // , "updated_at": -1
+    let sort_doc = doc! {"_id": -1};
     let find_options = find_options(Some(sort_doc), skip_x).await;
 
     let mut cursor = coll.find(filter_doc, find_options).await?;
@@ -222,7 +222,7 @@ pub async fn projects_in_position(
         _ => None,
     };
 
-    let sort_doc = doc! {"_id": -1}; // , "updated_at": -1
+    let sort_doc = doc! {"_id": -1};
     let find_options =
         FindOptions::builder().sort(sort_doc).limit(limit).build();
     let mut cursor = coll.find(filter_doc, find_options).await?;
@@ -266,7 +266,7 @@ pub async fn projects_by_user_id(
     )
     .await;
 
-    let sort_doc = doc! {"_id": -1, "updated_at": -1};
+    let sort_doc = doc! {"_id": -1};
     let find_options = find_options(Some(sort_doc), skip_x).await;
 
     let mut cursor = coll.find(filter_doc, find_options).await?;
@@ -346,7 +346,7 @@ pub async fn projects_by_category_id(
     )
     .await;
 
-    let sort_doc = doc! {"_id": -1, "updated_at": -1};
+    let sort_doc = doc! {"_id": -1};
     let find_options = find_options(Some(sort_doc), skip_x).await;
 
     let mut cursor = coll.find(filter_doc, find_options).await?;
@@ -444,7 +444,7 @@ pub async fn projects_by_topic_id(
     )
     .await;
 
-    let sort_doc = doc! {"_id": -1, "updated_at": -1};
+    let sort_doc = doc! {"_id": -1};
     let find_options = find_options(Some(sort_doc), skip_x).await;
 
     let mut cursor = coll.find(filter_doc, find_options).await?;
@@ -562,7 +562,7 @@ pub async fn projects_by_investment(
     )
     .await;
 
-    let sort_doc = doc! {"_id": -1, "updated_at": -1};
+    let sort_doc = doc! {"_id": -1};
     let find_options = find_options(Some(sort_doc), skip_x).await;
 
     let mut cursor = coll.find(filter_doc, find_options).await?;
@@ -629,7 +629,7 @@ pub async fn projects_by_worker_type(
     )
     .await;
 
-    let sort_doc = doc! {"_id": -1, "updated_at": -1};
+    let sort_doc = doc! {"_id": -1};
     let find_options = find_options(Some(sort_doc), skip_x).await;
 
     let mut cursor = coll.find(filter_doc, find_options).await?;
@@ -696,7 +696,7 @@ pub async fn projects_by_external(
     )
     .await;
 
-    let sort_doc = doc! {"_id": -1, "updated_at": -1};
+    let sort_doc = doc! {"_id": -1};
     let find_options = find_options(Some(sort_doc), skip_x).await;
 
     let mut cursor = coll.find(filter_doc, find_options).await?;

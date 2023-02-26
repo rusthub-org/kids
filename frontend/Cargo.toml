@@ -1,5 +1,5 @@
 [package]
-name = "piexue-frontend"
+name = "jobs-frontend"
 version = "0.0.1"
 authors = ["zzy <ask@rusthub.org>"]
 edition = "2021"
