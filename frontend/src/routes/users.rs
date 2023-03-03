@@ -267,6 +267,14 @@ pub async fn user_activate(req: Request<State>) -> tide::Result {
             data.insert("user_resend", user_resend);
         }
         _ => {
+            UserUpdateOneFieldByIdData::build_query(
+                user_update_one_field_by_id_data::Variables {
+                    user_id: user_id.to_string(),
+                    field_name: String::from("worker_quality"),
+                    field_val: String::from("10"),
+                },
+            );
+
             let user_activate_build_query =
                 UserUpdateOneFieldByIdData::build_query(
                     user_update_one_field_by_id_data::Variables {
