@@ -117,7 +117,7 @@ pub async fn project_random_id(db: &Database) -> GqlResult<ObjectId> {
 
     let match_doc = doc! {"$match": filter_doc};
     let mut cursor = coll
-        .aggregate(vec![doc! {"$sample": {"size": 1}}, match_doc], None)
+        .aggregate(vec![match_doc, doc! {"$sample": {"size": 1}}], None)
         .await?;
 
     if let Some(document_res) = cursor.next().await {

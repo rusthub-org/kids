@@ -137,7 +137,7 @@ pub async fn user_update_one_field_by_id(
 
     let query_doc = doc! {"_id": user_id};
     let update_doc = match field_name.as_str() {
-        "status" => {
+        "status" | "worker_quality" | "boss_quality" => {
             doc! {"$set": {field_name: field_val.parse::<i32>()?}}
         }
         _ => doc! {},
