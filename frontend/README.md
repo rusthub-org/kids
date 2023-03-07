@@ -6,7 +6,7 @@ Demo site: [https://kousun.com](https://kousun.com)
 
 ``` Bash
 git clone https://github.com/zzy/kousun
-cd kousun.com
+cd kousun
 cargo build
 
 cd frontend

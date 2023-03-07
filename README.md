@@ -18,14 +18,14 @@ Demo site:
 
 ## Stacks
 
-- [Rust](https://github.com/rust-lang/rust) - [Rust By Example](https://rust-by-example.niqin.com) and [Cargo Book](https://cargo.niqin.com)
+- [Rust](https://github.com/rust-lang/rust) - [Rust By Example](https://rust-by-example.niqin.com) and [Cargo Book](https://cargo-book.niqin.com)
 - [Tide](https://crates.io/crates/tide) - [Tide Book](https://tide-book.niqin.com)
 - [rhai](https://crates.io/crates/rhai) - [Embedded Scripting for Rust](https://rhai-script.niqin.com)
 - [async-graphql](https://crates.io/crates/async-graphql) - [async-graphql docs](https://async-graphql.niqin.com)
 - [mongodb & mongo-rust-driver](https://crates.io/crates/mongodb)
 - [Surf](https://crates.io/crates/surf)
 - [graphql_client](https://crates.io/crates/graphql_client)
-- [yew](https://yew.niqin.com)
+- [yew](https://yew-book.niqin.com)
 - [handlebars-rust](https://crates.io/crates/handlebars)
 - [jsonwebtoken](https://crates.io/crates/jsonwebtoken)
 - [cookie-rs](https://crates.io/crates/cookie)
@@ -40,4 +40,4 @@ Please read:
 
 ## Contributing
 
-You are welcome in contributing to the kousun.com. 
+You are welcome in contributing to the project ***kousun***. 

@@ -4,7 +4,7 @@
 
 ``` Bash
 git clone https://github.com/zzy/kousun
-cd kousun.com
+cd kousun
 cargo build
 
 cd backend
