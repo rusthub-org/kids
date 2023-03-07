@@ -1,10 +1,10 @@
-# PieXue | 丿雪
+# KouSun | 蔻隼
 
 [中文](./README-ZH.md)
 
-[PieXue | 丿雪](https://piexue.com) aims to build a multi-language CMS(Content Management System) based on Rust Web stacks, with long-term upgrade and maintenance.
+[KouSun | 蔻隼](https://kousun.com) aims to build a multi-language CMS(Content Management System) based on Rust Web stacks, with long-term upgrade and maintenance.
 
-At present, [demo site - piexue.com](https://piexue.com) is an aggregation site for projects, developers & teams, which gathered some part-time information required by the employers. It's an Internet Intelligent Matchmaking Service Platform with complete and free services, which aims to match the projects and developers.
+At present, [demo site - kousun.com](https://kousun.com) is an aggregation site for projects, developers & teams, which gathered some part-time information required by the employers. It's an Internet Intelligent Matchmaking Service Platform with complete and free services, which aims to match the projects and developers.
 
 See also:
 - https://github.com/zzy/tide-async-graphql-mongodb - Clean boilerplate for graphql services, wasm/yew & handlebars frontend. 
@@ -13,7 +13,7 @@ See also:
 ## Features
 
 Demo site:
-- [piexue.com - Project Matchmaking](https://piexue.com)
+- [kousun.com - Project Matchmaking](https://kousun.com)
 - [niqin.com - Books Platform](https://niqin.com)
 
 ## Stacks
@@ -40,4 +40,4 @@ Please read:
 
 ## Contributing
 
-You are welcome in contributing to the piexue.com. 
+You are welcome in contributing to the kousun.com. 

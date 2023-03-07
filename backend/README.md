@@ -3,8 +3,8 @@
 ## Build & run
 
 ``` Bash
-git clone https://github.com/piexue/piexue.com
-cd piexue.com
+git clone https://github.com/zzy/kousun
+cd kousun.com
 cargo build
 
 cd backend
@@ -17,7 +17,7 @@ ADDR=127.0.0.1
 PORT=8400
 LOG_LEVEL=Debug
 
-SITE_KID=piexue.com
+SITE_KID=kousun.com
 SITE_KEY=QiX7Riw8r..... # Replace with your SITE_KEY
 CLAIM_EXP=10000000000
 

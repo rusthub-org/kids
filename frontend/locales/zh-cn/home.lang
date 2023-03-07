@@ -11,13 +11,13 @@ sign-in-new-user = 新用户？
 sign-in-create-account = 创建账户
 
 sign-in-incorrect = 账户或密码错误
-sign-in-not-activation = 此丿雪账户尚未激活，请查阅激活邮件
-sign-in-banned = 此账户已被封禁，请联系丿雪服务专员（ask@rusthub.org）
-sign-in-security-problem = 此账户安全有异，请联系丿雪服务专员（ask@rusthub.org）
+sign-in-not-activation = 此蔻隼账户尚未激活，请查阅激活邮件
+sign-in-banned = 此账户已被封禁，请联系蔻隼服务专员（ask@rusthub.org）
+sign-in-security-problem = 此账户安全有异，请联系蔻隼服务专员（ask@rusthub.org）
 sign-in-not-registration = 此账户尚未注册
 
 user-register = 用户注册
-user-register-intro = 注册丿雪
+user-register-intro = 注册蔻隼
 
 register-username = 用户名
 register-username-tip = 字符范围：a-z、_-、0-9
@@ -43,21 +43,21 @@ register-have-account = 有账户？
 register-sign-in = 去签入
 
 register-result = <span class="fw-bold fc-blue-600">{ $nickname }</span>，祝贺！
-    你的丿雪账户已创建成功！
+    你的蔻隼账户已创建成功！
     <br><br>
     <span class="fw-bold">用户名</span>：{ $username }；
     <span class="fw-bold">电子邮件</span>：{ $email }。
     <br><br>
-    请登录你的邮箱，查阅丿雪智能账户激活邮件，并激活账户。
+    请登录你的邮箱，查阅蔻隼智能账户激活邮件，并激活账户。
     <br><br>
     若未收到激活邮件，或电子邮件填写错误，请 
-    <a href="mailto:ask@rusthub.org">联系丿雪智能服务专员（ask@rusthub.org）</a>
+    <a href="mailto:ask@rusthub.org">联系蔻隼智能服务专员（ask@rusthub.org）</a>
 register-failed-username-email-exists = 电子邮件或用户名已注册
 
-email-subject = { $nickname }（{ $username }），来自丿雪智能的账户激活邮件
+email-subject = { $nickname }（{ $username }），来自蔻隼智能的账户激活邮件
 email-body = 你好，{ $nickname }（{ $username }）！
     <br><br>
-    此邮件为丿雪智能发送，是你的账户激活邮件。
+    此邮件为蔻隼智能发送，是你的账户激活邮件。
     <br><br>
     请点击链接： https://{ $domain }/{ $language }/user/{ $user_id }/activate 激活你的账户。
     <br><br>
@@ -65,4 +65,4 @@ email-body = 你好，{ $nickname }（{ $username }）！
     <br><br>
     请勿回复，谢谢！
     <br><br>
-    丿雪智能
+    蔻隼智能

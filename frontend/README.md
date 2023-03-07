@@ -1,12 +1,12 @@
 # Web Application Server - handlebars
 
-Demo site: [https://piexue.com](https://piexue.com)
+Demo site: [https://kousun.com](https://kousun.com)
 
 ## Build & run
 
 ``` Bash
-git clone https://github.com/piexue/piexue.com
-cd piexue.com
+git clone https://github.com/zzy/kousun
+cd kousun.com
 cargo build
 
 cd frontend
@@ -15,7 +15,7 @@ cd frontend
 Rename file `.env.example` to `.env`, or put the environment variables into a `.env` file:
 
 ```
-DOMAIN=piexue.com
+DOMAIN=kousun.com
 ADDR=127.0.0.1
 PORT=7400
 LOG_LEVEL=Debug

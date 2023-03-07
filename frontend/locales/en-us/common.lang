@@ -1,4 +1,4 @@
-site-name = PieXue
+site-name = KouSun
 site-slogan = Internet Intelligent Matchmaking Service Platform
 site-intro = Free services, which aims to match the projects and developers. 
     This website is based on the Rust web stacks.
@@ -30,7 +30,7 @@ projects-published = Latest Published
 
 register = Register
 sign-in = Sign in
-sign-in-intro = Sign in PieXue
+sign-in-intro = Sign in KouSun
 sign-out = Sign out
 
 user-profile = Your profile
@@ -59,6 +59,6 @@ user-risk-tip = This website only provides data aggregation without any legal re
     Please identify the risks by yourself and beware of being deceived.
 
 based-on = Based on 
-    <a href="https://github.com/piexue/piexue.com" target="_blank">piexue/piexue.com</a> 
+    <a href="https://github.com/zzy/kousun" target="_blank">zzy/kousun</a> 
     to Develop
 copyright = All Rights Reserved

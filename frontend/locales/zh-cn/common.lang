@@ -1,4 +1,4 @@
-site-name = 丿雪
+site-name = 蔻隼
 site-slogan = 互联网智能对接服务平台
 site-intro = 免费服务，旨在连接需求方与开发者。
     本网站基于 Rust web 技术栈构建。
@@ -30,7 +30,7 @@ projects-published = 最新发布
 
 register = 注册
 sign-in = 签入
-sign-in-intro = 签入丿雪
+sign-in-intro = 签入蔻隼
 sign-out = 签出
 
 user-profile = 用户资料
@@ -59,6 +59,6 @@ user-risk-tip = 本网站仅提供数据聚合，不负任何法律责任。
     请自行甄别风险，谨防上当受骗。
     
 based-on = 基于 
-    <a href="https://github.com/piexue/piexue.com" target="_blank">piexue/piexue.com</a> 
+    <a href="https://github.com/zzy/kousun" target="_blank">zzy/kousun</a> 
     定制
 copyright = 版权所有

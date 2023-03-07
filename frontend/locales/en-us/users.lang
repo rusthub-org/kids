@@ -20,7 +20,7 @@ no-statistics = No statistics
 features-keys-tags = Features keys/tags: 
 related-keys-tags = Related keys/tags: 
 consulting-now = Consulting now
-consulting-now-tip = Consult inside PieXue.com to ensure your tasks and funds
+consulting-now-tip = Consult inside KouSun.com to ensure your tasks and funds
 
 user-intro = User Introduction
 user-statistics = User Statistics
@@ -33,20 +33,20 @@ related-projects = Related projects:
 user-view-projects = View all projects related to this user.
 
 user-activate = User Account Activation
-user-activated = The PieXue account has been activated successfully!
+user-activated = The KouSun account has been activated successfully!
 user-re-activate = User account activation email has been re-sent!
 user-activated-result = <span class="fw-bold fc-blue-600">{ $nickname }</span>, Congratulate!
-    The PieXue account has been activated successfully!
+    The KouSun account has been activated successfully!
     <br><br>
     <span class="fw-bold">Username</span>: { $username };
     <span class="fw-bold">Email</span>: { $email }.
 user-re-activate-result = <span class="fw-bold fc-blue-600">{ $nickname }</span>,
-    Your PieXue account activation email has been re-sent!
+    Your KouSun account activation email has been re-sent!
     <br><br>
     <span class="fw-bold">Username</span>: { $username };
     <span class="fw-bold">Email</span>: { $email }.
     <br><br>
-    Please log into your mailbox and check the activation email of PieXue, then activate your account.
+    Please log into your mailbox and check the activation email of KouSun, then activate your account.
 user-activate-problem = If you have any problem, please
     <a href="mailto:ask@rusthub.org">contact the service assistant (ask@rusthub.org)</a>
 
