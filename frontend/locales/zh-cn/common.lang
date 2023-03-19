@@ -1,6 +1,7 @@
 site-name = 蔻隼
-site-slogan = 互联网智能对接服务平台
-site-intro = 免费服务，旨在连接需求方与开发者。
+site-slogan = 直接、自由！智能对接服务平台
+site-intro = 免费服务，旨在连接需求方与开发者。<br>
+    让开发者和需求方直面沟通、自由交流，无需任何中介。<br>
     本网站基于 Rust web 技术栈构建。
 
 nav-projects = 项目需求

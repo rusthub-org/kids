@@ -1,6 +1,7 @@
 site-name = KouSun
-site-slogan = Internet Intelligent Matchmaking Service Platform
-site-intro = Free services, which aims to match the projects and developers. 
+site-slogan = Direct & Free! Intelligent Matchmaking Service Platform
+site-intro = Free services, which aims to match the projects and developers.<br>
+    Let employers and developers communicate directly and freely, no any intermediary.<br>
     This website is based on the Rust web stacks.
 
 nav-projects = Projects
