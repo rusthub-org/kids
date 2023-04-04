@@ -55,5 +55,5 @@ GraphiQL: connect to http://127.0.0.1:8400/gql/v1i with browser.
 
 See also:
 
-- https://github.com/zzy/tide-async-graphql-mongodb - Clean boilerplate for graphql services, wasm/yew & handlebars frontend. 
-- https://github.com/zzy/surfer - Simple WIP blog & upcoming upgrades.
+- https://github.com/zzy/tide-async-graphql-mongodb - Clean boilerplate for graphql services, wasm/yew & handlebars frontend
+- https://github.com/zzy/surfer - [WIP] Blog based on graphql services & wasm/yew
