@@ -1,43 +1,59 @@
-# KouSun | 蔻隼
+# api.kousun.com
 
 [中文](./README-ZH.md)
 
-[KouSun | 蔻隼](https://kousun.com) aims to build a multi-language CMS(Content Management System) based on Rust Web stacks, with long-term upgrade and maintenance.
+The **backend** for https://kousun.com, a **Graphql Services Server built on Rust Web Stacks**: tide, async-graphql, async-std, mongodb, jsonwebtoken, base64 & pulldown-cmark ...
 
-At present, [demo site - kousun.com](https://kousun.com) is an aggregation site for projects, developers & teams, which gathered some part-time information required by the employers. It's an Internet Intelligent Matchmaking Service Platform with complete and free services, which aims to match the projects and developers.
+> [KouSun | 蔻隼](https://kousun.com) aims to build a multi-language CMS(Content Management System) based on Rust Web stacks, with long-term upgrade and maintenance.
 
-See also:
-- https://github.com/zzy/tide-async-graphql-mongodb - Clean boilerplate for graphql services, wasm/yew & handlebars frontend. 
-- https://github.com/zzy/surfer - Simple WIP blog & upcoming upgrades.
+## Demo site
 
-## Features
-
-Demo site:
-- [kousun.com - Project Matchmaking](https://kousun.com)
+- [jobs.kousun.com - Projects Matchmaking](https://jobs.kousun.com)
+- [kids.kousun.com - Kids Education](https://kids.kousun.com)
 - [niqin.com - Books Platform](https://niqin.com)
 
-## Stacks
+## Build & run
 
-- [Rust](https://github.com/rust-lang/rust) - [Rust By Example](https://rust-by-example.niqin.com) and [Cargo Book](https://cargo-book.niqin.com)
-- [Tide](https://crates.io/crates/tide) - [Tide Book](https://tide-book.niqin.com)
-- [rhai](https://crates.io/crates/rhai) - [Embedded Scripting for Rust](https://rhai-script.niqin.com)
-- [async-graphql](https://crates.io/crates/async-graphql) - [async-graphql docs](https://async-graphql.niqin.com)
-- [mongodb & mongo-rust-driver](https://crates.io/crates/mongodb)
-- [Surf](https://crates.io/crates/surf)
-- [graphql_client](https://crates.io/crates/graphql_client)
-- [yew](https://yew-book.niqin.com)
-- [handlebars-rust](https://crates.io/crates/handlebars)
-- [jsonwebtoken](https://crates.io/crates/jsonwebtoken)
-- [cookie-rs](https://crates.io/crates/cookie)
-- [fluent-rs](https://crates.io/crates/fluent) - A collection of Rust crates implementing Project Fluent.
+``` Bash
+git clone https://github.com/rusthub-org/api.kousun.com
+cd api.kousun.com
+```
 
-## How to Build & Run?
+Rename file `.env.example` to `.env`, or put the environment variables into a `.env` file:
 
-Please read:
+```
+ADDR=127.0.0.1
+PORT=8400
+LOG_LEVEL=Debug
 
-- [Backend: graphql servies server](./backend/README.md)
-- [Frontend: web application server](./frontend/README.md)
+SITE_KID=api.kousun.com
+SITE_KEY=QiX7Riw8r..... # Replace with your SITE_KEY
+CLAIM_EXP=10000000000
 
-## Contributing
+GQL_URI=gql
+GQL_VER=v1
+GIQL_VER=v1i
 
-You are welcome in contributing to the project ***kousun***. 
+MONGODB_URI=mongodb://surfer:surfer@127.0.0.1:27017
+MONGODB_NAME=kousun
+PAGE_SIZE=10
+```
+
+Then, build & run:
+
+``` Bash
+cargo build
+cargo run # or cargo watch -x run
+```
+
+GraphiQL: connect to http://127.0.0.1:8400/gql/v1i with browser.
+
+## Frontend
+
+- [kousun-jobs](https://github.com/rusthub-org/jobs.kousun.com)
+- [kousun-kids](https://github.com/rusthub-org/kids.kousun.com)
+
+See also:
+
+- https://github.com/zzy/tide-async-graphql-mongodb - Clean boilerplate for graphql services, wasm/yew & handlebars frontend. 
+- https://github.com/zzy/surfer - Simple WIP blog & upcoming upgrades.
