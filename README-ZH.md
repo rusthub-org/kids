@@ -8,8 +8,8 @@
 
 ## 示例站点：
 
-- [jobs.kousun.com - 项目对接](https://jobs.kousun.com)
 - [kids.kousun.com - 青少年教育](https://kids.kousun.com)
+- [jobs.kousun.com - 项目对接](https://jobs.kousun.com)
 - [niqin.com - 书籍平台](https://niqin.com)
 
 ## 前端
