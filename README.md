@@ -4,7 +4,7 @@
 
 The **backend** for https://kousun.com, a **Graphql Services Server built on Rust Web Stacks**: tide, async-graphql, async-std, mongodb, jsonwebtoken, base64 & pulldown-cmark ...
 
-> [KouSun | 蔻隼](https://kousun.com) aims to build a multi-language CMS(Content Management System) based on Rust Web stacks, with long-term upgrade and maintenance.
+> [KouSun | 蔻隼](https://kousun.com) aims to build a **multi-language** CMS(Content Management System) based on **Rust Web stacks**, with long-term upgrade and maintenance.
 
 ## Demo site
 
