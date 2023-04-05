@@ -24,7 +24,7 @@ pub async fn build_schema() -> Schema<QueryRoot, MutationRoot, EmptySubscription
     // 3. Use lazy-static.rs.
     let mongo_ds = mongo::DataSource::init().await;
 
-    // The root object for the query and Mutatio, and use EmptySubscription.
+    // The root object for the query and Mutation, and use EmptySubscription.
     // Add global mongodb datasource  in the schema object.
     // let mut schema = Schema::new(QueryRoot, MutationRoot, EmptySubscription)
     Schema::build(QueryRoot, MutationRoot, EmptySubscription)
