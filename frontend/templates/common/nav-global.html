@@ -1,0 +1,28 @@
+{{!-- 注：使用在 2 处位置 --}}
+<a class="s-navigation--item {{ nav-projects-selected }}" href="/{{ language }}/projects">
+    {{ lang "nav-projects" }}
+</a>
+<a class="s-navigation--item {{ nav-users-selected }}" href="/{{ language }}/users">
+    {{ lang "nav-users" }}
+</a>
+{{!-- <a class="s-navigation--item {{ nav-prototypes-selected }}" href="/{{ language }}/prototypes">
+    {{ lang "nav-prototypes" }}
+</a> --}}
+{{!-- <a class="s-navigation--item {{ nav-statistics-selected }}" href="/{{ language }}/statistics">
+    {{ lang "nav-statistics" }}
+</a> --}}
+<a class="s-navigation--item" href='{{ helper-values "sites" "books" }}' target="_blank">
+    {{ lang "nav-niqin" }}
+</a>
+<a class="s-navigation--item" href='{{ helper-values "sites" "ideas" }}' target="_blank">
+    {{ lang "nav-ideas" }}
+</a>
+<a class="s-navigation--item" href='{{ helper-values "sites" "blog" }}' target="_blank">
+    {{ lang "nav-blog" }}
+</a>
+
+{{#if (str-cmp user.status 10 "gte") }}
+    <a class="s-navigation--item {{ nav-admin-selected }}" href="/admin">
+        管理后台
+    </a>
+{{/if}}

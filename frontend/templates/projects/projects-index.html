@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="{{ language }}">
+
+  <head>
+    <title>
+      {{#if filter_desc }}{{ lang filter_desc.condition }}
+        {{#if (str-cmp filter_desc.content "worker-role" "ct") }}{{ lang filter_desc.content }}
+        {{else}}{{ filter_desc.content }}{{/if}} - {{/if}}
+      {{ lang "projects-requirements" }} - {{ lang "site-name" }} | {{ lang "site-slogan" }}
+    </title>
+
+    <meta name="keywords" content='{{ lang "projects-requirements" }},{{ lang "site-name" }},{{ lang "site-slogan" }}'>
+    <meta name="description"
+      content='{{ lang "projects-requirements" }},{{ lang "site-name" }},{{ lang "site-slogan" }},{{ lang "site-intro" }}'>
+
+    {{> head }}
+  </head>
+
+  <body class="theme-system">
+    {{> header }}
+
+    <main class="ps-relative t64">
+      {{> wish-random }}
+
+      {{!-- google ad 内嵌，自适应 --}}
+      <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article"
+        data-ad-format="fluid" data-ad-client="ca-pub-2498669832870483" data-ad-slot="1938093545"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+
+      <div class="d-flex fw-wrap mt16 mx24 sm:ml4 sm:mr4">
+        <a class="s-btn s-btn__outlined {{ projects-all-selected }} sm:mb4" href="/{{ language }}/projects">
+          {{ lang "all" }}
+        </a>
+        <button class="s-btn sm:mb4" disabled>-</button>
+        <span class="s-btn-group sm:mb4">
+          <a class="s-btn s-btn__outlined {{ projects-managed-selected }}" href="/{{ language }}/projects/managed">
+            {{ lang "managed" }}
+          </a>
+          <a class="s-btn s-btn__outlined {{ projects-recommended-selected }}"
+            href="/{{ language }}/projects/recommended">
+            {{ lang "recommended" }}
+          </a>
+        </span>
+        <button class="s-btn sm:mb4" disabled>-</button>
+        <span class="s-btn-group sm:mb4">
+          <a class="s-btn s-btn__outlined {{ projects-person-selected }}" href="/{{ language }}/projects/person">
+            {{ lang "worker-role-person" }}
+          </a>
+          <a class="s-btn s-btn__outlined {{ projects-team-selected }}" href="/{{ language }}/projects/team">
+            {{ lang "worker-role-team" }}
+          </a>
+          <a class="s-btn s-btn__outlined {{ projects-company-selected }}" href="/{{ language }}/projects/company">
+            {{ lang "worker-role-company" }}
+          </a>
+        </span>
+        <button class="s-btn sm:mb4" disabled>-</button>
+        <span class="flex--item fl-grow1 sm:mb4">
+          <form method="post" onsubmit="setAction(this)">
+            <label class="s-label--status s-label--status__beta fs-body1" for="investment_min">
+              {{ lang "investment" }}
+            </label>
+            <input class="s-input bbw1 iw80" type="number" name="investment_min" id="investment_min" minlength="3"
+              placeholder='{{ lang "investment-min" }}' aria-label='{{ lang "investment-min" }}' required>
+            -
+            <input class="s-input bbw1 iw80" type="number" name="investment_max" id="investment_max" minlength="3"
+              placeholder='{{ lang "investment-max" }}' aria-label='{{ lang "investment-max" }}' required>
+            <button class="s-btn s-btn__outlined {{ projects-filter-selected }}" type="submit">
+              {{ lang "search" }}
+            </button>
+          </form>
+        </span>
+
+        <span class="flex--item">
+          <a class="s-btn s-btn__filled is-selected" href="/{{ language }}/project/new" target="_blank">
+            {{ lang "project-create" }}
+          </a>
+          <a class="s-btn s-btn__filled is-selected"
+            href="/{{ language }}{{#if user }}/user/{{ user.username }}/projects{{else}}/sign-in{{/if}}"
+            target="_blank">
+            {{ lang "my-projects" }}
+          </a>
+        </span>
+      </div>
+
+      <div class="mt8 mb96 mx24 sm:ml4 sm:mr4">
+
+        <span class="ml8 fc-danger fs-fine">{{ lang "project-risk-tip" }}</span>
+
+        <div class="d-grid grid__2 lg:grid__1 sm:grid__1 g12 w100 wmx100 mx-auto">
+          {{#each pagination.currentItems as |project|}}
+            <article class="s-card my8">
+              <h2 class="mb6">
+                <a class="s-tag mr6 mb2" href="/{{ ../language }}/category/{{ project.category.slug }}/projects"
+                  target="_blank">
+                  {{#if (str-cmp ../language "zh-cn") }}
+                    {{ project.category.nameZh }}
+                  {{else}}
+                    {{ project.category.nameEn }}
+                  {{/if}}
+                </a>
+                <a href="/{{ ../language }}/project/{{ project.id }}" target="_blank">
+                  {{ project.subject }}
+                  {{#unless project.external }}
+                    <sup class="fw-normal fs-fine">No.{{ project.id }}</sup>
+                  {{else}}
+                    <span class="ml8 s-badge s-badge__rep fc-blue-700 fs-caption">
+                      {{#if (str-cmp project.thirdPartyLink "codemart" "ct") }}
+                        码市
+                      {{/if}}
+                      {{#if (str-cmp project.thirdPartyLink "dribbble" "ct") }}
+                        dribbble
+                      {{/if}}
+                      {{#if (str-cmp project.thirdPartyLink "freelancer" "ct") }}
+                        freelancer
+                      {{/if}}
+                      {{#if (str-cmp project.thirdPartyLink "oschina" "ct") }}
+                        开源众包
+                      {{/if}}
+                      {{#if (str-cmp project.thirdPartyLink "taskcity" "ct") }}
+                        智城
+                      {{/if}}
+                    </span>
+                  {{/unless }}
+                </a>
+                {{#if (str-cmp project.status 2 "gte") }}
+                  <span class="ml8 s-tag s-tag__moderator fw-normal fs-body1">
+                    {{ lang "project-recommended" }}
+                  </span>
+                {{/if}}
+                {{#unless project.external }}
+                  <span class="ml8 s-tag s-tag__moderator fw-normal fs-body1">
+                    {{ lang "project-verified" }}
+                  </span>
+                {{/unless }}
+                {{#if (str-cmp project.status 6) }}
+                  <span class="ml8 s-tag s-tag__moderator fw-normal fs-body1">
+                    {{ lang "project-managed" }}
+                  </span>
+                {{/if}}
+              </h2>
+              <p class="my6 fs-body1">
+                {{#unless (str-cmp project.user.username "spider") }}
+                  <a class="s-link fw-bold" href="/{{ ../language }}/user/{{ project.user.username }}" target="_blank">
+                    {{ project.user.nickname }}
+                  </a>
+                  {{ lang "project-posted" }}
+                {{else}}
+                  {{ lang "project-data-aggregation" }}
+                {{/unless}}
+                {{ project.updatedAtNyrsq }}
+              </p>
+              <p class="my6 fs-body1">
+                <strong>{{ lang "project-investment" }}</strong>
+                {{ project.investment }}
+                {{ lang project.currencyType }}
+                <strong>{{#if project.negotiated }} - {{ lang "project-negotiated" }}{{/if}}</strong>
+                <strong class="ml16">{{ lang "project-hits" }}</strong>
+                {{ project.hits }}
+              </p>
+              <p class="my6 fs-body1">
+                <strong>{{ lang "project-keys-tags" }}</strong>
+                {{#if project.topics }}
+                  {{#each project.topics as |topic|}}
+                    <a class="s-badge ml4 mb2 fs-body1" href="/{{ ../../language }}/topic/{{ topic.slug }}/projects"
+                      target="_blank">
+                      {{ topic.name }}
+                    </a>
+                  {{/each}}
+                {{else}}
+                  {{ lang "not-setting" }}
+                {{/if}}
+              </p>
+              <p class="mt6 fs-body2 v-truncate2">
+                {{ project.content }}
+              </p>
+            </article>
+          {{/each}}
+        </div>
+
+        {{> pagination }}
+      </div>
+
+    </main>
+
+    {{> footer }}
+    <script>
+      function setAction(form) {
+        var investment_min = document.getElementById("investment_min").value;
+        var investment_max = document.getElementById("investment_max").value;
+        var form_action = "/{{ language }}/projects/" + investment_min + "-" + investment_max;
+        form.action = form_action;
+      }
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,68 @@
+user-sign-in = User Sign in
+
+sign-in-account = Account
+sign-in-account-tip = Username or Email
+sign-in-password = Password
+sign-in-password-tip = Your Password
+
+sign-in-resend-email = Did not receive the activation link? Resend email
+
+sign-in-new-user = New to KouSun?
+sign-in-create-account = Create an account
+
+sign-in-incorrect = Username or email is incorrect
+sign-in-not-activation = Your KouSun account has not been activated, please check the activation email
+sign-in-banned = This account has been banned, please contact the service assistant (ask@rusthub.org)
+sign-in-security-problem = Security problems with this account, please contact the service assistant (ask@rusthub.org)
+sign-in-not-registration = This account has not been registered
+
+user-register = User Register
+user-register-intro = Register KouSun
+
+register-username = Username
+register-username-tip = Characters range: a-z、_-、0-9
+register-email = Email
+register-email-tip = Frequently-used email
+register-password = Password
+register-password-tip = Do not be too simple
+register-nickname = Nickname
+register-nickname-tip = Nickname or pet name
+register-phone = Phone
+register-phone-tip = Frequently-used phone number
+register-public = Public
+register-im = IM tools
+register-im-tip = Whats App, WeChat, QQ, email, phone, etc
+register-website = Website
+register-website-tip = Personal website (please contain http:// or https://)
+register-topics = Advantages, keywords (Smart matching projects, developer or team)
+register-topics-tip = Separated by space, enter key, or comma
+register-intro = Introduction (Let someone know more to improve the success rate)
+register-intro-tip = Skills, experience, expertise, requirements, and other remarks, etc
+
+register-have-account = Have an account?
+register-sign-in = Go Sign in
+
+register-result = <span class="fw-bold fc-blue-600">{ $nickname }</span>, Congratulate!
+    Your KouSun's account has been created successfully!
+    <br><br>
+    <span class="fw-bold">Username</span>: { $username }；
+    <span class="fw-bold">Email</span>: { $email }。
+    <br><br>
+    Please sign in your email, and check the activation email from KouSun, then to activate your account.
+    <br><br>
+    If you didn't receive the activation email from KouSun, please
+    <a href="mailto:ask@rusthub.org">contact the service assistant (ask@rusthub.org)</a>
+register-failed-username-email-exists = Username or Email is exists
+
+email-subject = { $nickname } ({ $username }), account activation email from KouSun.com
+email-body = Hi, { $nickname } ({ $username })! 
+    <br><br>
+    This email sent from KouSun.com, it is your KouSun account activation email.
+    <br><br>
+    Please visit URL: https://{ $domain }/{ $language }/user/{ $user_id }/activate to activate your account.
+    <br><br>
+    If you can not visit URL from the email, please copy the URL to the browser address, and then visit it.
+    <br><br>
+    Please do not reply, thank you!
+    <br><br>
+    KouSun.com

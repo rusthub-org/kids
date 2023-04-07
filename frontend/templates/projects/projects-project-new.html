@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="{{ language }}">
+
+    <head>
+        <title>
+            {{ lang "project-create" }} - {{ lang "projects-requirements" }} -
+            {{ lang "site-name" }} | {{ lang "site-slogan" }}
+        </title>
+
+        <meta name="keywords"
+            content='{{ lang "project-create" }},{{ lang "projects-requirements" }},{{ lang "site-name" }},{{ lang "site-slogan" }}'>
+        <meta name="description"
+            content='{{ lang "project-create" }},{{ lang "projects-requirements" }},{{ lang "site-name" }},{{ lang "site-slogan" }}'>
+
+        {{> head }}
+        <link rel="stylesheet" href="/static/css/stacks-editor.min.css">
+    </head>
+
+    <body class="theme-system">
+        {{> header }}
+
+        <main class="ps-relative t64">
+            {{> wish-random }}
+
+            <div class="mt16 mb96 mx24 sm:ml4 sm:mr4 ta-center">
+
+                <h2 class="my16">{{ lang "project-create" }}</h2>
+
+                {{#if project_new_result }}
+                    <p class="fs-body2">
+                        {{ lang "project-new-result" project_new_result }}
+                    </p>
+                {{else}}
+                    {{#if project_new_failed }}
+                        <aside class="p2 mb8 fs-body2">
+                            {{ lang "project-new-failed" project_new_failed }}
+                        </aside>
+                    {{/if}}
+
+                    <form method="post">
+                        <input type="hidden" name="user_id" value="{{ user.id }}">
+
+                        <div class="d-flex flex__center fd-column gs16 gsy">
+
+                            <div class="mt8 p4 w66 wmn4 sm:w100 ta-left fw-bold bg-blue-100 fc-blue-900">
+                                💥 {{ lang "project-description" }}
+                            </div>
+
+                            <div class="d-flex w66 wmn4 sm:w100">
+                                <label class="flex--item s-input-fill order-first fw-bold fs-body2 w96"
+                                    for="category_id">
+                                    {{ lang "project-new-category" }}
+                                </label>
+                                <div class="d-flex fl-grow1 ps-relative">
+                                    <select class="flex--item s-select w100" name="category_id" id="category_id"
+                                        placeholder='{{ lang "project-category-select" }}'
+                                        aria-label='{{ lang "project-category-select" }}' required>
+                                        <option value="" selected>{{ lang "project-category-select" }}</option>
+                                        {{#each categories as |category|}}
+                                            <option value="{{ category.id }}">
+                                                {{#if (str-cmp ../language "zh-cn") }}
+                                                    {{ category.nameZh }}：{{ category.descriptionZh }}
+                                                {{else}}
+                                                    {{ category.nameEn }}：{{ category.descriptionEn }}
+                                                {{/if}}
+                                            </option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="d-flex w66 wmn4 sm:w100">
+                                <label class="flex--item s-input-fill order-first fw-bold fs-body2 w96" for="subject">
+                                    {{ lang "project-new-subject" }}
+                                </label>
+                                <div class="d-flex fl-grow1 ps-relative">
+                                    <input class="flex--item s-input blr0" type="text" name="subject" id="subject"
+                                        minlength="12" maxlength="40" placeholder='{{ lang "project-new-subject-tip" }}'
+                                        aria-label='{{ lang "project-new-subject-tip" }}' required>
+                                </div>
+                            </div>
+
+                            <div class="d-flex w66 wmn4 sm:w100">
+                                <label class="flex--item s-input-fill order-first fw-bold fs-body2 w96"
+                                    for="topic_names">
+                                    {{ lang "project-new-keys-tags" }}
+                                </label>
+                                <div class="d-flex fl-grow1 ps-relative">
+                                    <input type="hidden" name="topic_names" id="topic_names">
+                                    <keyword-tags tag-values="" class="flex--item s-input blr0"></keyword-tags>
+                                    <template id="keyword-tags-template">
+                                        <link href="/static/css/kw-t.css" rel="stylesheet">
+                                        <div class="keyword-tags-kit">
+                                            <div class="keyword-tags"></div>
+                                            <input type="text" class="flex--item s-input blr0 keyword-input"
+                                                placeholder='{{ lang "project-new-keys-tags-tip" }}'
+                                                aria-label='{{ lang "project-new-keys-tags-tip" }}' required>
+                                        </div>
+                                    </template>
+                                    <template id="keyword-tag-template">
+                                        <button type="button" class="keyword-tag">
+                                            <span class="keyword">{{ lang "site-name" }}</span>
+                                            <span class="delete-icon"></span>
+                                        </button>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <div class="d-flex w66 wmn4 sm:w100">
+                                <label class="flex--item s-input-fill order-first fw-bold fs-body2 w96"
+                                    for="investment">
+                                    {{ lang "project-new-investment" }}
+                                </label>
+                                <div class="d-flex fl-grow1 ps-relative">
+                                    <input class="flex--item s-input blr0" type="number" name="investment"
+                                        id="investment" minlength="3"
+                                        placeholder='{{ lang "project-new-investment-tip" }}'
+                                        aria-label='{{ lang "project-new-investment-tip" }}' required>
+                                </div>
+                                <div class="d-flex ai-center order-last s-input-fill gs4 gsx">
+                                    <select class="flex--item s-select s-select__sm" name="currency_type"
+                                        for="investment" required>
+                                        <option value="" selected>{{ lang "currency-type" }}</option>
+                                        <option value="currency-cny">{{ lang "currency-cny" }}</option>
+                                        <option value="currency-eur">{{ lang "currency-eur" }}</option>
+                                        <option value="currency-usd">{{ lang "currency-usd" }}</option>
+                                        <option value="currency-jpy">{{ lang "currency-jpy" }}</option>
+                                    </select>
+                                    <input type="hidden" name="negotiated" value="true">
+                                    <input class="flex--item s-checkbox ml16 ba baw2 bc-red-500" type="checkbox"
+                                        id="negotiated" onclick="setInputByCheckbox('negotiated', this)" checked>
+                                    <label class="flex--item s-label s-label__sm fw-normal" for="negotiated">
+                                        {{ lang "project-negotiated" }}
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="d-flex w66 wmn4 sm:w100">
+                                <label class="flex--item s-input-fill order-first fw-bold fs-body2 w96" for="duration">
+                                    {{ lang "project-new-duration" }}
+                                </label>
+                                <div class="d-flex fl-grow1 ps-relative">
+                                    <input class="flex--item s-input blr0" type="number" name="duration" id="duration"
+                                        minlength="1" placeholder='{{ lang "project-new-duration-tip" }}'
+                                        aria-label='{{ lang "project-new-duration-tip" }}' required>
+                                </div>
+                                <div class="d-flex ai-center order-last s-input-fill gs4 gsx">
+                                    <label class="flex--item s-label s-label__sm fw-normal" for="duration">
+                                        {{ lang "days" }}
+                                    </label>
+                                    <input type="hidden" name="workday" value="false">
+                                    <input class="flex--item s-checkbox ml8 ba baw2 bc-red-500" type="checkbox"
+                                        id="workday" onclick="setInputByCheckbox('workday', this)">
+                                    <label class="flex--item s-label s-label__sm fw-normal" for="workday">
+                                        {{ lang "project-new-workday" }}
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="d-flex fd-column w66 wmn4 sm:w100">
+                                <label class="flex--item mb4 s-label ta-left" for="content">
+                                    {{ lang "project-new-description" }}
+                                </label>
+                                <textarea class="flex--item s-textarea d-none" name="content" id="content"
+                                    placeholder='{{ lang "project-new-description" }}'
+                                    aria-label='{{ lang "project-new-description" }}' required>
+### Project overview
+Support **Markdown** syntax
+### 项目总览
+支持 **Markdown** 语法
+                                    </textarea>
+                                <div id="content-div" class="ta-left"></div>
+                            </div>
+
+                            <div class="d-flex w66 wmn4 sm:w100">
+                                <label class="flex--item s-input-fill order-first fw-bold fs-body2 w96" for="examples">
+                                    {{ lang "project-new-examples" }}
+                                </label>
+                                <div class="d-flex fl-grow1 ps-relative">
+                                    <input class="flex--item s-input blr0" type="text" name="examples" id="examples"
+                                        placeholder='{{ lang "project-new-examples-tip" }}'
+                                        aria-label='{{ lang "project-new-examples-tip" }}'>
+                                </div>
+                            </div>
+
+                            <div class="d-flex w66 wmn4 sm:w100">
+                                <label class="flex--item s-input-fill order-first fw-bold fs-body2 w96" for="file">
+                                    {{ lang "project-new-files" }}
+                                </label>
+                                <div class="d-flex fl-grow1 ps-relative">
+                                    <input type="hidden" name="files" id="files">
+                                    <input class="flex--item s-input blr0" type="file" id="file"
+                                        onchange="uploadFile(this)" placeholder='{{ lang "project-new-files-tip"}}'
+                                        aria-label='{{ lang "project-new-files-tip"}}'>
+                                </div>
+                            </div>
+
+                            <div class="d-flex fd-column my0 w66 wmn4 sm:w100 pl128" id="file_list">
+                            </div>
+
+                            <div class="mt8 p4 w66 wmn4 sm:w100 ta-left fw-bold bg-blue-100 fc-blue-900">
+                                💥 {{ lang "project-recruitment" }}
+                            </div>
+
+                            <div class="d-flex w66 wmn4 sm:w100">
+                                <label class="flex--item s-input-fill order-first fw-bold fs-body2 w96"
+                                    for="worker_type">
+                                    {{ lang "project-new-recruitment-role" }}
+                                </label>
+                                <div class="d-flex fl-grow1 ps-relative">
+                                    <select class="flex--item s-select w100" name="worker_type" id="worker_type"
+                                        placeholder='{{ lang "worker-role-select" }}'
+                                        aria-label='{{ lang "worker-role-select" }}' required>
+                                        <option value="" selected>{{ lang "worker-role-select" }}</option>
+                                        <option value="worker-role-person-engineer">
+                                            {{ lang "worker-role-person-engineer" }}
+                                        </option>
+                                        <option value="worker-role-person-designer">
+                                            {{ lang "worker-role-person-designer" }}
+                                        </option>
+                                        <option value="worker-role-person-teacher">
+                                            {{ lang "worker-role-person-teacher" }}
+                                        </option>
+                                        <option value="worker-role-person-others">
+                                            {{ lang "worker-role-person-others" }}
+                                        </option>
+                                        <option value="worker-role-team">{{ lang "worker-role-team" }}</option>
+                                        <option value="worker-role-company">{{ lang "worker-role-company" }}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="d-flex fd-column w66 wmn4 sm:w100">
+                                <label class="flex--item mb4 s-label ta-left" for="worker_info">
+                                    {{ lang "project-new-recruitment-desc" }}
+                                </label>
+                                <textarea class="flex--item s-textarea" name="worker_info" id="worker_info"
+                                    placeholder='{{ lang "project-new-recruitment-desc-tip" }}'
+                                    aria-label='{{ lang "project-new-recruitment-desc-tip" }}' required></textarea>
+                            </div>
+
+                            <div class="mt8 p4 w66 wmn4 sm:w100 ta-left fw-bold bg-blue-100 fc-blue-900">
+                                💥 {{ lang "user-contact" }}
+                            </div>
+
+                            <div class="d-flex w66 wmn4 sm:w100">
+                                <label class="flex--item s-input-fill order-first fw-bold fs-body2" for="contact_user">
+                                    {{ lang "project-new-contact-person" }}
+                                </label>
+                                <div class="d-flex fl-grow1 ps-relative">
+                                    <input class="flex--item s-input blr0" type="text" name="contact_user"
+                                        id="contact_user" value="{{ user.nickname }}"
+                                        placeholder='{{ lang "project-new-contact-person-tip" }}'
+                                        aria-label='{{ lang "project-new-contact-person-tip" }}' required>
+                                </div>
+                                <label class="flex--item s-input-fill fw-bold fs-body2" for="contact_email">
+                                    {{ lang "project-new-contact-email" }}
+                                </label>
+                                <div class="d-flex fl-grow1 ps-relative">
+                                    <input class="flex--item s-input blr0" type="email" name="contact_email"
+                                        id="contact_email" value="{{ user.email }}"
+                                        placeholder='{{ lang "project-new-contact-email-tip" }}'
+                                        aria-label='{{ lang "project-new-contact-email-tip" }}' required>
+                                </div>
+                            </div>
+
+                            <div class="d-flex w66 wmn4 sm:w100">
+                                <label class="flex--item s-input-fill order-first fw-bold fs-body2" for="contact_phone">
+                                    {{ lang "project-new-contact-phone" }}
+                                </label>
+                                <div class="d-flex fl-grow1 ps-relative">
+                                    <input class="flex--item s-input blr0" type="tel" name="contact_phone"
+                                        id="contact_phone" value="{{ user.phoneNumber }}"
+                                        placeholder='{{ lang "project-new-contact-phone-tip" }}'
+                                        aria-label='{{ lang "project-new-contact-phone-tip" }}' required>
+                                </div>
+                                {{!-- <label class="flex--item s-btn s-btn__filled mx4" for="phone_code">
+                                    {{ lang "project-new-contact-phone-code" }}
+                                </label>
+                                <div class="d-flex fl-grow1 ps-relative">
+                                    <input class="flex--item s-input blr0" type="text" name="phone_code" id="phone_code"
+                                        placeholder='{{ lang "project-new-contact-phone-code-tip" }}'
+                                        aria-label='{{ lang "project-new-contact-phone-code-tip" }}' disabled>
+                                </div>
+                                <button class="flex--item s-btn s-btn__filled ml4" for="phone_code" disabled>
+                                    {{ lang "project-new-contact-phone-verify" }}
+                                </button> --}}
+                            </div>
+
+                            <div class="d-flex w66 wmn4 sm:w100">
+                                <label class="flex--item s-input-fill order-first fw-bold fs-body2 w96"
+                                    for="contact_im">
+                                    {{ lang "project-new-contact-im" }}
+                                </label>
+                                <div class="d-flex fl-grow1 ps-relative">
+                                    <input class="flex--item s-input blr0" type="text" name="contact_im" id="contact_im"
+                                        value="{{ user.imAccount }}"
+                                        placeholder='{{ lang "project-new-contact-im-tip" }}'
+                                        aria-label='{{ lang "project-new-contact-im-tip" }}'>
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="language" value="{{ str-cut language 2 }}">
+
+                            <div class="d-flex fd-column ai-center">
+                                <div class="flex--item">
+                                    <button class="s-btn s-btn__primary ws2 fs-body2" type="submit"
+                                        onclick="setContent()">
+                                        {{ lang "project-new-create" }}
+                                    </button>
+                                </div>
+                                <div class="flex--item mt16 fs-body2">
+                                    {{ lang "project-new-create-tip" }}
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                {{/if}}
+
+            </div>
+        </main>
+
+        {{> footer }}
+        <script src="/static/js/kw-t.js"></script>
+        <script src="/static/js/highlight.min.js"></script>
+        <script src="/static/js/stacks-editor.bundle.js"></script>
+        <script>
+            let editor = new window.stacksEditor.StacksEditor(
+                document.getElementById("content-div"),
+                document.getElementById("content").value,
+                {
+                    parserFeatures: {
+                        tables: true,
+                    },
+                }
+            );
+
+            function setContent() {
+                document.getElementById("content").value = editor.content;
+            }
+
+            function uploadFile(input) {
+                let file = input.files[0];
+                if (file.size <= 5242880) {
+                    var form_data = new FormData();
+                    form_data.append("file", file);
+
+                    $.ajax({
+                        type: "PUT",
+                        url: "/{{ language }}/project/file/new/" + file.name,
+                        data: form_data,
+                        processData: false,
+                        contentType: false,
+                        success: function (res) {
+                            if (res["done"]) {
+                                alert(res["file_name"] + " - " + '{{ lang "project-new-file-upload-success" }}');
+
+                                let files_arr = str2arr($("#files").val());
+                                files_arr.push(res["file_id"]);
+                                $("#files").val(files_arr.join(","));
+
+                                let file_list_span = '<span class="my0 fs-body1 ta-left fc-blue-900"';
+                                file_list_span = file_list_span.concat('id="file_' + res["file_id"] + '">')
+                                file_list_span = file_list_span.concat(res["file_name"] + ' - <strong>{{ lang "project-new-file-uploaded" }}</strong> - ');
+                                file_list_span = file_list_span.concat('<button class="s-btn py2 px4 td-underline"');
+                                file_list_span = file_list_span.concat('onclick="removeFile(this, \'' + res["file_id"] + '\')"')
+                                file_list_span = file_list_span.concat('type="button">{{ lang "project-new-file-remove" }}</button>')
+                                file_list_span = file_list_span.concat('</span >')
+
+                                $("#file_list").append(file_list_span);
+                            }
+                            else {
+                                alert(res["err"]);
+                            }
+                        }
+                    });
+                }
+                else {
+                    alert('{{ lang "project-new-file-upload-failed" }}');
+                }
+
+                input.value = null;
+            }
+
+            function removeFile(file_node, file_id) {
+                $("#files").val($("#files").val().replace(file_id + ",", ""));
+                $("#files").val($("#files").val().replace("," + file_id, ""));
+                $("#files").val($("#files").val().replace(file_id, ""));
+
+                $(file_node).parent().remove()
+            }
+        </script>
+    </body>
+
+</html>

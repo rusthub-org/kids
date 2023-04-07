@@ -1,0 +1,128 @@
+<header class="bg-black-050 ps-fixed h64 t0 l0 r0 z-nav-fixed bb bc-black-3 js-stacks-topbar print:d-none">
+
+    <div class="d-flex ai-center px16 h100 mx-auto wmx12 sm:jc-space-between">
+
+        <a class="d-flex flex__center p8 mr8 s-link s-link__muted d-none md:d-block js-hamburger-btn" href="#">
+            <svg aria-hidden="true" class="svg-icon iconHamburger js-hamburger-icon" width="18" height="18"
+                viewBox="0 0 18 18">
+                <path d="M2 3h14v2H2V3zm0 5h14v2H2V8zm14 5H2v2h14v-2z" />
+            </svg>
+            <svg aria-hidden="true" class="svg-icon iconClear d-none js-hamburger-close-icon" width="18" height="18"
+                viewBox="0 0 18 18">
+                <path
+                    d="M15 4.41 13.59 3 9 7.59 4.41 3 3 4.41 7.59 9 3 13.59 4.41 15 9 10.41 13.59 15 15 13.59 10.41 9 15 4.41z" />
+            </svg>
+        </a>
+
+        <a class="flex--item js-logo" href="/{{ language }}">
+            <span class="fs-title fw-bold">
+                <img class="va-sub" src="/static/imgs/icons/logo-{{ language }}.svg" width="75" height="25"
+                    alt='{{ lang "site-name" }}' title='{{ lang "site-name" }} | {{ lang "site-slogan" }}'
+                    aria-label='{{ lang "site-name" }} | {{ lang "site-slogan" }}'>
+            </span>
+        </a>
+
+        <nav class="s-navigation mx16 fw-nowrap sm:d-none" aria-label='{{ lang "nav-g"}}'>
+            {{> nav-global }}
+        </nav>
+
+        <button class="s-btn__unset c-pointer flex--item fc-black-300 ml12 sm:d-none js-darkmode-btn ml-auto"
+            title='{{ lang "switch-theme" }}' aria-label='{{ lang "switch-theme" }}'>
+            <svg aria-hidden="true" class="svg-icon iconTheme " width="24" height="24" viewBox="0 0 18 18">
+                <path d='{{ helper-values "theme_mode" "svg" }}' />
+            </svg>
+        </button>
+
+        <a class="flex--item ml12 sm:d-none s-badge s-badge__gold fw-bold fs-caption"
+            href='/{{#if (str-cmp language "zh-cn") }}en-us{{else}}zh-cn{{/if}}'
+            title='{{#if (str-cmp language "zh-cn") }}Switch to English{{else}}切换为中文{{/if}}'
+            aria-label='{{#if (str-cmp language "zh-cn") }}Switch to English{{else}}切换为中文{{/if}}'>
+            {{#if (str-cmp language "zh-cn") }}English{{else}}中文{{/if}}
+        </a>
+
+        {{!-- <a class="flex--item fc-black-300 ml12 sm:d-none" title='{{ helper-values "i18n" "title" }}'
+            href='{{ helper-values "i18n" "href" }}'>
+            <svg aria-hidden="true" class="svg-icon iconInternational" width="24" height="24" viewBox="0 0 24 24">
+                <path d='{{ helper-values "i18n" "svg" }}' />
+            </svg>
+        </a> --}}
+
+        {{!-- <a class="flex--item fc-black-300 ml12 sm:d-none" title='{{ helper-values "github" "title" }}'
+            href='{{ helper-values "github" "href" }}' target="_blank">
+            <svg aria-hidden="true" class="svg-icon iconGitHub " width="24" height="24" viewBox="0 0 18 18">
+                <path d='{{ helper-values "github" "svg" }}' />
+            </svg>
+        </a> --}}
+
+        <a class="d-flex flex__center fc-black-300 ml12 sm:d-block" href="/{{ language }}/project"
+            title='{{ lang "random-project" }}' aria-label='{{ lang "random-project" }}' target="_blank">
+            <div class="s-avatar s-avatar__24">
+                <span class="s-avatar--letter fc-green-600">{{ lang "random" }}</span>
+                <img src="/static/imgs/svgs/Fire.svg" class="native s-avatar--badge">
+            </div>
+        </a>
+
+        <div class="flex--item fc-black-300 ml12 sm:d-none">
+            {{> sign }}
+        </div>
+
+    </div>
+
+    <div class="js-navigation">
+        <div class="overflow-y-hidden overflow-x-hidden bg-white z-nav py8">
+
+            <div class="d-none sm:d-block">
+                <div class="d-flex fd-column ai-center">
+
+                    <nav class="s-navigation s-navigation__wrap mx8 mb12 jc-center" aria-label='{{ lang "nav-g"}}'>
+                        {{> nav-global }}
+                    </nav>
+
+                    <div class="d-flex gs16 ai-center fw-wrap mx8">
+
+                        <button class="s-btn__unset c-pointer flex--item fc-black-300 js-darkmode-btn"
+                            title='{{ lang "switch-theme" }}' aria-label='{{ lang "switch-theme" }}'>
+                            <svg aria-hidden="true" class="svg-icon iconTheme" width="24" height="24"
+                                viewBox="0 0 18 18">
+                                <path d='{{ helper-values "theme_mode" "svg" }}' />
+                            </svg>
+                        </button>
+
+                        <a class="flex--item s-badge s-badge__gold fw-bold fs-caption"
+                            href='/{{#if (str-cmp language "zh-cn") }}en-us{{else}}zh-cn{{/if}}'
+                            title='{{#if (str-cmp language "zh-cn") }}Switch to English{{else}}切换为中文{{/if}}'
+                            aria-label='{{#if (str-cmp language "zh-cn") }}Switch to English{{else}}切换为中文{{/if}}'>
+                            {{#if (str-cmp language "zh-cn") }}English{{else}}中文{{/if}}
+                        </a>
+
+                        {{!-- <a class="flex--item fc-black-300" title='{{ helper-values "i18n" "title" }}'
+                            href='{{ helper-values "i18n" "href" }}'>
+                            <svg aria-hidden="true" class="svg-icon iconInternational" width="24" height="24"
+                                viewBox="0 0 24 24">
+                                <path d='{{ helper-values "i18n" "svg" }}' />
+                            </svg>
+                        </a> --}}
+
+                        {{!-- <a class="flex--item fc-black-300" title='{{ helper-values "github" "title" }}'
+                            href='{{ helper-values "github" "href" }}' target="_blank">
+                            <svg aria-hidden="true" class="svg-icon iconGitHub " width="24" height="24"
+                                viewBox="0 0 18 18">
+                                <path d='{{ helper-values "github" "svg" }}' />
+                            </svg>
+                        </a> --}}
+
+                        <div class="flex--item fc-black-300">
+                            {{> sign }}
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    {{#if user }}{{> sign-popover }}{{/if}}
+
+</header>

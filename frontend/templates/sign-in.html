@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="{{ language }}">
+
+  <head>
+    <title>{{ lang "sign-in-intro" }} - {{ lang "site-name" }} | {{ lang "site-slogan" }}</title>
+
+    <meta name="keywords" content='{{ lang "sign-in-intro" }},{{ lang "user-sign-in" }},{{ lang "site-name" }},{{
+      lang "site-slogan" }}'>
+    <meta name="description" content='{{ lang "sign-in-intro" }} - {{ lang "site-intro" }}'>
+
+    {{> head }}
+  </head>
+
+  <body class="theme-system">
+    {{> header }}
+
+    <main class="ps-relative t64">
+      {{> wish-random }}
+
+      <div class="ta-center mt16 mb96 mx64">
+
+        <a href="/{{ language }}">
+          <img class="mt32" src="/static/imgs/icons/logo-{{ language }}.svg" width="160" height="53"
+            alt='{{ lang "site-name" }}' title='{{ lang "site-name" }}' aria-label='{{ lang "site-name" }}'>
+        </a>
+        <h2 class="mt16 mb32">{{ lang "user-sign-in" }}</h2>
+
+        {{#if sign_in_failed }}
+          <aside class="p2 mb8 fc-error fs-body1">
+            {{ lang sign_in_failed }}
+            {{#if sign_in_failed_user_id }}
+              <form method="post" action="/{{ language }}/user/{{ sign_in_failed_user_id }}/activate">
+                <button class="s-btn" type="submit">{{ lang "sign-in-resend-email" }}</button>
+              </form>
+            {{/if}}
+          </aside>
+        {{/if}}
+        <form method="post">
+          <div class="d-flex flex__center fd-column gs16 gsy">
+
+            <div class="d-flex">
+              <label class="flex--item s-input-fill order-first fw-bold fs-body2" for="signature">
+                {{ lang "sign-in-account" }}
+              </label>
+              <div class="d-flex fl-grow1 ps-relative ws3">
+                <input class="flex--item s-input blr0" type="text|email" name="signature" id="signature"
+                  placeholder='{{ lang "sign-in-account-tip" }}' aria-label='{{ lang "sign-in-account-tip" }}' required>
+              </div>
+            </div>
+
+            <div class="d-flex">
+              <label class="flex--item s-input-fill order-first fw-bold fs-body2" for="password">
+                {{ lang "sign-in-password" }}
+              </label>
+              <div class="d-flex fl-grow1 ps-relative ws3">
+                <input class="flex--item s-input blr0" type="password" name="password" id="password"
+                  placeholder='{{ lang "sign-in-password-tip" }}' aria-label='{{ lang "sign-in-password-tip" }}'
+                  required>
+              </div>
+            </div>
+
+            {{!-- <div class="d-flex">
+            <div class="flex--item">
+              <input class="s-checkbox" type="checkbox" name="remember_me" id="remember_me">
+            </div>
+            <label class="flex--item s-label fw-normal ml8" for="remember_me">记住我</label>
+          </div> --}}
+
+            <div class="d-flex fd-column ai-center">
+              <div class="flex--item">
+                <button class="s-btn s-btn__primary ws1 fs-body2" type="submit">
+                  {{ lang "sign-in" }}
+                </button>
+              </div>
+              <div class="flex--item mt16 fs-body2">
+                {{ lang "sign-in-new-user" }}
+                <a href="/{{ language }}/register">{{ lang "sign-in-create-account" }}</a>
+              </div>
+            </div>
+
+          </div>
+        </form>
+
+      </div>
+    </main>
+
+    {{> footer }}
+  </body>
+
+</html>

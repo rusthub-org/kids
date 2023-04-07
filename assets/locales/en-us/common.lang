@@ -1,0 +1,65 @@
+site-name = Kids@KouSun
+site-slogan = Imagine, Program, Share
+site-intro = Create stories, games, and animations, and share with others.<br>
+    A gift for my daughter, also hopes to help all kids who enjoy programming.<br>
+    Always free, based on Scratch & Rust web stacks.
+
+nav-projects = Projects
+nav-projects-tip = Project and its requirements, recruitment condition, documents and cases ...
+nav-users = Developers & Teams
+nav-users-tip = List the interests, strengths, and advantages of developers and teams
+nav-prototypes = Prototypes
+nav-prototypes-tip = Case demonstration of excellent projects and good practice of cooperation process
+nav-statistics = Statistics
+nav-statistics-tip = Trend analysis of project fund, technical trend, and statistics of employers and developers
+nav-niqin = NiQin Books
+nav-niqin-tip = Books and docs for open source knowledge and technology
+nav-ideas = New Ideas
+nav-ideas-tip = Divergent your thinkings, and realize your new ideas
+nav-blog = Blog & News
+nav-g = global navigation
+
+switch-theme = Switch Theme
+random = R
+random-project = Random Project
+shared-aphorism = shared an aphorism: 
+
+more = More ...
+projects-managed = Latest Managed
+projects-recommended = Latest Recommended
+projects-published = Latest Published
+
+register = Register
+sign-in = Sign in
+sign-in-intro = Sign in KouSun
+sign-out = Sign out
+
+user-profile = Your profile
+user-general = General information
+user-contact = Contact information
+user-finance = Finance center
+
+projects-center = Projects center
+projects-matching = Projects Matching
+projects-management = Projects Management
+
+currency-type = Currency type?
+currency-cny = yuan (CNY)
+currency-eur = euros (EUR)
+currency-usd = dollars (USD)
+currency-jpy = yen (JPY)
+
+days = days
+workdays = workdays
+
+all = All
+search = Search
+secret = Secret
+not-setting = Not setting
+user-risk-tip = This website only provides data aggregation without any legal responsibility. 
+    Please identify the risks by yourself and beware of being deceived.
+
+based-on = Based on 
+    <a href="https://github.com/zzy/kousun" target="_blank">zzy/kousun</a> 
+    to Develop
+copyright = All Rights Reserved

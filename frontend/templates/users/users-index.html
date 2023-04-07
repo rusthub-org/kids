@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="{{ language }}">
+
+  <head>
+    <title>
+      {{#if filter_desc }}{{ lang filter_desc.condition }} {{ filter_desc.content }} - {{/if}}
+      {{ lang "users-teams" }} - {{ lang "site-name" }} | {{ lang "site-slogan" }}
+    </title>
+
+    <meta name="keywords" content='{{ lang "users-teams" }},{{ lang "site-name" }},{{ lang "site-slogan" }}'>
+    <meta name="description"
+      content='{{ lang "users-teams" }},{{ lang "site-name" }},{{ lang "site-slogan" }},{{ lang "site-intro" }}'>
+
+    {{> head }}
+  </head>
+
+  <body class="theme-system">
+    {{> header }}
+
+    <main class="ps-relative t64">
+      {{> wish-random }}
+
+      {{!-- google ad 内嵌，自适应 --}}
+      <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article"
+        data-ad-format="fluid" data-ad-client="ca-pub-2498669832870483" data-ad-slot="1938093545"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+
+      <div class="d-flex fw-wrap mt16 mx24 sm:ml4 sm:mr4">
+        <a class="s-btn s-btn__outlined {{ users-all-selected }} sm:mb4" href="/{{ language }}/users">
+          {{ lang "all" }}
+        </a>
+        <button class="s-btn sm:mb4" disabled>-</button>
+        <span class="s-btn-group fl-grow1 sm:mb4">
+          <a class="s-btn s-btn__outlined {{ users-boss-selected }}" href="/{{ language }}/users/boss">
+            {{ lang "boss" }}
+          </a>
+          <a class="s-btn s-btn__outlined {{ users-worker-selected }}" href="/{{ language }}/users/worker">
+            {{ lang "worker" }}
+          </a>
+        </span>
+
+        <span class="flex--item">
+          <a class="s-btn s-btn__filled is-selected" href="/{{ language }}/project/new" target="_blank">
+            {{ lang "project-create" }}
+          </a>
+          <a class="s-btn s-btn__filled is-selected"
+            href="/{{ language }}{{#if user }}/user/{{ user.username }}/projects{{else}}/sign-in{{/if}}"
+            target="_blank">
+            {{ lang "my-profile" }}
+          </a>
+        </span>
+      </div>
+
+      <div class="mt8 mb96 mx24 sm:ml4 sm:mr4">
+
+        <span class="ml8 fc-danger fs-fine">{{ lang "users-list-tip" }}</span>
+
+        <div class="d-grid grid__2 lg:grid__1 sm:grid__1 g12 w100 wmx100 mx-auto">
+          {{#each pagination.currentItems as |user_item|}}
+            <article class="s-card my8">
+              <h2 class="mb6">
+                <a href="/{{ ../language }}/user/{{ user_item.username }}" target="_blank">
+                  {{ user_item.nickname }}
+                  <sup class="fw-normal fs-fine">No.{{ user_item.id }}</sup>
+                </a>
+                {{#with (add-op user_item.workerQuality user_item.bossQuality) as |quality| }}
+                  {{#if (str-cmp quality 120 "gte") }}
+                    <span class="ml8 s-tag s-tag__moderator fw-normal fs-body1">
+                      {{ lang (level-op quality) }}
+                    </span>
+                  {{/if}}
+                {{/with}}
+              </h2>
+              <p class="my6 fs-body1">
+                <strong>{{ lang "registration-time" }}</strong>
+                {{ user_item.createdAtNyrsq }}
+              </p>
+              <p class="my6 fs-body1">
+                <strong>{{ lang "worker-quality" }}</strong>
+                {{#if user_item.workerQuality }}
+                  {{ user_item.workerQuality }}
+                {{else}}
+                  {{ lang "no-statistics" }}
+                {{/if}}
+                <strong class="ml16">{{ lang "boss-quality" }}</strong>
+                {{#if user_item.bossQuality }}
+                  {{ user_item.bossQuality }}
+                {{else}}
+                  {{ lang "no-statistics" }}
+                {{/if}}
+              </p>
+              <p class="my6 fs-body1">
+                <strong>{{ lang "features-keys-tags" }}</strong>
+                {{#if user_item.keywords }}
+                  {{#each user_item.keywords as |keyword|}}
+                    <a class="s-badge ml4 mb2 fs-body1" href="/{{ ../../language }}/topic/{{ keyword.slug }}/projects"
+                      target="_blank">
+                      {{ keyword.name }}
+                    </a>
+                  {{/each}}
+                {{else}}
+                  {{ lang "not-setting" }}
+                {{/if}}
+              </p>
+              <p class="my6 fs-body1">
+                <strong>{{ lang "related-keys-tags" }}</strong>
+                {{#if user_item.topics }}
+                  {{#each user_item.topics as |topic|}}
+                    <a class="s-badge ml4 mb2 fs-body1" href="/{{ ../../language }}/topic/{{ topic.slug }}/projects"
+                      target="_blank">
+                      {{ topic.name }}
+                    </a>
+                  {{/each}}
+                {{else}}
+                  {{ lang "not-setting" }}
+                {{/if}}
+              </p>
+              <p class="mt6 fs-body1">
+                <button class="s-btn s-btn__primary s-btn__xs is-selected fs-body1">
+                  {{ lang "consulting-now" }}
+                </button>
+                -
+                {{ lang "consulting-now-tip" }}
+              </p>
+            </article>
+          {{/each}}
+        </div>
+
+        {{> pagination }}
+      </div>
+
+    </main>
+
+    {{> footer }}
+  </body>
+
+</html>
