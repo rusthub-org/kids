@@ -33,7 +33,7 @@ pub async fn project_new(
     db: &Database,
     project_new: ProjectNew,
 ) -> GqlResult<Project> {
-    let coll = db.collection::<Document>("projects");
+    let coll = db.collection::<Document>("programs");
 
     let now = DateTime::now();
     let now2ago = now.to_chrono() + Duration::days(-2);
@@ -65,7 +65,7 @@ pub async fn project_by_id(
     db: &Database,
     project_id: ObjectId,
 ) -> GqlResult<Project> {
-    let coll = db.collection::<Document>("projects");
+    let coll = db.collection::<Document>("programs");
 
     let project_document = coll
         .find_one(doc! {"_id": project_id}, None)
@@ -83,7 +83,7 @@ pub async fn project_update_one_field_by_id(
     field_name: String,
     field_val: String,
 ) -> GqlResult<Project> {
-    let coll = db.collection::<Document>("projects");
+    let coll = db.collection::<Document>("programs");
 
     let query_doc = doc! {"_id": project_id};
     let update_doc = match field_name.as_str() {
@@ -106,7 +106,7 @@ pub async fn project_update_one_field_by_id(
 
 // get random project
 pub async fn project_random_id(db: &Database) -> GqlResult<ObjectId> {
-    let coll = db.collection::<Document>("projects");
+    let coll = db.collection::<Document>("programs");
 
     let now = DateTime::now();
     let days_before = now.to_chrono() + Duration::days(-7);
@@ -135,7 +135,7 @@ pub async fn projects(
     last_oid: String,
     status: i8,
 ) -> GqlResult<ProjectsResult> {
-    let coll = db.collection::<Document>("projects");
+    let coll = db.collection::<Document>("programs");
 
     let mut filter_doc = doc! {};
     filter_status(status, &mut filter_doc).await;
@@ -207,7 +207,7 @@ pub async fn projects_in_position(
     position: String,
     limit: i64,
 ) -> GqlResult<Vec<Project>> {
-    let coll = db.collection::<Document>("projects");
+    let coll = db.collection::<Document>("programs");
 
     let mut filter_doc = doc! {};
     if "".ne(username.trim()) && "-".ne(username.trim()) {
@@ -251,7 +251,7 @@ pub async fn projects_by_user_id(
     last_oid: String,
     status: i8,
 ) -> GqlResult<ProjectsResult> {
-    let coll = db.collection::<Document>("projects");
+    let coll = db.collection::<Document>("programs");
 
     let mut filter_doc = doc! {"user_id": user_id};
     filter_status(status, &mut filter_doc).await;
@@ -331,7 +331,7 @@ pub async fn projects_by_category_id(
     last_oid: String,
     status: i8,
 ) -> GqlResult<ProjectsResult> {
-    let coll = db.collection::<Document>("projects");
+    let coll = db.collection::<Document>("programs");
 
     let mut filter_doc = doc! {"category_id": category_id};
     filter_status(status, &mut filter_doc).await;
@@ -429,7 +429,7 @@ pub async fn projects_by_topic_id(
     project_ids.sort();
     project_ids.dedup();
 
-    let coll = db.collection::<Document>("projects");
+    let coll = db.collection::<Document>("programs");
 
     let mut filter_doc = doc! {"_id": {"$in": project_ids}};
     filter_status(status, &mut filter_doc).await;
@@ -507,7 +507,7 @@ async fn topics_projects_by_topic_id(
     topic_id: ObjectId,
 ) -> Vec<TopicProject> {
     let coll_topics_projects =
-        db.collection::<Document>("topics_users_projects");
+        db.collection::<Document>("topics_users_programs");
     let mut cursor_topics_projects = coll_topics_projects
         .find(
             doc! {
@@ -546,7 +546,7 @@ pub async fn projects_by_investment(
     last_oid: String,
     status: i8,
 ) -> GqlResult<ProjectsResult> {
-    let coll = db.collection::<Document>("projects");
+    let coll = db.collection::<Document>("programs");
 
     let mut filter_doc =
         doc! {"investment":  {"$gte": investment_min, "$lte": investment_max}};
@@ -614,7 +614,7 @@ pub async fn projects_by_worker_type(
     last_oid: String,
     status: i8,
 ) -> GqlResult<ProjectsResult> {
-    let coll = db.collection::<Document>("projects");
+    let coll = db.collection::<Document>("programs");
 
     let mut filter_doc = doc! {"worker_type": {"$regex": worker_type}};
     filter_status(status, &mut filter_doc).await;
@@ -681,7 +681,7 @@ pub async fn projects_by_external(
     last_oid: String,
     status: i8,
 ) -> GqlResult<ProjectsResult> {
-    let coll = db.collection::<Document>("projects");
+    let coll = db.collection::<Document>("programs");
 
     let mut filter_doc = doc! {"external": external};
     filter_status(status, &mut filter_doc).await;
@@ -771,7 +771,7 @@ pub async fn project_file_new(
     db: &Database,
     project_file_new: ProjectFileNew,
 ) -> GqlResult<ProjectFile> {
-    let coll = db.collection::<Document>("projects_files");
+    let coll = db.collection::<Document>("programs_files");
 
     let exist_document = coll
         .find_one(
@@ -799,7 +799,7 @@ async fn project_file_by_id(
     db: &Database,
     id: ObjectId,
 ) -> GqlResult<ProjectFile> {
-    let coll = db.collection::<Document>("projects_files");
+    let coll = db.collection::<Document>("programs_files");
 
     let project_file_document = coll
         .find_one(doc! {"_id": id}, None)
@@ -849,7 +849,7 @@ async fn projects_files_by_project_id(
     db: &Database,
     project_id: ObjectId,
 ) -> Vec<ProjectFile> {
-    let coll_projects_files = db.collection::<Document>("projects_files");
+    let coll_projects_files = db.collection::<Document>("programs_files");
     let mut cursor_projects_files = coll_projects_files
         .find(doc! {"project_id": project_id}, None)
         .await
