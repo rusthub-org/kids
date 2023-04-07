@@ -117,7 +117,7 @@ pub async fn topic_user_new(
     db: &Database,
     topic_user_new: TopicUserNew,
 ) -> GqlResult<TopicUser> {
-    let coll = db.collection::<Document>("topics_users_programs");
+    let coll = db.collection::<Document>("topics_users_projects");
 
     let exist_document = coll
         .find_one(
@@ -143,7 +143,7 @@ pub async fn topic_user_new(
 
 // get topic_user by its id
 async fn topic_user_by_id(db: &Database, id: ObjectId) -> GqlResult<TopicUser> {
-    let coll = db.collection::<Document>("topics_users_programs");
+    let coll = db.collection::<Document>("topics_users_projects");
 
     let topic_user_document = coll
         .find_one(doc! {"_id": id}, None)
@@ -160,7 +160,7 @@ pub async fn topic_project_new(
     db: &Database,
     topic_project_new: TopicProjectNew,
 ) -> GqlResult<TopicProject> {
-    let coll = db.collection::<Document>("topics_users_programs");
+    let coll = db.collection::<Document>("topics_users_projects");
 
     let exist_document = coll
         .find_one(
@@ -189,7 +189,7 @@ async fn topic_project_by_id(
     db: &Database,
     id: ObjectId,
 ) -> GqlResult<TopicProject> {
-    let coll = db.collection::<Document>("topics_users_programs");
+    let coll = db.collection::<Document>("topics_users_projects");
 
     let topic_project_document = coll
         .find_one(doc! {"_id": id}, None)
@@ -262,7 +262,7 @@ async fn topics_projects_by_project_id(
     project_id: ObjectId,
 ) -> Vec<TopicProject> {
     let coll_topics_projects =
-        db.collection::<Document>("topics_users_programs");
+        db.collection::<Document>("topics_users_projects");
     let mut cursor_topics_projects = coll_topics_projects
         .find(doc! {"project_id": project_id}, None)
         .await
@@ -323,7 +323,7 @@ async fn topics_users_by_user_id(
     user_id: ObjectId,
     contain_project: bool,
 ) -> Vec<TopicUser> {
-    let coll_topics_users = db.collection::<Document>("topics_users_programs");
+    let coll_topics_users = db.collection::<Document>("topics_users_projects");
 
     let mut filter_doc = doc! {"user_id": user_id};
     if !contain_project {
