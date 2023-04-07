@@ -1,21 +1,19 @@
 site-name = Kids@KouSun
 site-slogan = Imagine, Program, Share
-site-intro = Create stories, games, and animations, and share with others.<br>
+site-intro = Create stories, games, musics, arts, animations ... and share with others.<br>
     A gift for my daughter, also hopes to help all kids who enjoy programming.<br>
     Always free, based on Scratch & Rust web stacks.
 
-nav-projects = Projects
-nav-projects-tip = Project and its requirements, recruitment condition, documents and cases ...
-nav-users = Developers & Teams
-nav-users-tip = List the interests, strengths, and advantages of developers and teams
-nav-prototypes = Prototypes
-nav-prototypes-tip = Case demonstration of excellent projects and good practice of cooperation process
-nav-statistics = Statistics
-nav-statistics-tip = Trend analysis of project fund, technical trend, and statistics of employers and developers
-nav-niqin = NiQin Books
-nav-niqin-tip = Books and docs for open source knowledge and technology
-nav-ideas = New Ideas
-nav-ideas-tip = Divergent your thinkings, and realize your new ideas
+nav-creating = Start Creating
+nav-creating-tip = Start creating stories, games, musics, arts, animations ...
+nav-programs = Explore Programs
+nav-programs-tip = Explore shared stories, games, musics, arts, animations ...
+nav-tutorials = Tutorials
+nav-tutorials-tip = Rich tutorials for creating stories, games, musics, arts, animations ...
+nav-users = Find Friends
+nav-users-tip = Find friends, communicate with each other, and learn together
+nav-books = NiQin Books
+nav-jobs = Freelances
 nav-blog = Blog & News
 nav-g = global navigation
 

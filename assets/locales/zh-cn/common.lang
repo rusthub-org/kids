@@ -1,21 +1,19 @@
 site-name = 儿童@蔻隼
 site-slogan = 想象、编程、分享
-site-intro = 创建故事、游戏和动画片，并与他人分享。<br>
+site-intro = 创建故事、游戏、音乐、艺术、动画……并与他人分享。<br>
     给女儿的礼物，也希望可以帮助所有喜爱编程的孩童。<br>
     永远免费，基于 Scratch 和 Rust web 技术栈构建。
 
-nav-projects = 项目需求
-nav-projects-tip = 项目需求描述、招募要求，以及参考文档和案例等
-nav-users = 人员团队
-nav-users-tip = 接包人员/团队的实力、优势展示，以供发包方甄选
-nav-prototypes = 原型展示
-nav-prototypes-tip = 优秀项目的案例展示，合作流程的良好实践
-nav-statistics = 数据统计
-nav-statistics-tip = 项目资金走势、技术潮流分析，项目发包方/接包方统计
-nav-niqin = 泥芹书馆
-nav-niqin-tip = 开源知识和技术的书籍及文档
-nav-ideas = 创意思维
-nav-ideas-tip = 发散您的思维，实现您的创意
+nav-creating = 开始创建
+nav-creating-tip = 开始创建故事、游戏、音乐、艺术、动画……
+nav-programs = 探索程序
+nav-programs-tip = 探索已分享的故事、游戏、音乐、艺术、动画……
+nav-tutorials = 教程
+nav-tutorials-tip = 创建故事、游戏、音乐、艺术、动画……的丰富教程
+nav-users = 找朋友
+nav-users-tip = 找朋友，相互交流、共同学习
+nav-books = 泥芹书馆
+nav-jobs = 自由职业
 nav-blog = 博客资讯
 nav-g = 全局导航
 

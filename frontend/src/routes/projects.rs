@@ -59,7 +59,7 @@ pub async fn projects_index(req: Request<State>) -> tide::Result {
 
     let mut data: BTreeMap<&str, serde_json::Value> = BTreeMap::new();
     data.insert("language", json!(language));
-    data.insert("nav-projects-selected", json!("is-selected"));
+    data.insert("nav-programs-selected", json!("is-selected"));
     data.insert("projects-all-selected", json!("is-selected"));
     insert_wish_random(&mut data).await;
 
@@ -112,7 +112,7 @@ pub async fn projects_by_user(req: Request<State>) -> tide::Result {
 
     let mut data: BTreeMap<&str, serde_json::Value> = BTreeMap::new();
     data.insert("language", json!(language));
-    data.insert("nav-projects-selected", json!("is-selected"));
+    data.insert("nav-programs-selected", json!("is-selected"));
     insert_wish_random(&mut data).await;
 
     let sign_status = sign_status(&req).await;
@@ -191,7 +191,7 @@ pub async fn projects_by_category(req: Request<State>) -> tide::Result {
 
     let mut data: BTreeMap<&str, serde_json::Value> = BTreeMap::new();
     data.insert("language", json!(language));
-    data.insert("nav-projects-selected", json!("is-selected"));
+    data.insert("nav-programs-selected", json!("is-selected"));
     data.insert("projects-all-selected", json!("is-selected"));
     insert_wish_random(&mut data).await;
 
@@ -275,7 +275,7 @@ pub async fn projects_by_topic(req: Request<State>) -> tide::Result {
 
     let mut data: BTreeMap<&str, serde_json::Value> = BTreeMap::new();
     data.insert("language", json!(language));
-    data.insert("nav-projects-selected", json!("is-selected"));
+    data.insert("nav-programs-selected", json!("is-selected"));
     data.insert("projects-all-selected", json!("is-selected"));
     insert_wish_random(&mut data).await;
 
@@ -355,7 +355,7 @@ pub async fn projects_filter(req: Request<State>) -> tide::Result {
 
     let mut data: BTreeMap<&str, serde_json::Value> = BTreeMap::new();
     data.insert("language", json!(language));
-    data.insert("nav-projects-selected", json!("is-selected"));
+    data.insert("nav-programs-selected", json!("is-selected"));
     insert_wish_random(&mut data).await;
 
     let sign_status = sign_status(&req).await;
@@ -599,7 +599,7 @@ pub async fn project_new(mut req: Request<State>) -> tide::Result {
 
         let mut data: BTreeMap<&str, serde_json::Value> = BTreeMap::new();
         data.insert("language", json!(language));
-        data.insert("nav-projects-selected", json!("is-selected"));
+        data.insert("nav-programs-selected", json!("is-selected"));
         insert_wish_random(&mut data).await;
         insert_user_by_username(sign_status.username, &mut data).await;
 
@@ -764,7 +764,7 @@ pub async fn project_index(req: Request<State>) -> tide::Result {
 
     let mut data: BTreeMap<&str, serde_json::Value> = BTreeMap::new();
     data.insert("language", json!(language));
-    data.insert("nav-projects-selected", json!("is-selected"));
+    data.insert("nav-programs-selected", json!("is-selected"));
     insert_wish_random(&mut data).await;
 
     let sign_status = sign_status(&req).await;

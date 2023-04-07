@@ -14,7 +14,7 @@ let helper_values = #{
     sites: #{
         books: "//niqin.com",
         blog: "//blog.niqin.com",
-        ideas: "//ideas.niqin.com",
+        jobs: "//jobs.kousun.com",
     },
 };
 

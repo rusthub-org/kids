@@ -328,13 +328,6 @@
                         {{#if (str-cmp language "zh-cn") }}English{{else}}中文{{/if}}
                     </a>
 
-                    {{!-- <a class="flex--item fc-white" href='{{ helper-values "sites" "books" }}'
-                        title='{{ lang "nav-niqin" }}' aria-label='{{ lang "nav-niqin" }}' target="_blank">
-                        <svg aria-hidden="true" class="svg-icon iconCodepen" width="24" height="24" viewBox="0 0 18 18">
-                            <path d='{{ helper-values "books" "svg" }}' />
-                        </svg>
-                    </a> --}}
-
                     <a class="flex--item fc-white" href="/{{ language }}/project" title='{{ lang "random-project" }}'
                         aria-label='{{ lang "random-project" }}' target="_blank">
                         <div class="s-avatar s-avatar__24">
@@ -374,7 +367,23 @@
         <div class="flex--item bg-black-025 p64 sm:pt24 sm:pl24 sm:pr24 sm:pb24">
             <div class="d-grid grid__4 lg:grid__2 sm:grid__1 g16 w100 wmx12 mx-auto">
 
-                <a class="d-flex s-card p16 bs-sm bar-md h:bs-md sm:ai-center" href="/{{ language }}/projects">
+                <a class="d-flex s-card p16 bs-sm bar-md h:bs-md sm:ai-center" href="http://43.192.48.19:8602"
+                    target="_blank">
+                    <div class="flex--item fc-theme-primary-400 mr16">
+                        <svg aria-hidden="true" class="svg-spot spotTheme" width="48" height="48" viewBox="0 0 48 48">
+                            <path opacity=".2"
+                                d="M16.83 45h.67l25.22-25.56a3 3 0 000-4.25l-5.07-5.07a3 3 0 00-4.24 0L17 26.52V44a3 3 0 01-.17 1z" />
+                            <path
+                                d="M9 43a4 4 0 110-8 4 4 0 0 1 0 8zm0-2a2 2 0 100-4 2 2 0 0 0 0 4zm5-40H4a3 3 0 00-3 3v40a3 3 0 003 3h40a3 3 0 003-3V34a3 3 0 00-3-3H28.15l12.57-12.56a3 3 0 000-4.25l-7.07-7.07a3 3 0 00-4.24 0L17 19.52V4a3 3 0 00-3-3zm30 44H16.83a3 3 0 00.17-1v-1.85L26.15 33H44a1 1 0 011 1v10a1 1 0 01-1 1zm-4.7-27.98L17 39.32V22.37L30.82 8.54a1 1 0 011.41 0l7.08 7.07a1 1 0 010 1.41zM3 4a1 1 0 011-1h10a1 1 0 011 1v40a1 1 0 01-1 1H4a1 1 0 01-1-1V4z" />
+                        </svg>
+                    </div>
+                    <div class="flex--item">
+                        <div class="fw-bold fs-body3 fc-theme-primary-400 mb2">{{ lang "nav-creating" }}</div>
+                        <div class="fc-medium">{{ lang "nav-creating-tip" }}</div>
+                    </div>
+                </a>
+
+                <a class="d-flex s-card p16 bs-sm bar-md h:bs-md sm:ai-center" href="/{{ language }}/programs">
                     <div class="flex--item fc-theme-primary-400 mr16">
                         <svg aria-hidden="true" class="svg-spot spotPuzzle" width="48" height="48" viewBox="0 0 48 48">
                             <path opacity=".2"
@@ -385,8 +394,25 @@
                     </div>
 
                     <div class="flex--item">
-                        <div class="fw-bold fs-body3 fc-theme-primary-400 mb2">{{ lang "nav-projects" }}</div>
-                        <div class="fc-medium">{{ lang "nav-projects-tip" }}</div>
+                        <div class="fw-bold fs-body3 fc-theme-primary-400 mb2">{{ lang "nav-programs" }}</div>
+                        <div class="fc-medium">{{ lang "nav-programs-tip" }}</div>
+                    </div>
+                </a>
+
+                <a class="d-flex s-card p16 bs-sm bar-md h:bs-md sm:ai-center" href="/{{ language }}/tutorials">
+                    <div class="flex--item fc-theme-primary-400 mr16">
+                        <svg aria-hidden="true" class="svg-spot spotDocumentAlt" width="48" height="48"
+                            viewBox="0 0 48 48">
+                            <path
+                                d="M39 6c2.5 0 4 0 4 2v35a3 3 0 01-3 3H11c-2 0-2-2.34-2-4h30V6zm-19 6a4 4 0 11-8 0 4 4 0 0 1 8 0z"
+                                opacity=".2" />
+                            <path
+                                d="M10 20a1 1 0 100 2h24a1 1 0 100-2H10zm0 5a1 1 0 100 2h24a1 1 0 100-2H10zm0 5a1 1 0 100 2h24a1 1 0 100-2H10zm0 5a1 1 0 100 2h24a1 1 0 100-2H10zM4 4a3 3 0 013-3h30a3 3 0 013 3v1h.91C42.61 5 44 6.31 44 7.93v36.14A3.01 3.01 0 0140.91 47H11.1A3.01 3.01 0 018 44.07V43H7a3 3 0 01-3-3V4zm6.06 39v1.07a1 1 0 001.03.98H40.9a1 1 0 001.03-.98V7.93a1 1 0 00-1.03-.98H40V40a3 3 0 01-3 3H10.06zM7 3a1 1 0 00-1 1v36a1 1 0 001 1h30a1 1 0 001-1V4a1 1 0 00-1-1H7zm6.5 10a2.5 2.5 0 110-5 2.5 2.5 0 0 1 0 5zm0 2a4.5 4.5 0 100-9 4.5 4.5 0 0 0 0 9z" />
+                        </svg>
+                    </div>
+                    <div class="flex--item">
+                        <div class="fw-bold fs-body3 fc-theme-primary-400 mb2">{{ lang "nav-tutorials" }}</div>
+                        <div class="fc-medium">{{ lang "nav-tutorials-tip" }}</div>
                     </div>
                 </a>
 
@@ -404,72 +430,6 @@
                         <div class="fc-medium">{{ lang "nav-users-tip" }}</div>
                     </div>
                 </a>
-
-                <a class="d-flex s-card p16 bs-sm bar-md h:bs-md sm:ai-center" href='{{ helper-values "sites" "books"}}'
-                    target="_blank">
-                    <div class="flex--item fc-theme-primary-400 mr16">
-                        <svg aria-hidden="true" class="svg-spot spotDocumentAlt" width="48" height="48"
-                            viewBox="0 0 48 48">
-                            <path
-                                d="M39 6c2.5 0 4 0 4 2v35a3 3 0 01-3 3H11c-2 0-2-2.34-2-4h30V6zm-19 6a4 4 0 11-8 0 4 4 0 0 1 8 0z"
-                                opacity=".2" />
-                            <path
-                                d="M10 20a1 1 0 100 2h24a1 1 0 100-2H10zm0 5a1 1 0 100 2h24a1 1 0 100-2H10zm0 5a1 1 0 100 2h24a1 1 0 100-2H10zm0 5a1 1 0 100 2h24a1 1 0 100-2H10zM4 4a3 3 0 013-3h30a3 3 0 013 3v1h.91C42.61 5 44 6.31 44 7.93v36.14A3.01 3.01 0 0140.91 47H11.1A3.01 3.01 0 018 44.07V43H7a3 3 0 01-3-3V4zm6.06 39v1.07a1 1 0 001.03.98H40.9a1 1 0 001.03-.98V7.93a1 1 0 00-1.03-.98H40V40a3 3 0 01-3 3H10.06zM7 3a1 1 0 00-1 1v36a1 1 0 001 1h30a1 1 0 001-1V4a1 1 0 00-1-1H7zm6.5 10a2.5 2.5 0 110-5 2.5 2.5 0 0 1 0 5zm0 2a4.5 4.5 0 100-9 4.5 4.5 0 0 0 0 9z" />
-                        </svg>
-                    </div>
-                    <div class="flex--item">
-                        <div class="fw-bold fs-body3 fc-theme-primary-400 mb2">{{ lang "nav-niqin" }}</div>
-                        <div class="fc-medium">{{ lang "nav-niqin-tip" }}</div>
-                    </div>
-                </a>
-
-                <a class="d-flex s-card p16 bs-sm bar-md h:bs-md sm:ai-center" href='{{ helper-values "sites" "ideas"}}'
-                    target="_blank">
-                    <div class="flex--item fc-theme-primary-400 mr16">
-                        <svg aria-hidden="true" class="svg-spot spotTheme" width="48" height="48" viewBox="0 0 48 48">
-                            <path opacity=".2"
-                                d="M16.83 45h.67l25.22-25.56a3 3 0 000-4.25l-5.07-5.07a3 3 0 00-4.24 0L17 26.52V44a3 3 0 01-.17 1z" />
-                            <path
-                                d="M9 43a4 4 0 110-8 4 4 0 0 1 0 8zm0-2a2 2 0 100-4 2 2 0 0 0 0 4zm5-40H4a3 3 0 00-3 3v40a3 3 0 003 3h40a3 3 0 003-3V34a3 3 0 00-3-3H28.15l12.57-12.56a3 3 0 000-4.25l-7.07-7.07a3 3 0 00-4.24 0L17 19.52V4a3 3 0 00-3-3zm30 44H16.83a3 3 0 00.17-1v-1.85L26.15 33H44a1 1 0 011 1v10a1 1 0 01-1 1zm-4.7-27.98L17 39.32V22.37L30.82 8.54a1 1 0 011.41 0l7.08 7.07a1 1 0 010 1.41zM3 4a1 1 0 011-1h10a1 1 0 011 1v40a1 1 0 01-1 1H4a1 1 0 01-1-1V4z" />
-                        </svg>
-                    </div>
-                    <div class="flex--item">
-                        <div class="fw-bold fs-body3 fc-theme-primary-400 mb2">{{ lang "nav-ideas" }}</div>
-                        <div class="fc-medium">{{ lang "nav-ideas-tip" }}</div>
-                    </div>
-                </a>
-
-                {{!-- <a class="d-flex s-card p16 bs-sm bar-md h:bs-md sm:ai-center" href="/{{ language }}/projects">
-                    <div class="flex--item fc-theme-primary-400 mr16">
-                        <svg aria-hidden="true" class="svg-spot spotDocumentAlt" width="48" height="48"
-                            viewBox="0 0 48 48">
-                            <path
-                                d="M39 6c2.5 0 4 0 4 2v35a3 3 0 01-3 3H11c-2 0-2-2.34-2-4h30V6zm-19 6a4 4 0 11-8 0 4 4 0 0 1 8 0z"
-                                opacity=".2" />
-                            <path
-                                d="M10 20a1 1 0 100 2h24a1 1 0 100-2H10zm0 5a1 1 0 100 2h24a1 1 0 100-2H10zm0 5a1 1 0 100 2h24a1 1 0 100-2H10zm0 5a1 1 0 100 2h24a1 1 0 100-2H10zM4 4a3 3 0 013-3h30a3 3 0 013 3v1h.91C42.61 5 44 6.31 44 7.93v36.14A3.01 3.01 0 0140.91 47H11.1A3.01 3.01 0 018 44.07V43H7a3 3 0 01-3-3V4zm6.06 39v1.07a1 1 0 001.03.98H40.9a1 1 0 001.03-.98V7.93a1 1 0 00-1.03-.98H40V40a3 3 0 01-3 3H10.06zM7 3a1 1 0 00-1 1v36a1 1 0 001 1h30a1 1 0 001-1V4a1 1 0 00-1-1H7zm6.5 10a2.5 2.5 0 110-5 2.5 2.5 0 0 1 0 5zm0 2a4.5 4.5 0 100-9 4.5 4.5 0 0 0 0 9z" />
-                        </svg>
-                    </div>
-                    <div class="flex--item">
-                        <div class="fw-bold fs-body3 fc-theme-primary-400 mb2">{{ lang "nav-prototypes" }}</div>
-                        <div class="fc-medium">{{ lang "nav-prototypes-tip" }}</div>
-                    </div>
-                </a>
-
-                <a class="d-flex s-card p16 bs-sm bar-md h:bs-md sm:ai-center" href="/{{ language }}/users">
-                    <div class="flex--item fc-theme-primary-400 mr16">
-                        <svg aria-hidden="true" class="svg-spot spotTheme" width="48" height="48" viewBox="0 0 48 48">
-                            <path opacity=".2"
-                                d="M16.83 45h.67l25.22-25.56a3 3 0 000-4.25l-5.07-5.07a3 3 0 00-4.24 0L17 26.52V44a3 3 0 01-.17 1z" />
-                            <path
-                                d="M9 43a4 4 0 110-8 4 4 0 0 1 0 8zm0-2a2 2 0 100-4 2 2 0 0 0 0 4zm5-40H4a3 3 0 00-3 3v40a3 3 0 003 3h40a3 3 0 003-3V34a3 3 0 00-3-3H28.15l12.57-12.56a3 3 0 000-4.25l-7.07-7.07a3 3 0 00-4.24 0L17 19.52V4a3 3 0 00-3-3zm30 44H16.83a3 3 0 00.17-1v-1.85L26.15 33H44a1 1 0 011 1v10a1 1 0 01-1 1zm-4.7-27.98L17 39.32V22.37L30.82 8.54a1 1 0 011.41 0l7.08 7.07a1 1 0 010 1.41zM3 4a1 1 0 011-1h10a1 1 0 011 1v40a1 1 0 01-1 1H4a1 1 0 01-1-1V4z" />
-                        </svg>
-                    </div>
-                    <div class="flex--item">
-                        <div class="fw-bold fs-body3 fc-theme-primary-400 mb2">{{ lang "nav-statistics" }}</div>
-                        <div class="fc-medium">{{ lang "nav-statistics-tip" }}</div>
-                    </div>
-                </a> --}}
 
             </div>
         </div>
