@@ -88,7 +88,7 @@
                                 <div class="d-flex fl-grow1 ps-relative">
                                     <input type="hidden" name="cover_image_id" id="cover_image_id">
                                     <input class="flex--item s-input blr0" type="file" id="cover_image"
-                                        onchange="uploadFile(this, 'cover_image_id', 1)" required>
+                                        onchange="uploadFile(this, 'cover_image_id', 1, 1048576)" required>
                                 </div>
                             </div>
 
@@ -141,7 +141,7 @@ Support **Markdown** syntax
                                 <div class="d-flex fl-grow1 ps-relative">
                                     <input type="hidden" name="source_file_id" id="source_file_id">
                                     <input class="flex--item s-input blr0" type="file" id="source_file"
-                                        onchange="uploadFile(this, 'source_file_id', 2)" required>
+                                        onchange="uploadFile(this, 'source_file_id', 2, 5242880)" required>
                                 </div>
                             </div>
 
@@ -246,9 +246,9 @@ Support **Markdown** syntax
                 document.getElementById("content").value = editor.content;
             }
 
-            function uploadFile(input, file_id, file_kind) {
+            function uploadFile(input, file_id, file_kind, size_limit) {
                 let file = input.files[0];
-                if (file.size <= 5242880) {
+                if (file.size <= size_limit) {
                     var form_data = new FormData();
                     form_data.append("file", file);
 
@@ -261,17 +261,18 @@ Support **Markdown** syntax
                         success: function (res) {
                             if (res["done"]) {
                                 $("#" + file_id).val(res["file_id"]);
-
-                                alert(res["file_name"] + " - " + '{{ lang "project-new-file-upload-success" }}');
+                                alert(res["file_name"] + ' - ' + '{{ lang "project-new-file-upload-success" }}');
                             }
                             else {
-                                alert(res["err"]);
+                                input.value = null;
+                                alert(file.name + ' - ' + '{{ lang "project-new-file-upload-failure" }}' + ' - ' + res["err"]);
                             }
                         }
                     });
                 }
                 else {
-                    alert('{{ lang "project-new-file-upload-failed" }}');
+                    input.value = null;
+                    alert(file.name + ' - ' + '{{ lang "project-new-file-size-limit" }} ' + size_limit / 1048576 + 'm');
                 }
             }
         </script>

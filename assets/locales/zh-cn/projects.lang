@@ -79,7 +79,8 @@ project-new-failed = 该项目 <span class="td-underline">{ $subject }</span> �
     <br><br>
     使用<span class="fw-bold fc-blue-500">项目提升</span>功能，可让你的项目显示在列表顶部。
 
-project-new-file-upload-success = 文件上传成功！
+project-new-file-size-limit = 文件上传失败：\n单个文件的大小不能超过
 project-new-file-uploaded = 已上传
 project-new-file-remove = 移除
-project-new-file-upload-failed = 文件上传失败：\n单个文件大小不能超过 5 M
+project-new-file-upload-success = 文件上传成功
+project-new-file-upload-failure = 文件上传失败
