@@ -12,9 +12,8 @@ use crate::util::{
 use crate::models::{
     Page,
     projects::{
-        ProjectsByExternalData, projects_by_external_data, ProjectData,
-        project_data, ProjectUpdateOneFieldByIdData,
-        project_update_one_field_by_id_data,
+        ProjectsData, projects_data, ProjectData, project_data,
+        ProjectUpdateOneFieldByIdData, project_update_one_field_by_id_data,
     },
 };
 
@@ -69,18 +68,14 @@ pub async fn projects_admin(req: Request<State>) -> tide::Result {
         data.insert("nav-admin-selected", json!("is-selected"));
         insert_user_by_username(sign_status.username, &mut data).await;
 
-        let division = req.param("division")?.trim().eq("external");
         let page: Page = req.query()?;
         let projects_by_external_build_query =
-            ProjectsByExternalData::build_query(
-                projects_by_external_data::Variables {
-                    external: division,
-                    from_page: page.from,
-                    first_oid: page.first,
-                    last_oid: page.last,
-                    status: 0,
-                },
-            );
+            ProjectsData::build_query(projects_data::Variables {
+                from_page: page.from,
+                first_oid: page.first,
+                last_oid: page.last,
+                status: 0,
+            });
         let projects_by_external_query =
             json!(projects_by_external_build_query);
 

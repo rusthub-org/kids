@@ -18,25 +18,16 @@ pub struct Project {
     pub user_id: ObjectId,
     pub category_id: ObjectId,
     pub subject: String,
-    pub investment: u64,
-    pub currency_type: String,
-    pub negotiated: bool,
-    pub duration: u32,
-    pub workday: bool,
     pub content: String,
-    pub examples: String,
-    pub worker_type: String,
-    pub worker_info: String,
     pub contact_user: String,
     pub contact_phone: String,
     pub contact_email: String,
     pub contact_im: String,
-    pub external: bool,
-    pub third_party_link: String,
     pub created_at: DateTime,
     pub updated_at: DateTime,
     pub hits: u64,
-    pub applicants: u32,
+    pub insides: u64,
+    pub stars: u64,
     pub language: String,
     pub status: i8,
 }
@@ -60,10 +51,6 @@ impl Project {
         html::push_html(&mut content_html, parser);
 
         content_html
-    }
-
-    pub async fn worker_info_html(&self) -> String {
-        self.worker_info.replace("\r\n", "<br>")
     }
 
     pub async fn created_at_nyrsq(&self) -> String {
@@ -120,27 +107,17 @@ pub struct ProjectNew {
     pub user_id: ObjectId,
     pub category_id: ObjectId,
     pub subject: String,
-    pub investment: u64,
-    pub currency_type: String,
-    pub negotiated: bool,
-    pub duration: u32,
-    pub workday: bool,
     pub content: String,
-    pub examples: String,
-    pub worker_type: String,
-    pub worker_info: String,
     pub contact_user: String,
     pub contact_phone: String,
     pub contact_email: String,
     pub contact_im: String,
     #[graphql(skip)]
-    pub external: bool,
-    #[graphql(skip)]
-    pub third_party_link: String,
-    #[graphql(skip)]
     pub hits: u64,
     #[graphql(skip)]
-    pub applicants: u32,
+    pub insides: u64,
+    #[graphql(skip)]
+    pub stars: u64,
     pub language: String,
     #[graphql(skip)]
     pub status: i8,
@@ -150,12 +127,14 @@ pub struct ProjectNew {
 pub struct File {
     pub _id: ObjectId,
     pub name: String,
+    pub kind: i8,
     pub location: String,
 }
 
 #[derive(async_graphql::InputObject, Serialize, Deserialize)]
 pub struct FileNew {
     pub name: String,
+    pub kind: i8,
     pub location: String,
 }
 

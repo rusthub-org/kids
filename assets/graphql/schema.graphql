@@ -6,9 +6,7 @@ schema {
 type Category {
   id: ObjectId!
   nameZh: String!
-  descriptionZh: String!
   nameEn: String!
-  descriptionEn: String!
   slug: String!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -19,9 +17,7 @@ type Category {
 
 input CategoryNew {
   nameZh: String!
-  descriptionZh: String!
   nameEn: String!
-  descriptionEn: String!
 }
 
 type CategoryUser {
@@ -40,11 +36,13 @@ scalar DateTime
 type File {
   id: ObjectId!
   name: String!
+  kind: Int!
   location: String!
 }
 
 input FileNew {
   name: String!
+  kind: Int!
   location: String!
 }
 
@@ -90,29 +88,19 @@ type Project {
   userId: ObjectId!
   categoryId: ObjectId!
   subject: String!
-  investment: Int!
-  currencyType: String!
-  negotiated: Boolean!
-  duration: Int!
-  workday: Boolean!
   content: String!
-  examples: String!
-  workerType: String!
-  workerInfo: String!
   contactUser: String!
   contactPhone: String!
   contactEmail: String!
   contactIm: String!
-  external: Boolean!
-  thirdPartyLink: String!
   createdAt: DateTime!
   updatedAt: DateTime!
   hits: Int!
-  applicants: Int!
+  insides: Int!
+  stars: Int!
   language: String!
   status: Int!
   contentHtml: String!
-  workerInfoHtml: String!
   createdAtNyrsq: String!
   updatedAtNyrsq: String!
   user: User!
@@ -138,15 +126,7 @@ input ProjectNew {
   userId: ObjectId!
   categoryId: ObjectId!
   subject: String!
-  investment: Int!
-  currencyType: String!
-  negotiated: Boolean!
-  duration: Int!
-  workday: Boolean!
   content: String!
-  examples: String!
-  workerType: String!
-  workerInfo: String!
   contactUser: String!
   contactPhone: String!
   contactEmail: String!
@@ -333,8 +313,6 @@ type User {
   imPublic: Boolean!
   website: String!
   introduction: String!
-  workerQuality: Int!
-  bossQuality: Int!
   createdAt: DateTime!
   updatedAt: DateTime!
   status: Int!

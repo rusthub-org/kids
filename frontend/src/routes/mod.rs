@@ -54,10 +54,10 @@ pub async fn push_res(app: &mut Server<State>) {
 
     let mut projects = home.at("/projects");
     projects.at("/").get(super::routes::projects::projects_index);
-    projects
-        .at("/:filter_str")
-        .get(super::routes::projects::projects_filter)
-        .post(super::routes::projects::projects_filter);
+    // projects
+    //     .at("/:filter_str")
+    //     .get(super::routes::projects::projects_filter)
+    //     .post(super::routes::projects::projects_filter);
 
     let mut project = home.at("/project");
     project.at("/").get(super::routes::projects::project_random);
@@ -66,7 +66,9 @@ pub async fn push_res(app: &mut Server<State>) {
         .get(super::routes::projects::project_new)
         .post(super::routes::projects::project_new);
     project.at("/:project_id").get(super::routes::projects::project_index);
-    project.at("/file/new/:file_name").put(super::routes::projects::file_new);
+    project
+        .at("/file/new/:file_name/:file_kind")
+        .put(super::routes::projects::file_new);
 
     // let mut categories = app.at("/categories");
     let mut category = home.at("/category");

@@ -30,9 +30,6 @@ fragment projects_in_position_fragment on Project {
   id
   subject
   content
-  investment
-  currencyType
-  duration
   
   category {
     nameZh

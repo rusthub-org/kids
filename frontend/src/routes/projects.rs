@@ -6,7 +6,7 @@ use std::{
 use async_std::{fs::OpenOptions, io};
 use tide::{Request, Response, Redirect, http::Method};
 use graphql_client::{GraphQLQuery, Response as GqlResponse};
-use serde_json::{Value, json};
+use serde_json::json;
 use percent_encoding::percent_decode;
 
 use crate::State;
@@ -22,10 +22,7 @@ use crate::models::{
         ProjectInfo, ProjectsData, projects_data, ProjectsByUserData,
         projects_by_user_data, ProjectsByCategoryData,
         projects_by_category_data, ProjectsByTopicData, projects_by_topic_data,
-        ProjectsByInvestmentData, projects_by_investment_data,
-        ProjectsByWorkerTypeData, projects_by_worker_type_data,
-        ProjectsByExternalData, projects_by_external_data, ProjectData,
-        project_data, ProjectNewData, project_new_data,
+        ProjectData, project_data, ProjectNewData, project_new_data,
         ProjectUpdateOneFieldByIdData, project_update_one_field_by_id_data,
         ProjectRandomData, project_random_data, FileNewData, file_new_data,
         ProjectFileNewData, project_file_new_data,
@@ -335,250 +332,6 @@ pub async fn projects_by_topic(req: Request<State>) -> tide::Result {
     projects_by_topic_tpl.render(&data).await
 }
 
-pub async fn projects_filter(req: Request<State>) -> tide::Result {
-    let language = String::from(req.param("language")?);
-
-    let mut projects_filter_tpl: Hbs =
-        Hbs::new("projects/projects-index").await;
-    projects_filter_tpl
-        .reg_head()
-        .await
-        .reg_header()
-        .await
-        .reg_container()
-        .await
-        .reg_pagination()
-        .await
-        .reg_footer()
-        .await;
-    projects_filter_tpl.reg_script_values().await.reg_script_lang().await;
-
-    let mut data: BTreeMap<&str, serde_json::Value> = BTreeMap::new();
-    data.insert("language", json!(language));
-    data.insert("nav-projects-selected", json!("is-selected"));
-    insert_wish_random(&mut data).await;
-
-    let sign_status = sign_status(&req).await;
-    if sign_status.sign_in {
-        insert_user_by_username(sign_status.username, &mut data).await;
-    }
-
-    let filter_str = req.param("filter_str")?;
-    let page: Page = req.query()?;
-
-    let filter_desc;
-    match req.method() {
-        Method::Post => {
-            data.insert("projects-filter-selected", json!("is-selected"));
-
-            let projects_by_investment =
-                projects_by_investment_filter(filter_str, page).await;
-            data.insert("pagination", projects_by_investment);
-
-            filter_desc = json!({
-                "condition": "projects-filter-investment-range",
-                "content": filter_str
-            });
-        }
-        _ => {
-            if filter_str.contains("-") {
-                data.insert("projects-filter-selected", json!("is-selected"));
-
-                let projects_by_investment =
-                    projects_by_investment_filter(filter_str, page).await;
-                data.insert("pagination", projects_by_investment);
-
-                filter_desc = json!({
-                    "condition": "projects-filter-investment-range",
-                    "content": filter_str
-                });
-            } else {
-                match filter_str {
-                    "managed" => {
-                        data.insert(
-                            "projects-managed-selected",
-                            json!("is-selected"),
-                        );
-
-                        let projects_by_external_build_query =
-                            ProjectsByExternalData::build_query(
-                                projects_by_external_data::Variables {
-                                    external: false,
-                                    from_page: page.from,
-                                    first_oid: page.first,
-                                    last_oid: page.last,
-                                    status: 1,
-                                },
-                            );
-                        let projects_by_external_query =
-                            json!(projects_by_external_build_query);
-
-                        let projects_by_external_resp_body: GqlResponse<
-                            serde_json::Value,
-                        > = surf::post(&gql_uri().await)
-                            .body(projects_by_external_query)
-                            .recv_json()
-                            .await
-                            .unwrap();
-                        let projects_by_external_resp_data =
-                            projects_by_external_resp_body
-                                .data
-                                .expect("无响应数据");
-
-                        let projects_by_external =
-                            projects_by_external_resp_data
-                                ["projectsByExternal"]
-                                .clone();
-                        data.insert("pagination", projects_by_external);
-
-                        filter_desc = json!({
-                            "condition": "projects-filter-managed",
-                            "content": ""
-                        });
-                    }
-                    "recommended" => {
-                        data.insert(
-                            "projects-recommended-selected",
-                            json!("is-selected"),
-                        );
-
-                        let projects_recommend_build_query =
-                            ProjectsData::build_query(
-                                projects_data::Variables {
-                                    from_page: page.from,
-                                    first_oid: page.first,
-                                    last_oid: page.last,
-                                    status: 2,
-                                },
-                            );
-                        let projects_recommend_query =
-                            json!(projects_recommend_build_query);
-
-                        let projects_recommend_resp_body: GqlResponse<
-                            serde_json::Value,
-                        > = surf::post(&gql_uri().await)
-                            .body(projects_recommend_query)
-                            .recv_json()
-                            .await?;
-                        let projects_recommend_resp_data =
-                            projects_recommend_resp_body
-                                .data
-                                .expect("无响应数据");
-
-                        let projects_recommend =
-                            projects_recommend_resp_data["projects"].clone();
-                        data.insert("pagination", projects_recommend);
-
-                        filter_desc = json!({
-                            "condition": "projects-filter-recommended",
-                            "content": ""
-                        });
-                    }
-                    _ => {
-                        let worker_type = match filter_str {
-                            "company" => {
-                                data.insert(
-                                    "projects-company-selected",
-                                    json!("is-selected"),
-                                );
-                                "^worker-role-company"
-                            }
-                            "team" => {
-                                data.insert(
-                                    "projects-team-selected",
-                                    json!("is-selected"),
-                                );
-                                "^worker-role-team"
-                            }
-                            _ => {
-                                data.insert(
-                                    "projects-person-selected",
-                                    json!("is-selected"),
-                                );
-                                "^worker-role-person"
-                            }
-                        };
-
-                        let projects_by_worker_type_build_query =
-                            ProjectsByWorkerTypeData::build_query(
-                                projects_by_worker_type_data::Variables {
-                                    worker_type: String::from(worker_type),
-                                    from_page: page.from,
-                                    first_oid: page.first,
-                                    last_oid: page.last,
-                                    status: 1,
-                                },
-                            );
-                        let projects_by_worker_type_query =
-                            json!(projects_by_worker_type_build_query);
-
-                        let projects_by_worker_type_resp_body: GqlResponse<
-                            serde_json::Value,
-                        > = surf::post(&gql_uri().await)
-                            .body(projects_by_worker_type_query)
-                            .recv_json()
-                            .await
-                            .unwrap();
-                        let projects_by_worker_type_resp_data =
-                            projects_by_worker_type_resp_body
-                                .data
-                                .expect("无响应数据");
-
-                        let projects_by_worker_type =
-                            projects_by_worker_type_resp_data
-                                ["projectsByWorkerType"]
-                                .clone();
-                        data.insert("pagination", projects_by_worker_type);
-
-                        filter_desc = json!({
-                            "condition": "projects-filter-recruitment-role",
-                            "content": &worker_type[1..]
-                        });
-                    }
-                }
-            }
-        }
-    }
-
-    data.insert("filter_desc", filter_desc);
-
-    projects_filter_tpl.render(&data).await
-}
-
-async fn projects_by_investment_filter(
-    investment_filter_str: &str,
-    page_query: Page,
-) -> Value {
-    let filter_vec: Vec<i64> = investment_filter_str
-        .split("-")
-        .map(|f| f.parse().unwrap_or_default())
-        .collect();
-    let projects_by_investment_build_query =
-        ProjectsByInvestmentData::build_query(
-            projects_by_investment_data::Variables {
-                investment_min: filter_vec[0],
-                investment_max: filter_vec[1],
-                from_page: page_query.from,
-                first_oid: page_query.first,
-                last_oid: page_query.last,
-                status: 1,
-            },
-        );
-    let projects_by_investment_query =
-        json!(projects_by_investment_build_query);
-
-    let projects_by_investment_resp_body: GqlResponse<serde_json::Value> =
-        surf::post(&gql_uri().await)
-            .body(projects_by_investment_query)
-            .recv_json()
-            .await
-            .unwrap();
-    let projects_by_investment_resp_data =
-        projects_by_investment_resp_body.data.expect("无响应数据");
-
-    projects_by_investment_resp_data["projectsByInvestment"].clone()
-}
-
 pub async fn project_new(mut req: Request<State>) -> tide::Result {
     let language = String::from(req.param("language")?);
 
@@ -612,15 +365,7 @@ pub async fn project_new(mut req: Request<State>) -> tide::Result {
                         user_id: project_info.user_id.clone(),
                         category_id: project_info.category_id,
                         subject: project_info.subject.clone(),
-                        investment: project_info.investment as i64,
-                        currency_type: project_info.currency_type,
-                        negotiated: project_info.negotiated,
-                        duration: project_info.duration as i64,
-                        workday: project_info.workday,
                         content: project_info.content,
-                        examples: project_info.examples,
-                        worker_type: project_info.worker_type,
-                        worker_info: project_info.worker_info,
                         contact_user: project_info.contact_user,
                         contact_phone: project_info.contact_phone,
                         contact_email: project_info.contact_email,
@@ -682,7 +427,10 @@ pub async fn project_new(mut req: Request<State>) -> tide::Result {
                     }
 
                     // create ProjectFile
-                    let file_ids = project_info.files.split(",");
+                    let file_ids = [
+                        project_info.cover_image_id,
+                        project_info.source_file_id,
+                    ];
                     for file_id in file_ids {
                         let project_file_new_build_query =
                             ProjectFileNewData::build_query(
@@ -837,6 +585,8 @@ pub async fn file_new(mut req: Request<State>) -> tide::Result {
     let file_name_percent_de = percent_decode(file_name_percent.as_bytes());
     let file_name = String::from(file_name_percent_de.decode_utf8()?);
 
+    let file_kind = req.param("file_kind")?.parse::<i64>()?;
+
     let file_ext_index = file_name.rfind(".");
     let now_micros = SystemTime::now().duration_since(UNIX_EPOCH)?.as_micros();
 
@@ -856,6 +606,7 @@ pub async fn file_new(mut req: Request<State>) -> tide::Result {
         let file_new_build_query =
             FileNewData::build_query(file_new_data::Variables {
                 name: file_name.clone(),
+                kind: file_kind,
                 location: file_location,
             });
         let file_new_query = json!(file_new_build_query);

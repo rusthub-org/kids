@@ -14,14 +14,11 @@ fragment projects_result_fragment on ProjectsResult {
   currentItems {
     id
     subject
-    investment
-    currencyType
-    negotiated
     content
     updatedAtNyrsq
     hits
-    external
-    thirdPartyLink
+    insides
+    stars
     status
 
     user {
@@ -112,75 +109,11 @@ query ProjectsByTopicData(
   }
 }
 
-query ProjectsByInvestmentData(
-  $investmentMin: Int!
-  $investmentMax: Int!
-  $fromPage: Int!
-  $firstOid: String!
-  $lastOid: String!
-  $status: Int!
-) {
-  projectsByInvestment(
-    investmentMin: $investmentMin
-    investmentMax: $investmentMax
-    fromPage: $fromPage
-    firstOid: $firstOid
-    lastOid: $lastOid
-    status: $status
-  ) {
-    ...projects_result_fragment
-  }
-}
-
-query ProjectsByWorkerTypeData(
-  $workerType: String!
-  $fromPage: Int!
-  $firstOid: String!
-  $lastOid: String!
-  $status: Int!
-) {
-  projectsByWorkerType(
-    workerType: $workerType
-    fromPage: $fromPage
-    firstOid: $firstOid
-    lastOid: $lastOid
-    status: $status
-  ) {
-    ...projects_result_fragment
-  }
-}
-
-query ProjectsByExternalData(
-  $external: Boolean!
-  $fromPage: Int!
-  $firstOid: String!
-  $lastOid: String!
-  $status: Int!
-) {
-  projectsByExternal(
-    external: $external
-    fromPage: $fromPage
-    firstOid: $firstOid
-    lastOid: $lastOid
-    status: $status
-  ) {
-    ...projects_result_fragment
-  }
-}
-
 mutation ProjectNewData(
   $userId: ObjectId!
   $categoryId: ObjectId!
   $subject: String!
-  $investment: Int!
-  $currencyType: String!
-  $negotiated: Boolean!
-  $duration: Int!
-  $workday: Boolean!
   $content: String!
-  $examples: String!
-  $workerType: String!
-  $workerInfo: String!
   $contactUser: String!
   $contactPhone: String!
   $contactEmail: String!
@@ -192,15 +125,7 @@ mutation ProjectNewData(
       userId: $userId
       categoryId: $categoryId
       subject: $subject
-      investment: $investment
-      currencyType: $currencyType
-      negotiated: $negotiated
-      duration: $duration
-      workday: $workday
       content: $content
-      examples: $examples
-      workerType: $workerType
-      workerInfo: $workerInfo
       contactUser: $contactUser
       contactPhone: $contactPhone
       contactEmail: $contactEmail
@@ -221,25 +146,16 @@ query ProjectData(
   ) {
     id
     subject
-    investment
-    currencyType
-    negotiated
-    duration
-    workday
     content
     contentHtml
-    examples
-    workerType
-    workerInfoHtml
     contactUser
     contactPhone
     contactEmail
     contactIm
-    external
-    thirdPartyLink
     updatedAtNyrsq
     hits
-    applicants
+    insides
+    stars
     status
 
     user {
@@ -249,9 +165,7 @@ query ProjectData(
 
     category {
       nameZh
-      descriptionZh
       nameEn
-      descriptionEn
       slug
     }
 
@@ -287,11 +201,13 @@ query ProjectRandomData {
 
 mutation FileNewData(
   $name: String!
+  $kind: Int!
   $location: String!
 ) {
   fileNew(
     fileNew: {
       name: $name
+      kind: $kind
       location: $location
     }
   ) {

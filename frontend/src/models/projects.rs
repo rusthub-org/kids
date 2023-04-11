@@ -5,17 +5,10 @@ pub struct ProjectInfo {
     pub user_id: String,
     pub category_id: String,
     pub subject: String,
+    pub cover_image_id: String,
     pub topic_names: String,
-    pub investment: u64,
-    pub currency_type: String,
-    pub negotiated: bool,
-    pub duration: u32,
-    pub workday: bool,
     pub content: String,
-    pub examples: String,
-    pub files: String,
-    pub worker_type: String,
-    pub worker_info: String,
+    pub source_file_id: String,
     pub contact_user: String,
     pub contact_phone: String,
     pub contact_email: String,
@@ -58,27 +51,6 @@ pub struct ProjectsByCategoryData;
     query_path = "../assets/graphql/projects.graphql"
 )]
 pub struct ProjectsByTopicData;
-
-#[derive(GraphQLQuery)]
-#[graphql(
-    schema_path = "../assets/graphql/schema.graphql",
-    query_path = "../assets/graphql/projects.graphql"
-)]
-pub struct ProjectsByInvestmentData;
-
-#[derive(GraphQLQuery)]
-#[graphql(
-    schema_path = "../assets/graphql/schema.graphql",
-    query_path = "../assets/graphql/projects.graphql"
-)]
-pub struct ProjectsByWorkerTypeData;
-
-#[derive(GraphQLQuery)]
-#[graphql(
-    schema_path = "../assets/graphql/schema.graphql",
-    query_path = "../assets/graphql/projects.graphql"
-)]
-pub struct ProjectsByExternalData;
 
 #[derive(GraphQLQuery)]
 #[graphql(

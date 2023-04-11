@@ -43,8 +43,6 @@ query UserByUsernameDetailData(
     website
     introduction
     introductionHtml
-    workerQuality
-    bossQuality
     createdAtNyrsq
     status
     
@@ -93,8 +91,6 @@ fragment users_result_fragment on UsersResult {
     id
     username
     nickname
-    workerQuality
-    bossQuality
     createdAtNyrsq
 
     keywords {

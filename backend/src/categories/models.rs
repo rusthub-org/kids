@@ -15,9 +15,7 @@ use crate::projects::services::projects_by_category_id;
 pub struct Category {
     pub _id: ObjectId,
     pub name_zh: String,
-    pub description_zh: String,
     pub name_en: String,
-    pub description_en: String,
     pub slug: String,
     pub created_at: DateTime,
     pub updated_at: DateTime,
@@ -61,9 +59,7 @@ impl Category {
 #[derive(async_graphql::InputObject, Serialize, Deserialize)]
 pub struct CategoryNew {
     pub name_zh: String,
-    pub description_zh: String,
     pub name_en: String,
-    pub description_en: String,
     #[graphql(skip)]
     pub slug: String,
 }

@@ -138,17 +138,6 @@
                         {{{ project.contentHtml }}}
                     </section>
                     <p class="d-flex my6 fs-body1">
-                        <strong class="flex--item ws-nowrap">{{ lang "project-examples" }}</strong>
-                        <span class="flex--item pl4">
-                            {{#if project.examples }}
-                                {{ project.examples }}
-                            {{else}}
-                                {{ lang "not-setting" }}
-                            {{/if}}
-                        </span>
-                    </p>
-                    <p class="d-flex my6 fs-body1">
-                        <strong class="flex--item ws-nowrap">{{ lang "project-files" }}</strong>
                         <span class="flex--item pl4">
                             {{#if sign-in }}
                                 {{#if project.files }}
@@ -170,19 +159,6 @@
                                 </a>
                             {{/if}}
                         </span>
-                    </p>
-
-                    <p class="my6 p4 fw-bold bg-blue-100 fc-blue-900">
-                        💥 {{ lang "project-recruitment" }}
-                    </p>
-
-                    <p class="my6 fs-body1">
-                        <strong>{{ lang "project-recruitment-role" }}</strong>
-                        <span class="pl2">{{ lang project.workerType }}</span>
-                    </p>
-                    <p class="d-flex my6 fs-body1">
-                        <strong class="flex--item ws-nowrap">{{ lang "project-recruitment-desc" }}</strong>
-                        <span class="flex--item pl4">{{{ project.workerInfoHtml }}}</span>
                     </p>
 
                     <p class="my6 p4 fw-bold bg-blue-100 fc-blue-900">
