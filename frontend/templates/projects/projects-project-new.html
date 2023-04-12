@@ -136,12 +136,12 @@ Support **Markdown** syntax
                             <div class="d-flex w66 wmn4 sm:w100">
                                 <label class="flex--item s-input-fill order-first fw-bold fs-body2 w96"
                                     for="source_file">
-                                    {{ lang "project-new-source" }}
+                                    {{ lang "project-new-source-file" }}
                                 </label>
                                 <div class="d-flex fl-grow1 ps-relative">
                                     <input type="hidden" name="source_file_id" id="source_file_id">
                                     <input class="flex--item s-input blr0" type="file" id="source_file"
-                                        onchange="uploadFile(this, 'source_file_id', 2, 5242880)" required>
+                                        onchange="uploadFile(this, 'source_file_id', 2, 10485760)" required>
                                 </div>
                             </div>
 
@@ -246,34 +246,60 @@ Support **Markdown** syntax
                 document.getElementById("content").value = editor.content;
             }
 
+            let img_ext = new Array(".png", ".jpg", ".gif");
+            let src_ext = new Array(".sb3",);
+
             function uploadFile(input, file_id, file_kind, size_limit) {
                 let file = input.files[0];
-                if (file.size <= size_limit) {
-                    var form_data = new FormData();
-                    form_data.append("file", file);
+                if (file_kind == 1) {
+                    if (img_ext.contain(file.name.extension()) && file.size <= size_limit) {
+                        uploading(file, file_id, file_kind);
+                    }
+                    else {
+                        let failure_info = '{{ lang "project-new-cover-image" }}' + ' - ' + '{{ lang "project-new-file-upload-failure" }}';
+                        failure_info += '{{ lang "project-new-file-format-limit" }} *' + img_ext.join("/") + '\n';
+                        failure_info += '{{ lang "project-new-file-size-limit" }} ' + size_limit / 1048576 + 'm';
 
-                    $.ajax({
-                        type: "PUT",
-                        url: "/{{ language }}/project/file/new/" + file.name + "/" + file_kind,
-                        data: form_data,
-                        processData: false,
-                        contentType: false,
-                        success: function (res) {
-                            if (res["done"]) {
-                                $("#" + file_id).val(res["file_id"]);
-                                alert(res["file_name"] + ' - ' + '{{ lang "project-new-file-upload-success" }}');
-                            }
-                            else {
-                                input.value = null;
-                                alert(file.name + ' - ' + '{{ lang "project-new-file-upload-failure" }}' + ' - ' + res["err"]);
-                            }
+                        input.value = null;
+                        alert(failure_info);
+                    }
+                }
+                else if (file_kind == 2) {
+                    if (src_ext.contain(file.name.extension()) && file.size <= size_limit) {
+                        uploading(file, file_id, file_kind);
+                    }
+                    else {
+                        let failure_info = '{{ lang "project-new-source-file" }}' + ' - ' + '{{ lang "project-new-file-upload-failure" }}';
+                        failure_info += '{{ lang "project-new-file-format-limit" }} *' + src_ext.join("/") + '\n';
+                        failure_info += '{{ lang "project-new-file-size-limit" }} ' + size_limit / 1048576 + 'm';
+
+                        input.value = null;
+                        alert(failure_info);
+                    }
+                }
+            }
+
+            function uploading(file, file_id, file_kind) {
+                let form_data = new FormData();
+                form_data.append("file", file);
+
+                $.ajax({
+                    type: "PUT",
+                    url: "/{{ language }}/project/file/new/" + file.name + "/" + file_kind,
+                    data: form_data,
+                    processData: false,
+                    contentType: false,
+                    success: function (res) {
+                        if (res["done"]) {
+                            $("#" + file_id).val(res["file_id"]);
+                            alert(res["file_name"] + ' - ' + '{{ lang "project-new-file-upload-success" }}');
                         }
-                    });
-                }
-                else {
-                    input.value = null;
-                    alert(file.name + ' - ' + '{{ lang "project-new-file-size-limit" }} ' + size_limit / 1048576 + 'm');
-                }
+                        else {
+                            input.value = null;
+                            alert(file.name + ' - ' + '{{ lang "project-new-file-upload-failure" }}' + ' - ' + res["err"]);
+                        }
+                    }
+                });
             }
         </script>
     </body>

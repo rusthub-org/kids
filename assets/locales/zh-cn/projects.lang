@@ -53,7 +53,7 @@ project-new-cover-image = 封面图片
 project-new-keys-tags = 关键词/标签
 project-new-keys-tags-tip = 以空格、回车键，或半角逗号分割
 project-new-description = 项目描述（尽量详细，突出重点。建议 100 个字符以上）
-project-new-source = 项目源码
+project-new-source-file = 项目源码
 project-new-contact-person = 联系人
 project-new-contact-person-tip = 联系人的称呼
 project-new-contact-email = 电子邮件
@@ -79,8 +79,9 @@ project-new-failed = 该项目 <span class="td-underline">{ $subject }</span> �
     <br><br>
     使用<span class="fw-bold fc-blue-500">项目提升</span>功能，可让你的项目显示在列表顶部。
 
-project-new-file-size-limit = 文件上传失败：\n单个文件的大小不能超过
+project-new-file-format-limit = - 文件格式须为
+project-new-file-size-limit = - 文件大小不能超过
 project-new-file-uploaded = 已上传
 project-new-file-remove = 移除
 project-new-file-upload-success = 文件上传成功
-project-new-file-upload-failure = 文件上传失败
+project-new-file-upload-failure = 文件上传失败\n

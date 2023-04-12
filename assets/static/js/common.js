@@ -1,7 +1,28 @@
 "use strict";
 
+String.prototype.extension = function () {
+    let ext = null;
+
+    let name = this.toLowerCase();
+    let i = name.lastIndexOf(".");
+    if (i > -1) {
+        ext = name.substring(i);
+    }
+
+    return ext;
+}
+
+Array.prototype.contain = function (obj) {
+    for (let i = 0; i < this.length; i++) {
+        if (this[i] === obj)
+            return true;
+    }
+
+    return false;
+};
+
 function setInputByCheckbox(input_name, checkbox) {
-    var input_obj = $("input[name=" + input_name + "]");
+    let input_obj = $("input[name=" + input_name + "]");
 
     if (checkbox instanceof Object) {
         input_obj.val($(checkbox).is(':checked'));

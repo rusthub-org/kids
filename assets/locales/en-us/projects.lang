@@ -53,7 +53,7 @@ project-new-cover-image = Cover Image
 project-new-keys-tags = Keys/Tags
 project-new-keys-tags-tip = Separated by space, enter key, or comma
 project-new-description = Project description (In detail, stress the main points. Recommended more than 100 characters)
-project-new-source = Project Source
+project-new-source-file = Project Source
 project-new-contact-person = Contacts
 project-new-contact-person-tip = Name or nickname of contact person
 project-new-contact-email = Email
@@ -79,8 +79,9 @@ project-new-failed = This project <span class="td-underline">{ $subject }</span>
     <br><br>
     Use the function <span class="fw-bold fc-blue-500">project hoisting</span>, your project could be displayed at the top of list.
 
-project-new-file-size-limit = Failed to upload file: \nThe size of a single file must be less than
+project-new-file-format-limit = - File format must be
+project-new-file-size-limit = - File size must be less than
 project-new-file-uploaded = Uploaded
 project-new-file-remove = Remove
 project-new-file-upload-success = File uploaded successfully
-project-new-file-upload-failure = File upload failed
+project-new-file-upload-failure = File upload failed\n
