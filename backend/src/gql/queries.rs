@@ -338,6 +338,18 @@ impl QueryRoot {
         projects::services::files_by_project_id(db, project_id).await
     }
 
+    // get file of one project by file's kind & project_id
+    async fn file_by_kind_project_id(
+        &self,
+        ctx: &Context<'_>,
+        file_kind: i8,
+        project_id: ObjectId,
+    ) -> GqlResult<File> {
+        let db = &ctx.data_unchecked::<DataSource>().db;
+        projects::services::file_by_kind_project_id(db, file_kind, project_id)
+            .await
+    }
+
     // Get all categories
     async fn categories(&self, ctx: &Context<'_>) -> GqlResult<Vec<Category>> {
         let db = &ctx.data_unchecked::<DataSource>().db;

@@ -88,7 +88,7 @@
                                 <div class="d-flex fl-grow1 ps-relative">
                                     <input type="hidden" name="cover_image_id" id="cover_image_id">
                                     <input class="flex--item s-input blr0" type="file" id="cover_image"
-                                        onchange="uploadFile(this, 'cover_image_id', 1, 1048576)" required>
+                                        onchange="uploadFile(this, 'cover_image_id', 1, 102400)" required>
                                 </div>
                             </div>
 
@@ -258,7 +258,7 @@ Support **Markdown** syntax
                     else {
                         let failure_info = '{{ lang "project-new-cover-image" }}' + ' - ' + '{{ lang "project-new-file-upload-failure" }}';
                         failure_info += '{{ lang "project-new-file-format-limit" }} *' + img_ext.join("/") + '\n';
-                        failure_info += '{{ lang "project-new-file-size-limit" }} ' + size_limit / 1048576 + 'm';
+                        failure_info += '{{ lang "project-new-file-size-limit" }} ' + size_limit / 1024 + 'k';
 
                         input.value = null;
                         alert(failure_info);

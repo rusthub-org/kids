@@ -65,6 +65,17 @@ pub async fn projects_index(req: Request<State>) -> tide::Result {
         insert_user_by_username(sign_status.username, &mut data).await;
     }
 
+    let categories_build_query =
+        CategoriesData::build_query(categories_data::Variables {});
+    let categories_query = json!(categories_build_query);
+
+    let categories_resp_body: GqlResponse<serde_json::Value> =
+        surf::post(&gql_uri().await).body(categories_query).recv_json().await?;
+    let categories_resp_data = categories_resp_body.data.expect("无响应数据");
+
+    let categories = categories_resp_data["categories"].clone();
+    data.insert("categories", categories);
+
     let page: Page = req.query().unwrap();
     let projects_build_query =
         ProjectsData::build_query(projects_data::Variables {

@@ -100,13 +100,14 @@ type Project {
   stars: Int!
   language: String!
   status: Int!
+  coverImage: File!
+  sourceFile: File!
   contentHtml: String!
-  createdAtNyrsq: String!
-  updatedAtNyrsq: String!
   user: User!
   category: Category!
   topics: [Topic!]!
-  files: [File!]!
+  createdAtNyrsq: String!
+  updatedAtNyrsq: String!
 }
 
 type ProjectFile {
@@ -237,6 +238,7 @@ type QueryRoot {
   ): ProjectsResult!
   fileById(id: ObjectId!): File!
   filesByProjectId(projectId: ObjectId!): [File!]!
+  fileByKindProjectId(fileKind: Int!, projectId: ObjectId!): File!
   categories: [Category!]!
   categoriesByUserId(userId: ObjectId!): [Category!]!
   categoriesByUsername(username: String!): [Category!]!

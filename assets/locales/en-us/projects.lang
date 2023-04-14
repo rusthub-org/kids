@@ -1,23 +1,6 @@
 projects-requirements = Projects and Requirements
 
-managed = Managed
-recommended = Recommended
-worker-role-person = Person
-worker-role-team = Team
-worker-role-company = Company
-investment = Investment
-investment-min = minimum
-investment-max = maximum
-
-projects-filter-boss = Projects of boss: 
-projects-filter-worker = Projects of worker: 
-projects-filter-category = Projects category: 
-projects-filter-keys-tags = Keys and tags of projects: 
-projects-filter-investment-range = Investment range of projects: 
-projects-filter-managed = Managed projects
-projects-filter-recommended = Recommended projects
-projects-filter-recruitment-role = Recruitment role of projects: 
-
+project-online = Online Programming
 project-create = Create new Project
 my-projects = My Projects
 
@@ -32,8 +15,6 @@ project-data-aggregation = Data aggregation at
 project-investment = Investment: 
 project-negotiated = Negotiated
 project-duration = Development duration: 
-project-hits = Hits: 
-project-applicants = Applicants: 
 project-keys-tags = Project keys/tags: 
 project-contact-person = Contact person: 
 project-contact-phone = Phone: 

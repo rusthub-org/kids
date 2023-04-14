@@ -34,6 +34,22 @@ pub struct Project {
 
 #[async_graphql::ComplexObject]
 impl Project {
+    pub async fn cover_image(
+        &self,
+        ctx: &async_graphql::Context<'_>,
+    ) -> GqlResult<File> {
+        let db = &ctx.data_unchecked::<DataSource>().db;
+        super::services::file_by_kind_project_id(db, 1, self._id).await
+    }
+
+    pub async fn source_file(
+        &self,
+        ctx: &async_graphql::Context<'_>,
+    ) -> GqlResult<File> {
+        let db = &ctx.data_unchecked::<DataSource>().db;
+        super::services::file_by_kind_project_id(db, 2, self._id).await
+    }
+
     pub async fn content_html(&self) -> String {
         use pulldown_cmark::{Parser, Options, html};
 
@@ -51,22 +67,6 @@ impl Project {
         html::push_html(&mut content_html, parser);
 
         content_html
-    }
-
-    pub async fn created_at_nyrsq(&self) -> String {
-        self.created_at
-            .to_chrono()
-            .with_timezone(&FixedOffset::east_opt(8 * 3600).unwrap())
-            .format(DTF_YMDHMSZ)
-            .to_string()
-    }
-
-    pub async fn updated_at_nyrsq(&self) -> String {
-        self.updated_at
-            .to_chrono()
-            .with_timezone(&FixedOffset::east_opt(8 * 3600).unwrap())
-            .format(DTF_YMDHMSZ)
-            .to_string()
     }
 
     pub async fn user(
@@ -93,12 +93,20 @@ impl Project {
         topics::services::topics_by_project_id(db, self._id).await
     }
 
-    pub async fn files(
-        &self,
-        ctx: &async_graphql::Context<'_>,
-    ) -> GqlResult<Vec<File>> {
-        let db = &ctx.data_unchecked::<DataSource>().db;
-        super::services::files_by_project_id(db, self._id).await
+    pub async fn created_at_nyrsq(&self) -> String {
+        self.created_at
+            .to_chrono()
+            .with_timezone(&FixedOffset::east_opt(8 * 3600).unwrap())
+            .format(DTF_YMDHMSZ)
+            .to_string()
+    }
+
+    pub async fn updated_at_nyrsq(&self) -> String {
+        self.updated_at
+            .to_chrono()
+            .with_timezone(&FixedOffset::east_opt(8 * 3600).unwrap())
+            .format(DTF_YMDHMSZ)
+            .to_string()
     }
 }
 

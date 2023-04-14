@@ -75,8 +75,8 @@ async fn init_index<'ii>(
             .unwrap();
     let home_resp_data = home_resp_body.data.expect("无响应数据");
 
-    let managed_projects = home_resp_data["managedProjects"].clone();
-    data.insert("managed_projects", managed_projects);
+    // let managed_projects = home_resp_data["managedProjects"].clone();
+    // data.insert("managed_projects", managed_projects);
 
     let recommended_projects = home_resp_data["recommendedProjects"].clone();
     data.insert("recommended_projects", recommended_projects);

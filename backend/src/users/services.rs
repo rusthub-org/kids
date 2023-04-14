@@ -152,9 +152,9 @@ pub async fn user_update_one_field_by_id(
 pub async fn user_by_email(db: &Database, email: String) -> GqlResult<User> {
     let coll = db.collection::<Document>("users");
 
-    let exist_document = coll.find_one(doc! {"email": &email}, None).await?;
-    if exist_document.is_some() {
-        let user: User = from_document(exist_document.unwrap())?;
+    let user_document = coll.find_one(doc! {"email": &email}, None).await?;
+    if user_document.is_some() {
+        let user: User = from_document(user_document.unwrap())?;
         Ok(user)
     } else {
         Err(Error::new(format!("{} - 未注册", email)))
@@ -168,10 +168,10 @@ pub async fn user_by_username(
 ) -> GqlResult<User> {
     let coll = db.collection::<Document>("users");
 
-    let exist_document =
+    let user_document =
         coll.find_one(doc! {"username": &username}, None).await?;
-    if exist_document.is_some() {
-        let user: User = from_document(exist_document.unwrap())?;
+    if user_document.is_some() {
+        let user: User = from_document(user_document.unwrap())?;
         Ok(user)
     } else {
         Err(Error::new(format!("{} - 未注册", username)))

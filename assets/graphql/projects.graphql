@@ -157,6 +157,10 @@ query ProjectData(
     insides
     stars
     status
+    
+    sourceFile {
+      location
+    }
 
     user {
       username
@@ -172,11 +176,6 @@ query ProjectData(
     topics {
       name
       slug
-    }
-    
-    files {
-      name
-      location
     }
   }
 }

@@ -3,6 +3,7 @@ query CategoriesData {
     id
     nameZh
     nameEn
+    slug
   }
 }
 

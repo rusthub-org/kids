@@ -216,7 +216,7 @@ pub async fn projects_in_position(
     }
 
     match position.trim() {
-        "managed" => filter_doc.insert("status", doc! {"$gte": 6}),
+        // "managed" => filter_doc.insert("status", doc! {"$gte": 6}),
         "recommended" => filter_doc.insert("status", doc! {"$gte": 2}),
         "published" => filter_doc.insert("status", doc! {"$gte": 1}),
         _ => None,
@@ -842,6 +842,28 @@ pub async fn files_by_project_id(
     }
 
     Ok(files)
+}
+
+// get file of one project by file's kind & project_id
+pub async fn file_by_kind_project_id(
+    db: &Database,
+    file_kind: i8,
+    project_id: ObjectId,
+) -> GqlResult<File> {
+    let projects_files = projects_files_by_project_id(db, project_id).await;
+
+    let mut file_ids = vec![];
+    for project_file in projects_files {
+        file_ids.push(project_file.file_id);
+    }
+    let filter_doc = doc! {"_id": {"$in": file_ids}, "kind": file_kind as i32};
+
+    let coll = db.collection::<Document>("files");
+    let file_document =
+        coll.find_one(filter_doc, None).await.expect("账户不存在").unwrap();
+
+    let file: File = from_document(file_document)?;
+    Ok(file)
 }
 
 // get all ProjectFile by project_id

@@ -8,8 +8,8 @@ nav-creating = Start Creating
 nav-creating-tip = Start creating stories, games, musics, arts, animations ...
 nav-projects = Explore Projects
 nav-projects-tip = Explore shared stories, games, musics, arts, animations ...
-nav-tutorials = Tutorials & Examples
-nav-tutorials-tip = Step-by-step tutorials and examples
+nav-tutorials = Tutorials & Videos
+nav-tutorials-tip = Step-by-step tutorials, examples, videos ...
 nav-users = Find Friends
 nav-users-tip = Find friends, communicate with each other, and learn together
 nav-books = NiQin Books
@@ -23,13 +23,15 @@ random-project = Random Project
 shared-aphorism = shared an aphorism: 
 
 more = More ...
-projects-managed = Latest Managed
 projects-recommended = Latest Recommended
 projects-published = Latest Published
+project-hits = Hits
+project-insides = Insides
+project-stars = Stars
 
 register = Register
 sign-in = Sign in
-sign-in-intro = Sign in KouSun
+sign-in-intro = Sign in Kids@KouSun
 sign-out = Sign out
 
 user-profile = Your profile
@@ -40,15 +42,6 @@ user-finance = Finance center
 projects-center = Projects center
 projects-matching = Projects Matching
 projects-management = Projects Management
-
-currency-type = Currency type?
-currency-cny = yuan (CNY)
-currency-eur = euros (EUR)
-currency-usd = dollars (USD)
-currency-jpy = yen (JPY)
-
-days = days
-workdays = workdays
 
 all = All
 search = Search

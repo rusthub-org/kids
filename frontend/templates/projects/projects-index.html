@@ -34,45 +34,23 @@
           {{ lang "all" }}
         </a>
         <button class="s-btn sm:mb4" disabled>-</button>
-        <span class="s-btn-group sm:mb4">
-          <a class="s-btn s-btn__outlined {{ projects-managed-selected }}" href="/{{ language }}/projects/managed">
-            {{ lang "managed" }}
-          </a>
-          <a class="s-btn s-btn__outlined {{ projects-recommended-selected }}"
-            href="/{{ language }}/projects/recommended">
-            {{ lang "recommended" }}
-          </a>
-        </span>
-        <button class="s-btn sm:mb4" disabled>-</button>
-        <span class="s-btn-group sm:mb4">
-          <a class="s-btn s-btn__outlined {{ projects-person-selected }}" href="/{{ language }}/projects/person">
-            {{ lang "worker-role-person" }}
-          </a>
-          <a class="s-btn s-btn__outlined {{ projects-team-selected }}" href="/{{ language }}/projects/team">
-            {{ lang "worker-role-team" }}
-          </a>
-          <a class="s-btn s-btn__outlined {{ projects-company-selected }}" href="/{{ language }}/projects/company">
-            {{ lang "worker-role-company" }}
-          </a>
-        </span>
-        <button class="s-btn sm:mb4" disabled>-</button>
-        <span class="flex--item fl-grow1 sm:mb4">
-          <form method="post" onsubmit="setAction(this)">
-            <label class="s-label--status s-label--status__beta fs-body1" for="investment_min">
-              {{ lang "investment" }}
-            </label>
-            <input class="s-input bbw1 iw80" type="number" name="investment_min" id="investment_min" minlength="3"
-              placeholder='{{ lang "investment-min" }}' aria-label='{{ lang "investment-min" }}' required>
-            -
-            <input class="s-input bbw1 iw80" type="number" name="investment_max" id="investment_max" minlength="3"
-              placeholder='{{ lang "investment-max" }}' aria-label='{{ lang "investment-max" }}' required>
-            <button class="s-btn s-btn__outlined {{ projects-filter-selected }}" type="submit">
-              {{ lang "search" }}
-            </button>
-          </form>
+        <span class="flex--item fl-grow1 s-btn-group sm:mb4">
+          {{#each categories as |category|}}
+            <a class="s-btn s-btn__outlined {{#if (str-cmp category.id id-selected) }}is-selected{{/if}}"
+              href="/{{ ../language }}/category/{{ category.slug }}/projects">
+              {{#if (str-cmp ../language "zh-cn") }}
+                {{ category.nameZh }}
+              {{else}}
+                {{ category.nameEn }}
+              {{/if}}
+            </a>
+          {{/each}}
         </span>
 
         <span class="flex--item">
+          <a class="s-btn s-btn__filled is-selected" href="http://43.192.48.19:8602" target="_blank">
+            {{ lang "project-online" }}
+          </a>
           <a class="s-btn s-btn__filled is-selected" href="/{{ language }}/project/new" target="_blank">
             {{ lang "project-create" }}
           </a>
@@ -102,27 +80,6 @@
                 </a>
                 <a href="/{{ ../language }}/project/{{ project.id }}" target="_blank">
                   {{ project.subject }}
-                  {{#unless project.external }}
-                    <sup class="fw-normal fs-fine">No.{{ project.id }}</sup>
-                  {{else}}
-                    <span class="ml8 s-badge s-badge__rep fc-blue-700 fs-caption">
-                      {{#if (str-cmp project.thirdPartyLink "codemart" "ct") }}
-                        码市
-                      {{/if}}
-                      {{#if (str-cmp project.thirdPartyLink "dribbble" "ct") }}
-                        dribbble
-                      {{/if}}
-                      {{#if (str-cmp project.thirdPartyLink "freelancer" "ct") }}
-                        freelancer
-                      {{/if}}
-                      {{#if (str-cmp project.thirdPartyLink "oschina" "ct") }}
-                        开源众包
-                      {{/if}}
-                      {{#if (str-cmp project.thirdPartyLink "taskcity" "ct") }}
-                        智城
-                      {{/if}}
-                    </span>
-                  {{/unless }}
                 </a>
                 {{#if (str-cmp project.status 2 "gte") }}
                   <span class="ml8 s-tag s-tag__moderator fw-normal fs-body1">

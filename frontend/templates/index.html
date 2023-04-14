@@ -436,69 +436,6 @@
 
         <div class="flex--item bg-black-050 p16">
 
-            {{#if managed_projects }}
-                <div class="d-flex p12 pt0">
-                    <span class="fl-grow1 fs-subheading bg-confetti-animated">
-                        {{ lang "projects-managed" }}
-                    </span>
-                    <a class="pl8 fs-body2 fw-bold" href="/{{ language }}/projects/managed">
-                        {{ lang "more" }}
-                    </a>
-                </div>
-
-                <div class="d-grid grid__2 lg:grid__1 sm:grid__1 g12 w100 wmx100 mx-auto">
-                    {{#each managed_projects as |project|}}
-                        <article class="s-card p16 bg-silver-lighter bs-sm bar-md h:bs-md sm:ai-center">
-                            <p class="fw-bold fs-body3 fc-theme-secondary-400 mb2">
-                                <a class="s-tag" href="/{{ ../language }}/category/{{ project.category.slug }}/projects"
-                                    target="_blank">
-                                    {{#if (str-cmp ../language "zh-cn") }}
-                                        {{ project.category.nameZh }}
-                                    {{else}}
-                                        {{ project.category.nameEn }}
-                                    {{/if}}
-                                </a>
-
-                                <a href="/{{ ../language }}/project/{{ project.id }}" target="_blank">
-                                    {{ project.subject }}
-                                </a>
-                            </p>
-                            <p class="fc-medium mb2">
-                                <strong>
-                                    {{ project.investment }}
-                                    {{ lang project.currencyType }}
-                                </strong>
-                                |
-                                <strong>
-                                    {{ project.duration }}
-                                    {{ lang "days" }}
-                                </strong>
-                                {{#if project.topics }}
-                                    |
-                                    {{#each project.topics as |topic|}}
-                                        <a class="s-badge s-badge__sm mb2"
-                                            href="/{{ ../../language }}/topic/{{ topic.slug }}/projects"
-                                            target="_blank">
-                                            {{ topic.name }}
-                                        </a>
-                                    {{/each}}
-                                {{/if}}
-                            </p>
-                            <p class="fc-medium v-truncate1">
-                                {{ project.content }}
-                            </p>
-                        </article>
-                    {{/each}}
-                </div>
-
-                {{!-- google ad 内嵌，自适应 --}}
-                {{!-- <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article"
-                    data-ad-format="fluid" data-ad-client="ca-pub-2498669832870483" data-ad-slot="1938093545"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script> --}}
-            {{/if}}
-
             {{#if recommended_projects }}
                 <div class="d-flex p12 pt16">
                     <span class="fl-grow1 fs-subheading bg-confetti-animated">
@@ -509,11 +446,15 @@
                     </a>
                 </div>
 
-                <div class="d-grid grid__2 lg:grid__1 sm:grid__1 g12 w100 wmx100 mx-auto">
+                <div class="d-grid grid__4 lg:grid__2 sm:grid__1 g12 w100 wmx100 mx-auto">
                     {{#each recommended_projects as |project|}}
                         <article class="s-card p16 bg-silver-lighter bs-sm bar-md h:bs-md sm:ai-center">
-                            <p class="fw-bold fs-body3 fc-theme-secondary-400 mb2">
-                                <a class="s-tag" href="/{{ ../language }}/category/{{ project.category.slug }}/projects"
+                            <a href="/{{ ../language }}/project/{{ project.id }}" target="_blank">
+                                <img src="/static/files/{{ project.coverImage.location }}">
+                            </a>
+                            <p class="fw-bold fs-body3 fc-theme-secondary-400 truncate mb2">
+                                <a class="va-baseline s-tag"
+                                    href="/{{ ../language }}/category/{{ project.category.slug }}/projects"
                                     target="_blank">
                                     {{#if (str-cmp ../language "zh-cn") }}
                                         {{ project.category.nameZh }}
@@ -527,28 +468,29 @@
                                 </a>
                             </p>
                             <p class="fc-medium mb2">
-                                <strong>
-                                    {{ project.investment }}
-                                    {{ lang project.currencyType }}
-                                </strong>
-                                |
-                                <strong>
-                                    {{ project.duration }}
-                                    {{ lang "days" }}
-                                </strong>
-                                {{#if project.topics }}
-                                    |
-                                    {{#each project.topics as |topic|}}
-                                        <a class="s-badge s-badge__sm mb2"
-                                            href="/{{ ../../language }}/topic/{{ topic.slug }}/projects"
-                                            target="_blank">
-                                            {{ topic.name }}
-                                        </a>
-                                    {{/each}}
-                                {{/if}}
+                                {{#each project.topics as |topic|}}
+                                    <a class="s-badge s-badge__sm mb2"
+                                        href="/{{ ../../language }}/topic/{{ topic.slug }}/projects" target="_blank">
+                                        {{ topic.name }}
+                                    </a>
+                                {{/each}}
                             </p>
-                            <p class="fc-medium v-truncate1">
-                                {{ project.content }}
+                            <p class="d-flex flex__fl-equal fc-medium ta-center">
+                                <a class="flex--item" href="/{{ ../language }}/project/{{ project.id }}"
+                                    target="_blank">
+                                    <strong>{{ project.hits }}</strong>
+                                    ({{ lang "project-hits" }})
+                                </a>
+                                <a class="flex--item" href="/{{ ../language }}/project/{{ project.id }}"
+                                    target="_blank">
+                                    <strong>{{ project.insides }}</strong>
+                                    ({{ lang "project-insides" }})
+                                </a>
+                                <a class="flex--item" href="/{{ ../language }}/project/{{ project.id }}"
+                                    target="_blank">
+                                    <strong>{{ project.stars }}</strong>
+                                    ({{ lang "project-stars" }})
+                                </a>
                             </p>
                         </article>
                     {{/each}}
@@ -572,11 +514,15 @@
                     </a>
                 </div>
 
-                <div class="d-grid grid__2 lg:grid__1 sm:grid__1 g12 w100 wmx100 mx-auto">
+                <div class="d-grid grid__4 lg:grid__2 sm:grid__1 g12 w100 wmx100 mx-auto">
                     {{#each published_projects as |project|}}
                         <article class="s-card p16 bg-silver-lighter bs-sm bar-md h:bs-md sm:ai-center">
-                            <p class="fw-bold fs-body3 fc-theme-secondary-400 mb2">
-                                <a class="s-tag" href="/{{ ../language }}/category/{{ project.category.slug }}/projects"
+                            <a href="/{{ ../language }}/project/{{ project.id }}" target="_blank">
+                                <img src="/static/files/{{ project.coverImage.location }}">
+                            </a>
+                            <p class="fw-bold fs-body3 fc-theme-secondary-400 truncate mb2">
+                                <a class="va-baseline s-tag"
+                                    href="/{{ ../language }}/category/{{ project.category.slug }}/projects"
                                     target="_blank">
                                     {{#if (str-cmp ../language "zh-cn") }}
                                         {{ project.category.nameZh }}
@@ -590,28 +536,29 @@
                                 </a>
                             </p>
                             <p class="fc-medium mb2">
-                                <strong>
-                                    {{ project.investment }}
-                                    {{ lang project.currencyType }}
-                                </strong>
-                                |
-                                <strong>
-                                    {{ project.duration }}
-                                    {{ lang "days" }}
-                                </strong>
-                                {{#if project.topics }}
-                                    |
-                                    {{#each project.topics as |topic|}}
-                                        <a class="s-badge s-badge__sm mb2"
-                                            href="/{{ ../../language }}/topic/{{ topic.slug }}/projects"
-                                            target="_blank">
-                                            {{ topic.name }}
-                                        </a>
-                                    {{/each}}
-                                {{/if}}
+                                {{#each project.topics as |topic|}}
+                                    <a class="s-badge s-badge__sm mb2"
+                                        href="/{{ ../../language }}/topic/{{ topic.slug }}/projects" target="_blank">
+                                        {{ topic.name }}
+                                    </a>
+                                {{/each}}
                             </p>
-                            <p class="fc-medium v-truncate1">
-                                {{ project.content }}
+                            <p class="d-flex flex__fl-equal fc-medium ta-center">
+                                <a class="flex--item" href="/{{ ../language }}/project/{{ project.id }}"
+                                    target="_blank">
+                                    <strong>{{ project.hits }}</strong>
+                                    ({{ lang "project-hits" }})
+                                </a>
+                                <a class="flex--item" href="/{{ ../language }}/project/{{ project.id }}"
+                                    target="_blank">
+                                    <strong>{{ project.insides }}</strong>
+                                    ({{ lang "project-insides" }})
+                                </a>
+                                <a class="flex--item" href="/{{ ../language }}/project/{{ project.id }}"
+                                    target="_blank">
+                                    <strong>{{ project.stars }}</strong>
+                                    ({{ lang "project-stars" }})
+                                </a>
                             </p>
                         </article>
                     {{/each}}

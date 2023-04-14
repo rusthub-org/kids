@@ -1,23 +1,6 @@
 projects-requirements = 项目需求
 
-managed = 保障管控
-recommended = 优质推荐
-worker-role-person = 个人
-worker-role-team = 团队
-worker-role-company = 公司
-investment = 投资预算
-investment-min = 最少
-investment-max = 最多
-
-projects-filter-boss = 项目需求方：
-projects-filter-worker = 项目开发者：
-projects-filter-category = 项目需求类型：
-projects-filter-keys-tags = 项目标签、关键词：
-projects-filter-investment-range = 投资预算区间：
-projects-filter-managed = 保障管控项目
-projects-filter-recommended = 优质推荐项目
-projects-filter-recruitment-role = 项目招募角色：
-
+project-online = 在线编程
 project-create = 创建新项目
 my-projects = 我的项目
 
@@ -32,8 +15,6 @@ project-data-aggregation = 数据聚合于
 project-investment = 投资预算：
 project-negotiated = 可议价
 project-duration = 开发周期：
-project-hits = 浏览数量：
-project-applicants = 申请人数：
 project-keys-tags = 项目关键词/标签：
 project-contact-person = 联系人：
 project-contact-phone = 手机号码：

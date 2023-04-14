@@ -1,14 +1,6 @@
 query HomeData(
   $username: String!
 ) {
-  managedProjects: projectsInPosition(
-    username: $username
-    position: "managed"
-    limit: 4
-  ) {
-    ...projects_in_position_fragment
-  }
-
   recommendedProjects: projectsInPosition(
     username: $username
     position: "recommended"
@@ -29,7 +21,13 @@ query HomeData(
 fragment projects_in_position_fragment on Project {
   id
   subject
-  content
+  hits
+  insides
+  stars
+  
+  coverImage {
+    location
+  }
   
   category {
     nameZh
