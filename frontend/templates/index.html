@@ -450,7 +450,7 @@
                     {{#each recommended_projects as |project|}}
                         <article class="s-card p16 bg-silver-lighter bs-sm bar-md h:bs-md sm:ai-center">
                             <a href="/{{ ../language }}/project/{{ project.id }}" target="_blank">
-                                <img src="/static/files/{{ project.coverImage.location }}">
+                                <img src="/files/projects/{{ project.coverImage.location }}">
                             </a>
                             <p class="fw-bold fs-body3 fc-theme-secondary-400 truncate mb2">
                                 <a class="va-baseline s-tag"
@@ -467,7 +467,7 @@
                                     {{ project.subject }}
                                 </a>
                             </p>
-                            <p class="fc-medium mb2">
+                            <p class="fc-medium truncate mb2">
                                 {{#each project.topics as |topic|}}
                                     <a class="s-badge s-badge__sm mb2"
                                         href="/{{ ../../language }}/topic/{{ topic.slug }}/projects" target="_blank">
@@ -518,7 +518,7 @@
                     {{#each published_projects as |project|}}
                         <article class="s-card p16 bg-silver-lighter bs-sm bar-md h:bs-md sm:ai-center">
                             <a href="/{{ ../language }}/project/{{ project.id }}" target="_blank">
-                                <img src="/static/files/{{ project.coverImage.location }}">
+                                <img src="/files/projects/{{ project.coverImage.location }}">
                             </a>
                             <p class="fw-bold fs-body3 fc-theme-secondary-400 truncate mb2">
                                 <a class="va-baseline s-tag"
@@ -535,7 +535,7 @@
                                     {{ project.subject }}
                                 </a>
                             </p>
-                            <p class="fc-medium mb2">
+                            <p class="fc-medium truncate mb2">
                                 {{#each project.topics as |topic|}}
                                     <a class="s-badge s-badge__sm mb2"
                                         href="/{{ ../../language }}/topic/{{ topic.slug }}/projects" target="_blank">

@@ -608,7 +608,7 @@ pub async fn file_new(req: Request<State>) -> tide::Result {
         file_location.push_str(&file_name[ext_index..]);
     }
 
-    let file_path = Path::new("../assets/static/files").join(&file_location);
+    let file_path = Path::new("../files/projects").join(&file_location);
     let file_copy = file_copy(req, file_path).await;
 
     let res;
