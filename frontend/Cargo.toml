@@ -5,6 +5,7 @@ authors = ["zzy <ask@rusthub.org>"]
 edition = "2021"
 
 [dependencies]
+futures = "0.3"
 async-std = { path = "../../../crates/async-std", features = ["attributes"] }
 tide = { path = "../../../crates/tide", features = ["logger", "cookies"] }
 
@@ -19,6 +20,7 @@ surf = "2.3"
 graphql_client = "0.12"
 handlebars = { version = "4.3", features = ["script_helper"] }
 
+multer = "2.1"
 percent-encoding = "2.2"
 lettre = "0.10"
 fluent-bundle = "0.15"
