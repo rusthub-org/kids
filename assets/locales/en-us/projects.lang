@@ -1,29 +1,20 @@
-projects-requirements = Projects and Requirements
+projects-list = Projects List
 
 project-online = Online Programming
 project-create = Create new Project
 my-projects = My Projects
 
-project-managed = Managed
-project-verified = Verified
 project-recommended = Recommended
 
-project-description = Project Description
-
+project-content = Project Content
 project-posted = posted at
-project-data-aggregation = Data aggregation at
-project-investment = Investment: 
-project-negotiated = Negotiated
-project-duration = Development duration: 
 project-keys-tags = Project keys/tags: 
 project-contact-person = Contact person: 
 project-contact-phone = Phone: 
 project-contact-im = IM tools: 
 project-contact-email = Email: 
-project-external = External project, please visit 
-project-third-link = source link of project
 project-view-contact = To view contact details of project, please 
-project-risk-tip = For data outside this website, summary aggregation only; without any storage, and the access address is the link of the source website. 
+project-risk-tip = All rights of each project belong to the author, the website assumes no responsibility. 
     If there is anything improper, please contact ask@rusthub.org.
 
 project-new-category = Category

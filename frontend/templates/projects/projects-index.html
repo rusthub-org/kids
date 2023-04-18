@@ -6,12 +6,12 @@
       {{#if filter_desc }}{{ lang filter_desc.condition }}
         {{#if (str-cmp filter_desc.content "worker-role" "ct") }}{{ lang filter_desc.content }}
         {{else}}{{ filter_desc.content }}{{/if}} - {{/if}}
-      {{ lang "projects-requirements" }} - {{ lang "site-name" }} | {{ lang "site-slogan" }}
+      {{ lang "projects-list" }} - {{ lang "site-name" }} | {{ lang "site-slogan" }}
     </title>
 
-    <meta name="keywords" content='{{ lang "projects-requirements" }},{{ lang "site-name" }},{{ lang "site-slogan" }}'>
+    <meta name="keywords" content='{{ lang "projects-list" }},{{ lang "site-name" }},{{ lang "site-slogan" }}'>
     <meta name="description"
-      content='{{ lang "projects-requirements" }},{{ lang "site-name" }},{{ lang "site-slogan" }},{{ lang "site-intro" }}'>
+      content='{{ lang "projects-list" }},{{ lang "site-name" }},{{ lang "site-slogan" }},{{ lang "site-intro" }}'>
 
     {{> head }}
   </head>
@@ -66,11 +66,14 @@
 
         <span class="ml8 fc-danger fs-fine">{{ lang "project-risk-tip" }}</span>
 
-        <div class="d-grid grid__2 lg:grid__1 sm:grid__1 g12 w100 wmx100 mx-auto">
+        <div class="d-grid grid__4 lg:grid__2 sm:grid__1 g12 w100 wmx100 mx-auto">
           {{#each pagination.currentItems as |project|}}
             <article class="s-card my8">
-              <h2 class="mb6">
-                <a class="s-tag mr6 mb2" href="/{{ ../language }}/category/{{ project.category.slug }}/projects"
+              <a href="/{{ ../language }}/project/{{ project.id }}" target="_blank">
+                <img src="/files/projects/{{ project.coverImage.location }}">
+              </a>
+              <h3 class="fw-bold fs-body3 fc-theme-secondary-400 truncate my2">
+                <a class="va-baseline s-tag mb4" href="/{{ ../language }}/category/{{ project.category.slug }}/projects"
                   target="_blank">
                   {{#if (str-cmp ../language "zh-cn") }}
                     {{ project.category.nameZh }}
@@ -81,56 +84,47 @@
                 <a href="/{{ ../language }}/project/{{ project.id }}" target="_blank">
                   {{ project.subject }}
                 </a>
-                {{#if (str-cmp project.status 2 "gte") }}
-                  <span class="ml8 s-tag s-tag__moderator fw-normal fs-body1">
-                    {{ lang "project-recommended" }}
-                  </span>
-                {{/if}}
-                {{#unless project.external }}
-                  <span class="ml8 s-tag s-tag__moderator fw-normal fs-body1">
-                    {{ lang "project-verified" }}
-                  </span>
-                {{/unless }}
-                {{#if (str-cmp project.status 6) }}
-                  <span class="ml8 s-tag s-tag__moderator fw-normal fs-body1">
-                    {{ lang "project-managed" }}
-                  </span>
-                {{/if}}
-              </h2>
-              <p class="my6 fs-body1">
-                {{#unless (str-cmp project.user.username "spider") }}
-                  <a class="s-link fw-bold" href="/{{ ../language }}/user/{{ project.user.username }}" target="_blank">
-                    {{ project.user.nickname }}
-                  </a>
-                  {{ lang "project-posted" }}
-                {{else}}
-                  {{ lang "project-data-aggregation" }}
-                {{/unless}}
-                {{ project.updatedAtNyrsq }}
-              </p>
-              <p class="my6 fs-body1">
-                <strong>{{ lang "project-investment" }}</strong>
-                {{ project.investment }}
-                {{ lang project.currencyType }}
-                <strong>{{#if project.negotiated }} - {{ lang "project-negotiated" }}{{/if}}</strong>
-                <strong class="ml16">{{ lang "project-hits" }}</strong>
-                {{ project.hits }}
-              </p>
-              <p class="my6 fs-body1">
-                <strong>{{ lang "project-keys-tags" }}</strong>
+              </h3>
+              <p class="fc-medium truncate mb2">
                 {{#if project.topics }}
                   {{#each project.topics as |topic|}}
-                    <a class="s-badge ml4 mb2 fs-body1" href="/{{ ../../language }}/topic/{{ topic.slug }}/projects"
+                    <a class="s-badge s-badge__sm" href="/{{ ../../language }}/topic/{{ topic.slug }}/projects"
                       target="_blank">
                       {{ topic.name }}
                     </a>
                   {{/each}}
                 {{else}}
+                  <strong>{{ lang "project-keys-tags" }}</strong>
                   {{ lang "not-setting" }}
                 {{/if}}
               </p>
-              <p class="mt6 fs-body2 v-truncate2">
-                {{ project.content }}
+              <p class="fs-medium mb2">
+                <a class="s-link fw-bold" href="/{{ ../language }}/user/{{ project.user.username }}" target="_blank">
+                  {{ project.user.nickname }}
+                </a>
+                {{ lang "project-posted" }}
+                {{ project.updatedAtNyrsq }}
+              </p>
+              <p class="pl4 fc-medium">
+                <a href="/{{ language }}/project/{{ project.id }}" target="_blank">
+                  <strong>{{ project.hits }}</strong>
+                  {{ lang "project-hits" }}
+                </a>
+                <span class="mx4 fc-red-600">/</span>
+                <a href="/{{ language }}/project/{{ project.id }}" target="_blank">
+                  <strong>{{ project.stars }}</strong>
+                  {{ lang "project-stars" }}
+                </a>
+                <span class="mx4 fc-red-600">/</span>
+                <a href="/{{ language }}/project/{{ project.id }}" target="_blank">
+                  <strong>{{ project.insides }}</strong>
+                  {{ lang "project-insides" }}
+                </a>
+                {{#if (str-cmp project.status 2 "gte") }}
+                  <span class="ml12 s-tag s-tag__sm s-tag__moderator fw-normal fs-caption">
+                    {{ lang "project-recommended" }}
+                  </span>
+                {{/if}}
               </p>
             </article>
           {{/each}}
@@ -142,14 +136,6 @@
     </main>
 
     {{> footer }}
-    <script>
-      function setAction(form) {
-        var investment_min = document.getElementById("investment_min").value;
-        var investment_max = document.getElementById("investment_max").value;
-        var form_action = "/{{ language }}/projects/" + investment_min + "-" + investment_max;
-        form.action = form_action;
-      }
-    </script>
   </body>
 
 </html>

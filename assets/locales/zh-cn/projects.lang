@@ -1,29 +1,20 @@
-projects-requirements = 项目需求
+projects-list = 项目清单
 
 project-online = 在线编程
 project-create = 创建新项目
 my-projects = 我的项目
 
-project-managed = 管控
-project-verified = 验证
 project-recommended = 推荐
 
-project-description = 项目描述
-
+project-content = 项目内容
 project-posted = 发布于
-project-data-aggregation = 数据聚合于
-project-investment = 投资预算：
-project-negotiated = 可议价
-project-duration = 开发周期：
 project-keys-tags = 项目关键词/标签：
 project-contact-person = 联系人：
 project-contact-phone = 手机号码：
 project-contact-im = 交流工具：
 project-contact-email = 电子邮件：
-project-external = 外部项目，请访问 
-project-third-link = 项目来源链接
 project-view-contact = 查看项目详细联系信息，请 
-project-risk-tip = 对于本网站以外数据，仅提供摘要聚合；不做任何存储，且访问地址均为来源网站链接。
+project-risk-tip = 每个项目的所有权利均属于作者，本站不负任何责任。
     若有不当之处，请联系 ask@rusthub.org。
 
 project-new-category = 项目类型

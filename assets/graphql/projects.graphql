@@ -14,12 +14,15 @@ fragment projects_result_fragment on ProjectsResult {
   currentItems {
     id
     subject
-    content
     updatedAtNyrsq
     hits
     insides
     stars
     status
+    
+    coverImage {
+      location
+    }
 
     user {
       username
@@ -159,6 +162,7 @@ query ProjectData(
     status
     
     sourceFile {
+      name
       location
     }
 

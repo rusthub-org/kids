@@ -452,8 +452,8 @@
                             <a href="/{{ ../language }}/project/{{ project.id }}" target="_blank">
                                 <img src="/files/projects/{{ project.coverImage.location }}">
                             </a>
-                            <p class="fw-bold fs-body3 fc-theme-secondary-400 truncate mb2">
-                                <a class="va-baseline s-tag"
+                            <h3 class="fw-bold fs-body3 fc-theme-secondary-400 truncate my2">
+                                <a class="va-baseline s-tag mb4"
                                     href="/{{ ../language }}/category/{{ project.category.slug }}/projects"
                                     target="_blank">
                                     {{#if (str-cmp ../language "zh-cn") }}
@@ -462,34 +462,38 @@
                                         {{ project.category.nameEn }}
                                     {{/if}}
                                 </a>
-
                                 <a href="/{{ ../language }}/project/{{ project.id }}" target="_blank">
                                     {{ project.subject }}
                                 </a>
-                            </p>
+                            </h3>
                             <p class="fc-medium truncate mb2">
-                                {{#each project.topics as |topic|}}
-                                    <a class="s-badge s-badge__sm mb2"
-                                        href="/{{ ../../language }}/topic/{{ topic.slug }}/projects" target="_blank">
-                                        {{ topic.name }}
-                                    </a>
-                                {{/each}}
+                                {{#if project.topics }}
+                                    {{#each project.topics as |topic|}}
+                                        <a class="s-badge s-badge__sm"
+                                            href="/{{ ../../language }}/topic/{{ topic.slug }}/projects"
+                                            target="_blank">
+                                            {{ topic.name }}
+                                        </a>
+                                    {{/each}}
+                                {{else}}
+                                    <strong>{{ lang "project-keys-tags" }}</strong>
+                                    {{ lang "not-setting" }}
+                                {{/if}}
                             </p>
-                            <p class="d-flex flex__fl-equal fc-medium ta-center">
-                                <a class="flex--item" href="/{{ ../language }}/project/{{ project.id }}"
-                                    target="_blank">
+                            <p class="fc-medium pl6">
+                                <a href="/{{ ../language }}/project/{{ project.id }}" target="_blank">
                                     <strong>{{ project.hits }}</strong>
-                                    ({{ lang "project-hits" }})
+                                    {{ lang "project-hits" }}
                                 </a>
-                                <a class="flex--item" href="/{{ ../language }}/project/{{ project.id }}"
-                                    target="_blank">
-                                    <strong>{{ project.insides }}</strong>
-                                    ({{ lang "project-insides" }})
-                                </a>
-                                <a class="flex--item" href="/{{ ../language }}/project/{{ project.id }}"
-                                    target="_blank">
+                                <span class="mx4 fc-red-600">/</span>
+                                <a href="/{{ ../language }}/project/{{ project.id }}" target="_blank">
                                     <strong>{{ project.stars }}</strong>
-                                    ({{ lang "project-stars" }})
+                                    {{ lang "project-stars" }}
+                                </a>
+                                <span class="mx4 fc-red-600">/</span>
+                                <a href="/{{ ../language }}/project/{{ project.id }}" target="_blank">
+                                    <strong>{{ project.insides }}</strong>
+                                    {{ lang "project-insides" }}
                                 </a>
                             </p>
                         </article>
@@ -520,8 +524,8 @@
                             <a href="/{{ ../language }}/project/{{ project.id }}" target="_blank">
                                 <img src="/files/projects/{{ project.coverImage.location }}">
                             </a>
-                            <p class="fw-bold fs-body3 fc-theme-secondary-400 truncate mb2">
-                                <a class="va-baseline s-tag"
+                            <h3 class="fw-bold fs-body3 fc-theme-secondary-400 truncate my2">
+                                <a class="va-baseline s-tag mb4"
                                     href="/{{ ../language }}/category/{{ project.category.slug }}/projects"
                                     target="_blank">
                                     {{#if (str-cmp ../language "zh-cn") }}
@@ -530,34 +534,38 @@
                                         {{ project.category.nameEn }}
                                     {{/if}}
                                 </a>
-
                                 <a href="/{{ ../language }}/project/{{ project.id }}" target="_blank">
                                     {{ project.subject }}
                                 </a>
-                            </p>
+                            </h3>
                             <p class="fc-medium truncate mb2">
-                                {{#each project.topics as |topic|}}
-                                    <a class="s-badge s-badge__sm mb2"
-                                        href="/{{ ../../language }}/topic/{{ topic.slug }}/projects" target="_blank">
-                                        {{ topic.name }}
-                                    </a>
-                                {{/each}}
+                                {{#if project.topics }}
+                                    {{#each project.topics as |topic|}}
+                                        <a class="s-badge s-badge__sm"
+                                            href="/{{ ../../language }}/topic/{{ topic.slug }}/projects"
+                                            target="_blank">
+                                            {{ topic.name }}
+                                        </a>
+                                    {{/each}}
+                                {{else}}
+                                    <strong>{{ lang "project-keys-tags" }}</strong>
+                                    {{ lang "not-setting" }}
+                                {{/if}}
                             </p>
-                            <p class="d-flex flex__fl-equal fc-medium ta-center">
-                                <a class="flex--item" href="/{{ ../language }}/project/{{ project.id }}"
-                                    target="_blank">
+                            <p class="fc-medium pl6">
+                                <a href="/{{ ../language }}/project/{{ project.id }}" target="_blank">
                                     <strong>{{ project.hits }}</strong>
-                                    ({{ lang "project-hits" }})
+                                    {{ lang "project-hits" }}
                                 </a>
-                                <a class="flex--item" href="/{{ ../language }}/project/{{ project.id }}"
-                                    target="_blank">
-                                    <strong>{{ project.insides }}</strong>
-                                    ({{ lang "project-insides" }})
-                                </a>
-                                <a class="flex--item" href="/{{ ../language }}/project/{{ project.id }}"
-                                    target="_blank">
+                                <span class="mx4 fc-red-600">/</span>
+                                <a href="/{{ ../language }}/project/{{ project.id }}" target="_blank">
                                     <strong>{{ project.stars }}</strong>
-                                    ({{ lang "project-stars" }})
+                                    {{ lang "project-stars" }}
+                                </a>
+                                <span class="mx4 fc-red-600">/</span>
+                                <a href="/{{ ../language }}/project/{{ project.id }}" target="_blank">
+                                    <strong>{{ project.insides }}</strong>
+                                    {{ lang "project-insides" }}
                                 </a>
                             </p>
                         </article>

@@ -4,7 +4,7 @@ query HomeData(
   recommendedProjects: projectsInPosition(
     username: $username
     position: "recommended"
-    limit: 6
+    limit: 4
   ) {
     ...projects_in_position_fragment
   }
@@ -12,7 +12,7 @@ query HomeData(
   publishedProjects: projectsInPosition(
     username: $username
     position: "published"
-    limit: 10
+    limit: 8
   ) {
     ...projects_in_position_fragment
   }
