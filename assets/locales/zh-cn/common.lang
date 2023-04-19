@@ -1,14 +1,14 @@
 site-name = 儿童@蔻隼
 site-slogan = 想象、编程、分享
-site-intro = 创建故事、游戏、音乐、艺术、动画……并与他人分享。<br>
+site-intro = 创建故事、游戏、音乐、艺术、动画、教程……并与他人分享。<br>
     促进孩子的计算和逻辑思维，增强孩子解决问题的能力。<br>
     给女儿的礼物，也希望可以帮助所有喜爱编程的孩童。<br>
     永远免费，基于 Scratch 和 Rust web 技术栈构建。
 
 nav-creating = 开始创建
-nav-creating-tip = 开始创建故事、游戏、音乐、艺术、动画……
+nav-creating-tip = 开始创建故事、游戏、音乐、艺术、动画、教程……
 nav-projects = 探索项目
-nav-projects-tip = 探索已分享的故事、游戏、音乐、艺术、动画……
+nav-projects-tip = 探索已分享的故事、游戏、音乐、艺术、动画、教程……
 nav-tutorials = 教程视频
 nav-tutorials-tip = 循序渐进的教程、实例、视频……
 nav-users = 找朋友

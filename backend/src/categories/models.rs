@@ -16,6 +16,7 @@ pub struct Category {
     pub _id: ObjectId,
     pub name_zh: String,
     pub name_en: String,
+    pub name_plural: String,
     pub slug: String,
     pub created_at: DateTime,
     pub updated_at: DateTime,
@@ -60,6 +61,8 @@ impl Category {
 pub struct CategoryNew {
     pub name_zh: String,
     pub name_en: String,
+    #[graphql(skip)]
+    pub name_plural: String,
     #[graphql(skip)]
     pub slug: String,
 }

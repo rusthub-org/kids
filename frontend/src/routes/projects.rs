@@ -197,6 +197,7 @@ pub async fn projects_by_category(req: Request<State>) -> tide::Result {
     if sign_status.sign_in {
         insert_user_by_username(sign_status.username, &mut data).await;
     }
+    insert_categories(&mut data).await;
 
     let category_slug = req.param("category_slug")?;
     let category_by_slug_build_query =
@@ -218,11 +219,8 @@ pub async fn projects_by_category(req: Request<State>) -> tide::Result {
     data.insert(
         "filter_desc",
         json!({
-            "condition": "projects-filter-category",
-            "content": match language.as_str() {
-                "zh-cn" => category["nameZh"].as_str().unwrap(),
-                _ => category["nameEn"].as_str().unwrap(),
-            }
+            "condition": category["nameEn"].as_str().unwrap(),
+            "content": category["namePlural"].as_str().unwrap()
         }),
     );
 
@@ -392,10 +390,13 @@ pub async fn projects_filter(req: Request<State>) -> tide::Result {
                 projects_recommended_resp_data["projects"].clone();
             data.insert("pagination", projects_recommended);
 
-            filter_desc = json!("projects-filter-recommended");
+            filter_desc = json!({
+                "condition": "n/a",
+                "content": "projects-filter-recommended"
+            });
         }
         _ => {
-            filter_desc = json!("N/A");
+            filter_desc = json!("n/a");
         }
     }
 

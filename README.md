@@ -4,7 +4,7 @@
 
 > [KouSun | 蔻隼](https://kousun.com) aims to build a **multi-language** CMS(Content Management System) based on **Rust Web stacks**, with long-term upgrade and maintenance.
 
-[Demo site - kids.kousun.com](https://kids.kousun.com) is based on Scratch & Rust web stacks. Kids can create stories, games, musics, arts, animations ... and share with others. A gift for my daughter, also hopes to help all kids who enjoy programming.
+[Demo site - kids.kousun.com](https://kids.kousun.com) is based on Scratch & Rust web stacks. Kids can create stories, games, musics, arts, animations, tutorials ... and share with others. A gift for my daughter, also hopes to help all kids who enjoy programming.
 
 See also:
 - https://github.com/zzy/tide-async-graphql-mongodb - Clean boilerplate for graphql services, wasm/yew & handlebars frontend

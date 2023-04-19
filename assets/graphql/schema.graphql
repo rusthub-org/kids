@@ -7,6 +7,7 @@ type Category {
   id: ObjectId!
   nameZh: String!
   nameEn: String!
+  namePlural: String!
   slug: String!
   createdAt: DateTime!
   updatedAt: DateTime!

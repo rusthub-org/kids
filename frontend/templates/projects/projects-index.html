@@ -3,7 +3,7 @@
 
   <head>
     <title>
-      {{#if filter_desc }}{{ lang filter_desc }} - {{/if}}
+      {{#if filter_desc }}{{ lang filter_desc.content }} - {{/if}}
       {{ lang "projects-list" }} - {{ lang "site-name" }} | {{ lang "site-slogan" }}
     </title>
 
@@ -34,19 +34,15 @@
           </a>
           <a class="s-btn s-btn__outlined {{ projects-recommended-selected }}"
             href="/{{ language }}/projects/recommended">
-            {{ lang "project-recommended" }}
+            {{ lang "projects-filter-recommended" }}
           </a>
         </span>
         <button class="s-btn sm:mb4" disabled>-</button>
         <span class="flex--item fl-grow1 s-btn-group sm:mb4">
           {{#each categories as |category|}}
-            <a class="s-btn s-btn__outlined {{#if (str-cmp category.id id-selected) }}is-selected{{/if}}"
+            <a class="s-btn s-btn__outlined {{#if (str-cmp ../filter_desc.condition category.nameEn) }}is-selected{{/if}}"
               href="/{{ ../language }}/category/{{ category.slug }}/projects">
-              {{#if (str-cmp ../language "zh-cn") }}
-                {{ category.nameZh }}
-              {{else}}
-                {{ category.nameEn }}
-              {{/if}}
+              {{ lang category.namePlural }}
             </a>
           {{/each}}
         </span>
@@ -126,7 +122,7 @@
                 </a>
                 {{#if (str-cmp project.status 2 "gte") }}
                   <span class="ml12 s-tag s-tag__sm s-tag__moderator fw-normal fs-caption">
-                    {{ lang "project-recommended" }}
+                    {{ lang "projects-filter-recommended" }}
                   </span>
                 {{/if}}
               </p>

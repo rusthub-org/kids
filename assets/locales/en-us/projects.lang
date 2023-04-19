@@ -1,11 +1,16 @@
 projects-list = Projects List
 
+projects-filter-recommended = Recommended
+category-stories = Stories
+category-games = Games
+category-musics = Musics
+category-arts = Arts
+category-animations = Animations
+category-tutorials = Tutorials
+
 project-online = Online Programming
 project-create = Create new Project
 my-projects = My Projects
-
-project-recommended = Recommended
-projects-filter-recommended = Recommended projects
 
 project-content = Project Content
 project-posted = posted at
