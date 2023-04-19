@@ -7,8 +7,12 @@ use serde_json::json;
 
 use super::common::{gql_uri, scripts_dir, tpls_dir, get_lang_msg};
 
-use crate::models::users::{
-    UserByUsernameData, user_by_username_data, WishRandomData, wish_random_data,
+use crate::models::{
+    users::{
+        UserByUsernameData, user_by_username_data, WishRandomData,
+        wish_random_data,
+    },
+    categories::{CategoriesData, categories_data},
 };
 
 pub struct Hbs<'hbs> {
@@ -248,4 +252,21 @@ pub async fn insert_wish_random(data: &mut BTreeMap<&str, serde_json::Value>) {
 
     let wish = wish_random_resp_data["wishRandom"].clone();
     data.insert("wish", wish);
+}
+
+pub async fn insert_categories(data: &mut BTreeMap<&str, serde_json::Value>) {
+    let categories_build_query =
+        CategoriesData::build_query(categories_data::Variables {});
+    let categories_query = json!(categories_build_query);
+
+    let categories_resp_body: GqlResponse<serde_json::Value> =
+        surf::post(&gql_uri().await)
+            .body(categories_query)
+            .recv_json()
+            .await
+            .unwrap();
+    let categories_resp_data = categories_resp_body.data.expect("无响应数据");
+
+    let categories = categories_resp_data["categories"].clone();
+    data.insert("categories", categories);
 }

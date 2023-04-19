@@ -55,6 +55,7 @@ pub async fn push_res(app: &mut Server<State>) {
 
     let mut projects = home.at("/projects");
     projects.at("/").get(super::routes::projects::projects_index);
+    projects.at("/:filter_str").get(super::routes::projects::projects_filter);
 
     let mut project = home.at("/project");
     project.at("/").get(super::routes::projects::project_random);

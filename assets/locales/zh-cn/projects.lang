@@ -5,6 +5,7 @@ project-create = 创建新项目
 my-projects = 我的项目
 
 project-recommended = 推荐
+projects-filter-recommended = 推荐项目
 
 project-content = 项目内容
 project-posted = 发布于

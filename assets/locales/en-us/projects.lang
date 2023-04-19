@@ -5,6 +5,7 @@ project-create = Create new Project
 my-projects = My Projects
 
 project-recommended = Recommended
+projects-filter-recommended = Recommended projects
 
 project-content = Project Content
 project-posted = posted at

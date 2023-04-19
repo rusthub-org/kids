@@ -12,7 +12,9 @@ use percent_encoding::percent_decode;
 use crate::State;
 use crate::util::{
     common::{gql_uri, sign_status},
-    tpl::{Hbs, insert_user_by_username, insert_wish_random},
+    tpl::{
+        Hbs, insert_user_by_username, insert_wish_random, insert_categories,
+    },
     upload::file_copy,
 };
 
@@ -28,10 +30,7 @@ use crate::models::{
         ProjectRandomData, project_random_data, FileNewData, file_new_data,
         ProjectFileNewData, project_file_new_data,
     },
-    categories::{
-        CategoriesData, categories_data, CategoryBySlugData,
-        category_by_slug_data,
-    },
+    categories::{CategoryBySlugData, category_by_slug_data},
     topics::{
         TopicsNewData, topics_new_data, TopicProjectNewData,
         topic_project_new_data, TopicBySlugData, topic_by_slug_data,
@@ -65,17 +64,7 @@ pub async fn projects_index(req: Request<State>) -> tide::Result {
     if sign_status.sign_in {
         insert_user_by_username(sign_status.username, &mut data).await;
     }
-
-    let categories_build_query =
-        CategoriesData::build_query(categories_data::Variables {});
-    let categories_query = json!(categories_build_query);
-
-    let categories_resp_body: GqlResponse<serde_json::Value> =
-        surf::post(&gql_uri().await).body(categories_query).recv_json().await?;
-    let categories_resp_data = categories_resp_body.data.expect("无响应数据");
-
-    let categories = categories_resp_data["categories"].clone();
-    data.insert("categories", categories);
+    insert_categories(&mut data).await;
 
     let page: Page = req.query().unwrap();
     let projects_build_query =
@@ -344,6 +333,77 @@ pub async fn projects_by_topic(req: Request<State>) -> tide::Result {
     projects_by_topic_tpl.render(&data).await
 }
 
+pub async fn projects_filter(req: Request<State>) -> tide::Result {
+    let language = String::from(req.param("language")?);
+
+    let mut projects_filter_tpl: Hbs =
+        Hbs::new("projects/projects-index").await;
+    projects_filter_tpl
+        .reg_head()
+        .await
+        .reg_header()
+        .await
+        .reg_container()
+        .await
+        .reg_pagination()
+        .await
+        .reg_footer()
+        .await;
+    projects_filter_tpl.reg_script_values().await.reg_script_lang().await;
+
+    let mut data: BTreeMap<&str, serde_json::Value> = BTreeMap::new();
+    data.insert("language", json!(language));
+    data.insert("nav-projects-selected", json!("is-selected"));
+    insert_wish_random(&mut data).await;
+
+    let sign_status = sign_status(&req).await;
+    if sign_status.sign_in {
+        insert_user_by_username(sign_status.username, &mut data).await;
+    }
+    insert_categories(&mut data).await;
+
+    let filter_str = req.param("filter_str")?;
+    let page: Page = req.query()?;
+
+    let filter_desc;
+    match filter_str {
+        "recommended" => {
+            data.insert("projects-recommended-selected", json!("is-selected"));
+
+            let projects_recommended_build_query =
+                ProjectsData::build_query(projects_data::Variables {
+                    from_page: page.from,
+                    first_oid: page.first,
+                    last_oid: page.last,
+                    status: 2,
+                });
+            let projects_recommended_query =
+                json!(projects_recommended_build_query);
+
+            let projects_recommended_resp_body: GqlResponse<serde_json::Value> =
+                surf::post(&gql_uri().await)
+                    .body(projects_recommended_query)
+                    .recv_json()
+                    .await?;
+            let projects_recommended_resp_data =
+                projects_recommended_resp_body.data.expect("无响应数据");
+
+            let projects_recommended =
+                projects_recommended_resp_data["projects"].clone();
+            data.insert("pagination", projects_recommended);
+
+            filter_desc = json!("projects-filter-recommended");
+        }
+        _ => {
+            filter_desc = json!("N/A");
+        }
+    }
+
+    data.insert("filter_desc", filter_desc);
+
+    projects_filter_tpl.render(&data).await
+}
+
 pub async fn project_new(mut req: Request<State>) -> tide::Result {
     let language = String::from(req.param("language")?);
 
@@ -474,20 +534,7 @@ pub async fn project_new(mut req: Request<State>) -> tide::Result {
                 }
             }
             _ => {
-                let categories_build_query =
-                    CategoriesData::build_query(categories_data::Variables {});
-                let categories_query = json!(categories_build_query);
-
-                let categories_resp_body: GqlResponse<serde_json::Value> =
-                    surf::post(&gql_uri().await)
-                        .body(categories_query)
-                        .recv_json()
-                        .await?;
-                let categories_resp_data =
-                    categories_resp_body.data.expect("无响应数据");
-
-                let categories = categories_resp_data["categories"].clone();
-                data.insert("categories", categories);
+                insert_categories(&mut data).await;
             }
         }
 
