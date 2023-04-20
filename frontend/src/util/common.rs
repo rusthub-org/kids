@@ -1,4 +1,4 @@
-use std::{path::PathBuf, fs::read_to_string};
+use std::{path::PathBuf, fs::read_to_string, borrow::Cow};
 use tide::Request;
 use fluent_bundle::{FluentBundle, FluentResource, FluentArgs, FluentValue};
 use serde_json::{Map, Value};
@@ -79,14 +79,25 @@ pub fn get_lang_msg(
         }
     }
 
-    let msg = bundle
-        .get_message(msg_id)
-        .expect(format!("{} is not exists", msg_id).as_str());
-    let pattern =
-        msg.value().expect(format!("{} must have a value", msg_id).as_str());
+    // let msg = bundle
+    //     .get_message(msg_id)
+    //     .expect(format!("{} is not exists", msg_id).as_str());
+    // let pattern =
+    //     msg.value().expect(format!("{} must have a value", msg_id).as_str());
 
-    let mut errors = vec![];
-    let value = bundle.format_pattern(&pattern, Some(&args), &mut errors);
+    // let mut errors = vec![];
+    // let value = bundle.format_pattern(&pattern, Some(&args), &mut errors);
+
+    let value = if let Some(fmsg) = bundle.get_message(msg_id) {
+        let pattern = fmsg.value().unwrap();
+
+        let mut errors = vec![];
+        bundle.format_pattern(&pattern, Some(&args), &mut errors)
+    } else {
+        println!("\n\n\nmsg_id: {} 未被翻译，请检查！\n\n\n", msg_id);
+
+        Cow::from(msg_id)
+    };
 
     value.to_string()
 }

@@ -279,6 +279,7 @@ pub async fn projects_by_topic(req: Request<State>) -> tide::Result {
     if sign_status.sign_in {
         insert_user_by_username(sign_status.username, &mut data).await;
     }
+    insert_categories(&mut data).await;
 
     let topic_slug = req.param("topic_slug")?;
     let topic_by_slug_build_query =
@@ -300,7 +301,7 @@ pub async fn projects_by_topic(req: Request<State>) -> tide::Result {
     data.insert(
         "filter_desc",
         json!({
-            "condition": "projects-filter-keys-tags",
+            "condition": "topic",
             "content": topic["name"].as_str().unwrap()
         }),
     );
@@ -391,7 +392,7 @@ pub async fn projects_filter(req: Request<State>) -> tide::Result {
             data.insert("pagination", projects_recommended);
 
             filter_desc = json!({
-                "condition": "n/a",
+                "condition": "recommended",
                 "content": "projects-filter-recommended"
             });
         }
