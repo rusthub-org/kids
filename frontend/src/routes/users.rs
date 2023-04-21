@@ -13,10 +13,9 @@ use crate::util::{
 use crate::models::{
     Page,
     users::{
-        UsersData, users_data, UsersByQualityData, users_by_quality_data,
-        UserByIdData, user_by_id_data, UserByUsernameDetailData,
-        user_by_username_detail_data, UserUpdateOneFieldByIdData,
-        user_update_one_field_by_id_data,
+        UsersData, users_data, UserByIdData, user_by_id_data,
+        UserByUsernameDetailData, user_by_username_detail_data,
+        UserUpdateOneFieldByIdData, user_update_one_field_by_id_data,
     },
 };
 
@@ -73,89 +72,89 @@ pub async fn users_index(req: Request<State>) -> tide::Result {
     users_index_tpl.render(&data).await
 }
 
-pub async fn users_filter(req: Request<State>) -> tide::Result {
-    let language = String::from(req.param("language")?);
+// pub async fn users_filter(req: Request<State>) -> tide::Result {
+//     let language = String::from(req.param("language")?);
 
-    let mut users_filter_tpl: Hbs = Hbs::new("users/users-index").await;
-    users_filter_tpl
-        .reg_head()
-        .await
-        .reg_header()
-        .await
-        .reg_container()
-        .await
-        .reg_pagination()
-        .await
-        .reg_footer()
-        .await;
-    users_filter_tpl
-        .reg_script_values()
-        .await
-        .reg_script_ops()
-        .await
-        .reg_script_lang()
-        .await;
+//     let mut users_filter_tpl: Hbs = Hbs::new("users/users-index").await;
+//     users_filter_tpl
+//         .reg_head()
+//         .await
+//         .reg_header()
+//         .await
+//         .reg_container()
+//         .await
+//         .reg_pagination()
+//         .await
+//         .reg_footer()
+//         .await;
+//     users_filter_tpl
+//         .reg_script_values()
+//         .await
+//         .reg_script_ops()
+//         .await
+//         .reg_script_lang()
+//         .await;
 
-    let mut data: BTreeMap<&str, serde_json::Value> = BTreeMap::new();
-    data.insert("language", json!(language));
-    data.insert("nav-users-selected", json!("is-selected"));
-    insert_wish_random(&mut data).await;
+//     let mut data: BTreeMap<&str, serde_json::Value> = BTreeMap::new();
+//     data.insert("language", json!(language));
+//     data.insert("nav-users-selected", json!("is-selected"));
+//     insert_wish_random(&mut data).await;
 
-    let sign_status = sign_status(&req).await;
-    if sign_status.sign_in {
-        insert_user_by_username(sign_status.username, &mut data).await;
-    }
+//     let sign_status = sign_status(&req).await;
+//     if sign_status.sign_in {
+//         insert_user_by_username(sign_status.username, &mut data).await;
+//     }
 
-    let filter_str = req.param("filter_str")?;
-    let page: Page = req.query()?;
+//     let filter_str = req.param("filter_str")?;
+//     let page: Page = req.query()?;
 
-    let filter_desc;
-    let quality_field = match filter_str {
-        "boss" => {
-            data.insert("users-boss-selected", json!("is-selected"));
-            filter_desc = json!({
-                "condition": "user-filter-boss",
-                "content": ""
-            });
+//     let filter_desc;
+//     let quality_field = match filter_str {
+//         "boss" => {
+//             data.insert("users-boss-selected", json!("is-selected"));
+//             filter_desc = json!({
+//                 "condition": "user-filter-boss",
+//                 "content": ""
+//             });
 
-            "boss_quality"
-        }
-        _ => {
-            data.insert("users-worker-selected", json!("is-selected"));
-            filter_desc = json!({
-                "condition": "user-filter-worker",
-                "content": ""
-            });
+//             "boss_quality"
+//         }
+//         _ => {
+//             data.insert("users-worker-selected", json!("is-selected"));
+//             filter_desc = json!({
+//                 "condition": "user-filter-worker",
+//                 "content": ""
+//             });
 
-            "worker_quality"
-        }
-    };
-    data.insert("filter_desc", filter_desc);
+//             "worker_quality"
+//         }
+//     };
+//     data.insert("filter_desc", filter_desc);
 
-    let users_by_quality_build_query =
-        UsersByQualityData::build_query(users_by_quality_data::Variables {
-            quality_field: String::from(quality_field),
-            from_page: page.from,
-            first_oid: page.first,
-            last_oid: page.last,
-            status: 1,
-        });
-    let users_by_quality_query = json!(users_by_quality_build_query);
+//     let users_by_quality_build_query =
+//         UsersByQualityData::build_query(users_by_quality_data::Variables {
+//             quality_field: String::from(quality_field),
+//             from_page: page.from,
+//             first_oid: page.first,
+//             last_oid: page.last,
+//             status: 1,
+//         });
+//     let users_by_quality_query = json!(users_by_quality_build_query);
 
-    let users_by_quality_resp_body: GqlResponse<serde_json::Value> =
-        surf::post(&gql_uri().await)
-            .body(users_by_quality_query)
-            .recv_json()
-            .await
-            .unwrap();
-    let users_by_quality_resp_data =
-        users_by_quality_resp_body.data.expect("无响应数据");
+//     let users_by_quality_resp_body: GqlResponse<serde_json::Value> =
+//         surf::post(&gql_uri().await)
+//             .body(users_by_quality_query)
+//             .recv_json()
+//             .await
+//             .unwrap();
+//     let users_by_quality_resp_data =
+//         users_by_quality_resp_body.data.expect("无响应数据");
 
-    let users_by_quality = users_by_quality_resp_data["usersByQuality"].clone();
-    data.insert("pagination", users_by_quality);
+//     let users_by_quality = users_by_quality_resp_data["usersByQuality"].clone();
+//     data.insert("pagination", users_by_quality);
 
-    users_filter_tpl.render(&data).await
-}
+//     users_filter_tpl.render(&data).await
+// }
 
 pub async fn user_index(req: Request<State>) -> tide::Result {
     let language = String::from(req.param("language")?);
@@ -267,23 +266,6 @@ pub async fn user_activate(req: Request<State>) -> tide::Result {
             data.insert("user_resend", user_resend);
         }
         _ => {
-            let user_worker_quality_build_query =
-                UserUpdateOneFieldByIdData::build_query(
-                    user_update_one_field_by_id_data::Variables {
-                        user_id: user_id.to_string(),
-                        field_name: String::from("worker_quality"),
-                        field_val: String::from("10"),
-                    },
-                );
-            let user_worker_quality_query =
-                json!(user_worker_quality_build_query);
-
-            let _user_worker_quality_resp_body: GqlResponse<serde_json::Value> =
-                surf::post(&gql_uri().await)
-                    .body(user_worker_quality_query)
-                    .recv_json()
-                    .await?;
-
             let user_activate_build_query =
                 UserUpdateOneFieldByIdData::build_query(
                     user_update_one_field_by_id_data::Variables {

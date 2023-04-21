@@ -43,7 +43,7 @@ pub async fn push_res(app: &mut Server<State>) {
 
     let mut users = home.at("/users");
     users.at("/").get(super::routes::users::users_index);
-    users.at("/:filter_str").get(super::routes::users::users_filter);
+    // users.at("/:filter_str").get(super::routes::users::users_filter);
 
     let mut user = home.at("/user");
     user.at("/:user_id/activate")

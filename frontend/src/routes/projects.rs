@@ -117,6 +117,7 @@ pub async fn projects_by_user(req: Request<State>) -> tide::Result {
     if sign_status.sign_in {
         insert_user_by_username(sign_status.username, &mut data).await;
     }
+    insert_categories(&mut data).await;
 
     let author_username = req.param("author_username")?;
     let author_by_username_build_query =
@@ -135,11 +136,15 @@ pub async fn projects_by_user(req: Request<State>) -> tide::Result {
         author_by_username_resp_body.data.expect("无响应数据");
 
     let author = author_by_username_resp_data["userByUsername"].clone();
+    let author_content = author["nickname"].as_str().unwrap().to_string()
+        + " ("
+        + author["username"].as_str().unwrap()
+        + ")";
     data.insert(
         "filter_desc",
         json!({
-            "condition": "projects-filter-boss",
-            "content": author["nickname"].as_str().unwrap()
+            "condition": "user",
+            "content": author_content
         }),
     );
 

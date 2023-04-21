@@ -137,7 +137,7 @@ pub async fn user_update_one_field_by_id(
 
     let query_doc = doc! {"_id": user_id};
     let update_doc = match field_name.as_str() {
-        "status" | "worker_quality" | "boss_quality" => {
+        "status" => {
             doc! {"$set": {field_name: field_val.parse::<i32>()?}}
         }
         _ => doc! {},
@@ -277,75 +277,6 @@ pub async fn users(
     .await;
 
     let sort_doc = doc! {"_id": -1};
-    let find_options = find_options(Some(sort_doc), skip_x).await;
-
-    let mut cursor = coll.find(filter_doc, find_options).await?;
-
-    let mut users: Vec<User> = vec![];
-    while let Some(result) = cursor.next().await {
-        match result {
-            Ok(document) => {
-                let user = from_document(document)?;
-                users.push(user);
-            }
-            Err(error) => {
-                println!("\n\n\n{}\n\n\n", error);
-            }
-        }
-    }
-
-    let users_result = UsersResult {
-        page_info: PageInfo {
-            current_stuff: Some(String::from(USERS_STUFF)),
-            current_page: Some(current_page),
-            first_cursor: match users.first() {
-                Some(user) => Some(user._id),
-                _ => None,
-            },
-            last_cursor: match users.last() {
-                Some(user) => Some(user._id),
-                _ => None,
-            },
-            has_previous_page: current_page > 1,
-            has_next_page: current_page < pages_count,
-        },
-        res_count: ResCount {
-            pages_count: Some(pages_count),
-            total_count: Some(total_count),
-        },
-        current_items: users,
-    };
-
-    Ok(users_result)
-}
-
-// Get all Users by worker_quality or boss_quality
-pub async fn users_by_quality(
-    db: &Database,
-    quality_field: String,
-    from_page: u32,
-    first_oid: String,
-    last_oid: String,
-    status: i8,
-) -> GqlResult<UsersResult> {
-    let coll = db.collection::<Document>("users");
-
-    let mut filter_doc = doc! {
-        "status": {"$gte": status as i32, "$lte": 12},
-        &quality_field: {"$gt": 0}
-    };
-
-    let (pages_count, total_count) =
-        count_pages_and_total(&coll, Some(filter_doc.clone()), None).await;
-    let (current_page, skip_x) = calculate_current_filter_skip(
-        from_page,
-        first_oid,
-        last_oid,
-        &mut filter_doc,
-    )
-    .await;
-
-    let sort_doc = doc! {quality_field: -1, "_id": -1};
     let find_options = find_options(Some(sort_doc), skip_x).await;
 
     let mut cursor = coll.find(filter_doc, find_options).await?;

@@ -29,6 +29,7 @@ pub struct User {
     pub introduction: String,
     pub created_at: DateTime,
     pub updated_at: DateTime,
+    pub hits: u64,
     pub status: i8,
 }
 
@@ -114,6 +115,8 @@ pub struct UserNew {
     pub im_public: bool,
     pub website: String,
     pub introduction: String,
+    #[graphql(skip)]
+    pub hits: u64,
     #[graphql(skip)]
     pub status: i8,
 }

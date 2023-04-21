@@ -36,13 +36,6 @@
                             {{ author_user.nickname }}
                             <sup class="fw-normal fs-fine">No.{{ author_user.id }}</sup>
                         </a>
-                        {{#with (add-op author_user.workerQuality author_user.bossQuality) as |quality| }}
-                            {{#if (str-cmp quality 120 "gte") }}
-                                <span class="ml8 s-tag s-tag__moderator fw-normal fs-body1">
-                                    {{ lang (level-op quality) }}
-                                </span>
-                            {{/if}}
-                        {{/with}}
                     </h2>
                     <p class="my6 fs-body1">
                         <strong>{{ lang "registration-time" }}</strong>
@@ -94,22 +87,6 @@
                     {{/if}}
                     <p class="my6 p4 fw-bold bg-blue-100 fc-blue-900">
                         💥 {{ lang "user-statistics" }}
-                    </p>
-                    <p class="my6 fs-body1">
-                        <strong>{{ lang "worker-quality" }}</strong>
-                        {{#if author_user.workerQuality }}
-                            {{ author_user.workerQuality }}
-                        {{else}}
-                            {{ lang "no-statistics" }}
-                        {{/if}}
-                    </p>
-                    <p class="my6 fs-body1">
-                        <strong>{{ lang "boss-quality" }}</strong>
-                        {{#if author_user.bossQuality }}
-                            {{ author_user.bossQuality }}
-                        {{else}}
-                            {{ lang "no-statistics" }}
-                        {{/if}}
                     </p>
                     <p class="my6 fs-body1">
                         <strong>{{ lang "features-keys-tags" }}</strong>

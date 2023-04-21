@@ -57,7 +57,7 @@ pub async fn send_email(
         SmtpTransport::relay(email_smtp).unwrap().credentials(creds).build();
 
     match mailer.send(&email_message) {
-        Ok(_) => println!("\nEmail sent successfully!\n"),
-        Err(e) => println!("\nCould not send email: {:?}\n", e),
+        Ok(_) => println!("\n\n\nEmail sent successfully!\n\n\n"),
+        Err(e) => println!("\n\n\nCould not send email: {:?}\n\n\n", e),
     }
 }

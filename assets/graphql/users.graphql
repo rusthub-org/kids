@@ -58,6 +58,49 @@ query UserByUsernameDetailData(
   }
 }
 
+query UsersData(
+  $fromPage: Int!
+  $firstOid: String!
+  $lastOid: String!
+  $status: Int!
+) {
+  users(
+    fromPage: $fromPage
+    firstOid: $firstOid
+    lastOid: $lastOid
+    status: $status
+  ) {
+    pageInfo {
+      currentStuff
+      currentPage
+      firstCursor
+      lastCursor
+      hasPreviousPage
+      hasNextPage
+    }
+    resCount {
+      pagesCount
+      totalCount
+    }
+    currentItems {
+      id
+      username
+      nickname
+      createdAtNyrsq
+
+      keywords {
+        name
+        slug
+      }
+
+      topics {
+        name
+        slug
+      }
+    }
+  }
+}
+
 mutation UserUpdateOneFieldByIdData(
   $userId: ObjectId!
   $fieldName: String!
@@ -71,71 +114,6 @@ mutation UserUpdateOneFieldByIdData(
       username
       nickname
       email
-  }
-}
-
-fragment users_result_fragment on UsersResult {
-  pageInfo {
-    currentStuff
-    currentPage
-    firstCursor
-    lastCursor
-    hasPreviousPage
-    hasNextPage
-  }
-  resCount {
-    pagesCount
-    totalCount
-  }
-  currentItems {
-    id
-    username
-    nickname
-    createdAtNyrsq
-
-    keywords {
-      name
-      slug
-    }
-
-    topics {
-      name
-      slug
-    }
-  }
-}
-
-query UsersData(
-  $fromPage: Int!
-  $firstOid: String!
-  $lastOid: String!
-  $status: Int!
-) {
-  users(
-    fromPage: $fromPage
-    firstOid: $firstOid
-    lastOid: $lastOid
-    status: $status
-  ) {
-    ...users_result_fragment
-  }
-}
-
-query UsersByQualityData(
-  $qualityField: String!
-  $fromPage: Int!
-  $firstOid: String!
-  $lastOid: String!
-  $status: Int!
-) {
-  usersByQuality(
-    qualityField: $qualityField
-    fromPage: $fromPage
-    firstOid: $firstOid
-    lastOid: $lastOid
-    status: $status
-  ) {
-    ...users_result_fragment
   }
 }
 

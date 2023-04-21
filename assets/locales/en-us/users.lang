@@ -1,12 +1,4 @@
 users-teams = Users and Teams
-
-boss = Boss
-worker = Worker
-
-user-filter-boss = Users and teams as bosses
-user-filter-worker = Users and teams as workers
-
-project-create = Create new Project
 my-profile = My Profile
 
 excellent = Excellent
@@ -14,13 +6,9 @@ good = Good
 growing = Growing
 
 registration-time = Registration time: 
-worker-quality = Worker quality: 
-boss-quality = Boss quality: 
 no-statistics = No statistics
 features-keys-tags = Features keys/tags: 
 related-keys-tags = Related keys/tags: 
-consulting-now = Consulting now
-consulting-now-tip = Consult inside KouSun.com to ensure your tasks and funds
 
 user-intro = User Introduction
 user-statistics = User Statistics

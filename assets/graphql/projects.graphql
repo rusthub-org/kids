@@ -1,4 +1,4 @@
-fragment projects_result_fragment on ProjectsResult {
+fragment ProjectsResultFragment on ProjectsResult {
   pageInfo {
     currentStuff
     currentPage
@@ -54,7 +54,7 @@ query ProjectsData(
     lastOid: $lastOid
     status: $status
   ) {
-    ...projects_result_fragment
+    ...ProjectsResultFragment
   }
 }
 
@@ -72,7 +72,7 @@ query ProjectsByUserData(
     lastOid: $lastOid
     status: $status
   ) {
-    ...projects_result_fragment
+    ...ProjectsResultFragment
   }
 }
 
@@ -90,7 +90,7 @@ query ProjectsByCategoryData(
     lastOid: $lastOid
     status: $status
   ) {
-    ...projects_result_fragment
+    ...ProjectsResultFragment
   }
 }
 
@@ -108,7 +108,7 @@ query ProjectsByTopicData(
     lastOid: $lastOid
     status: $status
   ) {
-    ...projects_result_fragment
+    ...ProjectsResultFragment
   }
 }
 

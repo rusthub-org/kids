@@ -153,13 +153,6 @@ type QueryRoot {
     lastOid: String!
     status: Int!
   ): UsersResult!
-  usersByQuality(
-    qualityField: String!
-    fromPage: Int!
-    firstOid: String!
-    lastOid: String!
-    status: Int!
-  ): UsersResult!
   projectById(projectId: ObjectId!): Project!
   projectRandomId: ObjectId!
   projects(
@@ -210,28 +203,6 @@ type QueryRoot {
   ): ProjectsResult!
   projectsByTopicSlug(
     topicSlug: String!
-    fromPage: Int!
-    firstOid: String!
-    lastOid: String!
-    status: Int!
-  ): ProjectsResult!
-  projectsByInvestment(
-    investmentMin: Int!
-    investmentMax: Int!
-    fromPage: Int!
-    firstOid: String!
-    lastOid: String!
-    status: Int!
-  ): ProjectsResult!
-  projectsByWorkerType(
-    workerType: String!
-    fromPage: Int!
-    firstOid: String!
-    lastOid: String!
-    status: Int!
-  ): ProjectsResult!
-  projectsByExternal(
-    external: Boolean!
     fromPage: Int!
     firstOid: String!
     lastOid: String!
@@ -318,6 +289,7 @@ type User {
   introduction: String!
   createdAt: DateTime!
   updatedAt: DateTime!
+  hits: Int!
   status: Int!
   introductionHtml: String!
   createdAtNyrsq: String!

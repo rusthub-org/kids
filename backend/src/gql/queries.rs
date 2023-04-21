@@ -76,28 +76,6 @@ impl QueryRoot {
         users::services::users(db, from_page, first_oid, last_oid, status).await
     }
 
-    // Get all Users by worker_quality or boss_quality
-    async fn users_by_quality(
-        &self,
-        ctx: &Context<'_>,
-        quality_field: String,
-        from_page: u32,
-        first_oid: String,
-        last_oid: String,
-        status: i8,
-    ) -> GqlResult<UsersResult> {
-        let db = &ctx.data_unchecked::<DataSource>().db;
-        users::services::users_by_quality(
-            db,
-            quality_field,
-            from_page,
-            first_oid,
-            last_oid,
-            status,
-        )
-        .await
-    }
-
     // Get project by its id
     async fn project_by_id(
         &self,
@@ -251,69 +229,6 @@ impl QueryRoot {
         let db = &ctx.data_unchecked::<DataSource>().db;
         projects::services::projects_by_topic_slug(
             db, topic_slug, from_page, first_oid, last_oid, status,
-        )
-        .await
-    }
-
-    // Get all projects by investment
-    async fn projects_by_investment(
-        &self,
-        ctx: &Context<'_>,
-        investment_min: i64,
-        investment_max: i64,
-        from_page: u32,
-        first_oid: String,
-        last_oid: String,
-        status: i8,
-    ) -> GqlResult<ProjectsResult> {
-        let db = &ctx.data_unchecked::<DataSource>().db;
-        projects::services::projects_by_investment(
-            db,
-            investment_min,
-            investment_max,
-            from_page,
-            first_oid,
-            last_oid,
-            status,
-        )
-        .await
-    }
-
-    // Get all projects by worker_type
-    async fn projects_by_worker_type(
-        &self,
-        ctx: &Context<'_>,
-        worker_type: String,
-        from_page: u32,
-        first_oid: String,
-        last_oid: String,
-        status: i8,
-    ) -> GqlResult<ProjectsResult> {
-        let db = &ctx.data_unchecked::<DataSource>().db;
-        projects::services::projects_by_worker_type(
-            db,
-            worker_type,
-            from_page,
-            first_oid,
-            last_oid,
-            status,
-        )
-        .await
-    }
-
-    // Get all projects by external
-    async fn projects_by_external(
-        &self,
-        ctx: &Context<'_>,
-        external: bool,
-        from_page: u32,
-        first_oid: String,
-        last_oid: String,
-        status: i8,
-    ) -> GqlResult<ProjectsResult> {
-        let db = &ctx.data_unchecked::<DataSource>().db;
-        projects::services::projects_by_external(
-            db, external, from_page, first_oid, last_oid, status,
         )
         .await
     }

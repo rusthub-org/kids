@@ -1,12 +1,4 @@
 users-teams = 人员团队
-
-boss = 需求方
-worker = 开发者
-
-user-filter-boss = 作为需求方的人员团队
-user-filter-worker = 作为开发者的人员团队
-
-project-create = 创建新项目
 my-profile = 我的资料
 
 excellent = 优秀
@@ -14,15 +6,11 @@ good = 良好
 growing = 关注
 
 registration-time = 注册时间：
-worker-quality = 工作质量：
-boss-quality = 雇主质量：
 no-statistics = 暂无统计
 features-keys-tags = 特点关键词/标签：
-related-keys-tags = 涉猎关键词/标签：
-consulting-now = 立即预约
-consulting-now-tip = 蔻隼站内预约，可最大程度保障你的任务进度和资金安全
+related-keys-tags = 关联关键词/标签：
 
-user-intro = 用户资料
+user-intro = 用户简介
 user-statistics = 用户分析
 
 user-website = 个人网站：

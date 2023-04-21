@@ -14,7 +14,7 @@ lazy_static = "1.4"
 femme = "2.2"
 
 async-graphql = { version = "5.0", features = ["bson", "chrono"] }
-mongodb = { version = "2.4", default-features = false, features = [
+mongodb = { version = "2.5", default-features = false, features = [
   "async-std-runtime",
 ] }
 

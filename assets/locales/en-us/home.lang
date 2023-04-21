@@ -34,10 +34,10 @@ register-im = IM tools
 register-im-tip = Whats App, WeChat, QQ, email, phone, etc
 register-website = Website
 register-website-tip = Personal website (please contain http:// or https://)
-register-topics = Advantages, keywords (Smart matching projects, developer or team)
+register-topics = Advantages, keywords
 register-topics-tip = Separated by space, enter key, or comma
-register-intro = Introduction (Let someone know more to improve the success rate)
-register-intro-tip = Skills, experience, expertise, requirements, and other remarks, etc
+register-intro = Introduction
+register-intro-tip = Skills, experience, expertise, and other remarks, etc
 
 register-have-account = Have an account?
 register-sign-in = Go Sign in

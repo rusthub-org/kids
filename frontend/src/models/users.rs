@@ -41,13 +41,6 @@ pub struct UserByUsernameDetailData;
     schema_path = "../assets/graphql/schema.graphql",
     query_path = "../assets/graphql/users.graphql"
 )]
-pub struct UserUpdateOneFieldByIdData;
-
-#[derive(GraphQLQuery)]
-#[graphql(
-    schema_path = "../assets/graphql/schema.graphql",
-    query_path = "../assets/graphql/users.graphql"
-)]
 pub struct UsersData;
 
 #[derive(GraphQLQuery)]
@@ -55,7 +48,7 @@ pub struct UsersData;
     schema_path = "../assets/graphql/schema.graphql",
     query_path = "../assets/graphql/users.graphql"
 )]
-pub struct UsersByQualityData;
+pub struct UserUpdateOneFieldByIdData;
 
 #[derive(GraphQLQuery)]
 #[graphql(

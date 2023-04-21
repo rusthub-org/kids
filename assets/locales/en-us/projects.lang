@@ -1,4 +1,5 @@
 projects-list = Projects List
+my-projects = My Projects
 
 projects-filter-recommended = Recommended
 category-stories = Stories
@@ -7,10 +8,6 @@ category-musics = Musics
 category-arts = Arts
 category-animations = Animations
 category-tutorials = Tutorials
-
-project-online = Online Programming
-project-create = Create new Project
-my-projects = My Projects
 
 project-content = Project Content
 project-posted = posted at

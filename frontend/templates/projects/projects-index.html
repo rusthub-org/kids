@@ -67,27 +67,27 @@
         <span class="ml8 fc-danger fs-fine">{{ lang "project-risk-tip" }}</span>
 
         <div class="d-grid grid__4 lg:grid__2 sm:grid__1 g12 w100 wmx100 mx-auto">
-          {{#each pagination.currentItems as |project|}}
+          {{#each pagination.currentItems as |project_item|}}
             <article class="s-card my8">
-              <a href="/{{ ../language }}/project/{{ project.id }}" target="_blank">
-                <img src="/files/projects/{{ project.coverImage.location }}">
+              <a href="/{{ ../language }}/project/{{ project_item.id }}" target="_blank">
+                <img src="/files/projects/{{ project_item.coverImage.location }}">
               </a>
               <h3 class="fw-bold fs-body3 fc-theme-secondary-400 truncate my2">
-                <a class="va-baseline s-tag mb4" href="/{{ ../language }}/category/{{ project.category.slug }}/projects"
-                  target="_blank">
+                <a class="va-baseline s-tag mb4"
+                  href="/{{ ../language }}/category/{{ project_item.category.slug }}/projects" target="_blank">
                   {{#if (str-cmp ../language "zh-cn") }}
-                    {{ project.category.nameZh }}
+                    {{ project_item.category.nameZh }}
                   {{else}}
-                    {{ project.category.nameEn }}
+                    {{ project_item.category.nameEn }}
                   {{/if}}
                 </a>
-                <a href="/{{ ../language }}/project/{{ project.id }}" target="_blank">
-                  {{ project.subject }}
+                <a href="/{{ ../language }}/project/{{ project_item.id }}" target="_blank">
+                  {{ project_item.subject }}
                 </a>
               </h3>
               <p class="fc-medium truncate mb2">
-                {{#if project.topics }}
-                  {{#each project.topics as |topic|}}
+                {{#if project_item.topics }}
+                  {{#each project_item.topics as |topic|}}
                     <a class="s-badge s-badge__sm" href="/{{ ../../language }}/topic/{{ topic.slug }}/projects"
                       target="_blank">
                       {{ topic.name }}
@@ -99,28 +99,29 @@
                 {{/if}}
               </p>
               <p class="fs-medium mb2">
-                <a class="s-link fw-bold" href="/{{ ../language }}/user/{{ project.user.username }}" target="_blank">
-                  {{ project.user.nickname }}
+                <a class="s-link fw-bold" href="/{{ ../language }}/user/{{ project_item.user.username }}"
+                  target="_blank">
+                  {{ project_item.user.nickname }}
                 </a>
                 {{ lang "project-posted" }}
-                {{ project.updatedAtNyrsq }}
+                {{ project_item.updatedAtNyrsq }}
               </p>
               <p class="pl4 fc-medium">
-                <a href="/{{ ../language }}/project/{{ project.id }}" target="_blank">
-                  <strong>{{ project.hits }}</strong>
+                <a href="/{{ ../language }}/project/{{ project_item.id }}" target="_blank">
+                  <strong>{{ project_item.hits }}</strong>
                   {{ lang "project-hits" }}
                 </a>
                 <span class="mx4 fc-red-600">/</span>
-                <a href="/{{ ../language }}/project/{{ project.id }}" target="_blank">
-                  <strong>{{ project.stars }}</strong>
+                <a href="/{{ ../language }}/project/{{ project_item.id }}" target="_blank">
+                  <strong>{{ project_item.stars }}</strong>
                   {{ lang "project-stars" }}
                 </a>
                 <span class="mx4 fc-red-600">/</span>
-                <a href="/{{ ../language }}/project/{{ project.id }}" target="_blank">
-                  <strong>{{ project.insides }}</strong>
+                <a href="/{{ ../language }}/project/{{ project_item.id }}" target="_blank">
+                  <strong>{{ project_item.insides }}</strong>
                   {{ lang "project-insides" }}
                 </a>
-                {{#if (str-cmp project.status 2 "gte") }}
+                {{#if (str-cmp project_item.status 2 "gte") }}
                   <span class="ml12 s-tag s-tag__sm s-tag__moderator fw-normal fs-caption">
                     {{ lang "projects-filter-recommended" }}
                   </span>

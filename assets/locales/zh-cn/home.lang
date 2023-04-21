@@ -34,10 +34,10 @@ register-im = 交流工具
 register-im-tip = 微信、QQ、公开邮箱、防骚扰电话等
 register-website = 个人网站
 register-website-tip = 个人网站（包含 http:// 或 https://）
-register-topics = 优势、关键词（智能匹配项目或人员团队）
+register-topics = 优势、关键词
 register-topics-tip = 以空格、回车键，或半角逗号分割
-register-intro = 简介（让对方更了解，以提高成功率）
-register-intro-tip = 技能、经验、特长、要求，及其它备注事项等
+register-intro = 简介
+register-intro-tip = 技能、经验、特长，及其它备注事项等
 
 register-have-account = 有账户？
 register-sign-in = 去签入
