@@ -48,11 +48,7 @@ pub async fn category_new(
                         format!("{}-{}-{}", slug_zh, slug_en, slug_ms);
                 }
 
-                let mut new_document = to_document(&category_new)?;
-                let now = DateTime::now();
-                new_document.insert("created_at", now);
-                new_document.insert("updated_at", now);
-
+                let new_document = to_document(&category_new)?;
                 let category_res = coll
                     .insert_one(new_document, None)
                     .await
