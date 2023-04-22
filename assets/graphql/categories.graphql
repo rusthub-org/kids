@@ -3,7 +3,6 @@ query CategoriesData {
     id
     nameZh
     nameEn
-    namePlural
     slug
   }
 }
@@ -17,7 +16,6 @@ query CategoryBySlugData(
     id
     nameZh
     nameEn
-    namePlural
     slug
   }
 }

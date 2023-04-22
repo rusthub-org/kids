@@ -9,10 +9,7 @@ use mongodb::{
 };
 use async_graphql::Error;
 
-use crate::util::{
-    constant::GqlResult,
-    common::{slugify, bson_dt_nyr},
-};
+use crate::util::{constant::GqlResult, common::slugify};
 
 use super::models::{Category, CategoryUser, CategoryNew, CategoryUserNew};
 
@@ -68,10 +65,8 @@ pub async fn category_new(
                     from_document(exist_document.unwrap())?;
 
                 Err(Error::new(format!(
-                    "{}（中）| {}（英），此类别已在 {} 创建",
-                    category.name_zh,
-                    category.name_en,
-                    bson_dt_nyr(category.created_at).await
+                    "{}（中）| {}（英），此类别已创建",
+                    category.name_zh, category.name_en
                 )))
             }
         }

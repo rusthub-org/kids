@@ -225,7 +225,10 @@ pub async fn projects_by_category(req: Request<State>) -> tide::Result {
         "filter_desc",
         json!({
             "condition": category["nameEn"].as_str().unwrap(),
-            "content": category["namePlural"].as_str().unwrap()
+            "content": match language.as_str() {
+                "zh-cn" => category["nameZh"].as_str().unwrap(),
+                _ => category["nameEn"].as_str().unwrap(),
+            }
         }),
     );
 

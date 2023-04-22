@@ -94,7 +94,7 @@ pub fn get_lang_msg(
         let mut errors = vec![];
         bundle.format_pattern(&pattern, Some(&args), &mut errors)
     } else {
-        println!("\n\n\nmsg_id: {} 未被翻译，请检查！\n\n\n", msg_id);
+        println!("\n\n\nmsg_id: {} 未被翻译\n\n\n", msg_id);
 
         Cow::from(msg_id)
     };

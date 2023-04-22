@@ -42,7 +42,11 @@
           {{#each categories as |category|}}
             <a class="s-btn s-btn__outlined {{#if (str-cmp ../filter_desc.condition category.nameEn) }}is-selected{{/if}}"
               href="/{{ ../language }}/category/{{ category.slug }}/projects">
-              {{ lang category.namePlural }}
+              {{#if (str-cmp ../language "zh-cn") }}
+                {{ category.nameZh }}
+              {{else}}
+                {{ category.nameEn }}
+              {{/if}}
             </a>
           {{/each}}
         </span>

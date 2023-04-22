@@ -1,12 +1,8 @@
 use serde::{Serialize, Deserialize};
-use mongodb::bson::{oid::ObjectId, DateTime};
-use chrono::FixedOffset;
+use mongodb::bson::oid::ObjectId;
 
 use crate::dbs::mongo::DataSource;
-use crate::util::{
-    constant::{GqlResult, DTF_YMDHMSZ},
-    pagination::ProjectsResult,
-};
+use crate::util::{constant::GqlResult, pagination::ProjectsResult};
 
 use crate::projects::services::projects_by_category_id;
 
@@ -16,30 +12,11 @@ pub struct Category {
     pub _id: ObjectId,
     pub name_zh: String,
     pub name_en: String,
-    pub name_plural: String,
     pub slug: String,
-    pub created_at: DateTime,
-    pub updated_at: DateTime,
 }
 
 #[async_graphql::ComplexObject]
 impl Category {
-    pub async fn created_at_nyrsq(&self) -> String {
-        self.created_at
-            .to_chrono()
-            .with_timezone(&FixedOffset::east_opt(8 * 3600).unwrap())
-            .format(DTF_YMDHMSZ)
-            .to_string()
-    }
-
-    pub async fn updated_at_nyrsq(&self) -> String {
-        self.updated_at
-            .to_chrono()
-            .with_timezone(&FixedOffset::east_opt(8 * 3600).unwrap())
-            .format(DTF_YMDHMSZ)
-            .to_string()
-    }
-
     pub async fn projects(
         &self,
         ctx: &async_graphql::Context<'_>,
@@ -61,8 +38,6 @@ impl Category {
 pub struct CategoryNew {
     pub name_zh: String,
     pub name_en: String,
-    #[graphql(skip)]
-    pub name_plural: String,
     #[graphql(skip)]
     pub slug: String,
 }
