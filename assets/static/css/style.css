@@ -107,6 +107,11 @@ article code {
 }
 
 article img {
+  max-width: 100%;
+  max-height: fit-content;
+}
+
+.imgs-list {
   width: 100%;
   height: 300px;
 }

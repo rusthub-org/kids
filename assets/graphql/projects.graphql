@@ -161,6 +161,10 @@ query ProjectData(
     stars
     status
     
+    coverImage {
+      location
+    }
+    
     sourceFile {
       name
       location

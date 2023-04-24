@@ -74,7 +74,7 @@
           {{#each pagination.currentItems as |project_item|}}
             <article class="s-card my8">
               <a href="/{{ ../language }}/project/{{ project_item.id }}" target="_blank">
-                <img src="/files/projects/{{ project_item.coverImage.location }}">
+                <img class="imgs-list" src="/files/projects/{{ project_item.coverImage.location }}">
               </a>
               <h3 class="fw-bold fs-body3 fc-theme-secondary-400 truncate my2">
                 <a class="va-baseline s-tag mb4"

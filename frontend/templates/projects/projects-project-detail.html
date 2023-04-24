@@ -2,7 +2,8 @@
 <html lang="{{ language }}">
 
     <head>
-        <title>{{ project.subject }} -
+        <title>
+            {{ project.subject }} - No.{{ project.id }} -
             {{#if (str-cmp language "zh-cn") }}{{ project.category.nameZh }}{{else}}{{ project.category.nameEn }}{{/if}}
             - {{ lang "projects-list" }} - {{ lang "site-name" }} | {{ lang "site-slogan" }}
         </title>
@@ -93,22 +94,25 @@
                             {{ lang "not-setting" }}
                         {{/if}}
                     </p>
-                    <section class="my6 pl16 py12 ba bar-lg bc-black-200 fs-body2">
-                        {{{ project.contentHtml }}}
-                    </section>
-                    <p class="d-flex my6 fs-body1">
-                        <span class="flex--item pl4">
-                            {{#if sign-in }}
-                                <a href="/files/projects/{{ project.sourceFile.location }}" target="_blank"
-                                    download='{{ lang "site-name" }}-{{ project.subject }}-{{ project.sourceFile.name }}'>
-                                    {{ project.sourceFile.name }}
-                                </a>
-                            {{else}}
-                                <a class="fw-bold" href="/{{ language }}/sign-in" target="_blank">
-                                    {{ lang "sign-in-intro" }}
-                                </a>
-                            {{/if}}
+                    <section class="d-grid grid__2 lg:grid__2 sm:grid__1 my6 py12 px8 ba bar-lg bc-black-200 fs-body2">
+                        <img src="/files/projects/{{ project.coverImage.location }}">
+                        <span class="pt6 pl16">
+                            {{{ project.contentHtml }}}
                         </span>
+                    </section>
+                    <p class="my6 fs-body1">
+                        <strong>{{ lang "project-source-file" }}</strong>
+                        {{#if sign-in }}
+                            <a href="/files/projects/{{ project.sourceFile.location }}" target="_blank"
+                                download='{{ lang "site-name" }}-{{ project.subject }}-{{ project.sourceFile.name }}'>
+                                {{ project.sourceFile.name }}
+                            </a>
+                        {{else}}
+                            {{ lang "project-source-file-download-tip" }}
+                            <a class="fw-bold" href="/{{ language }}/sign-in" target="_blank">
+                                {{ lang "sign-in-intro" }}
+                            </a>
+                        {{/if}}
                     </p>
 
                     <p class="my6 p4 fw-bold bg-blue-100 fc-blue-900">

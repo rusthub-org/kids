@@ -3,13 +3,10 @@
 
     <head>
         <title>
-            {{ project.subject }} - No.{{ project.id }} - {{ project.category.description }} - 项目需求 -
-            蔻隼 | 互联网智能对接服务平台
+            {{ project.subject }} - No.{{ project.id }} -
+            {{#if (str-cmp language "zh-cn") }}{{ project.category.nameZh }}{{else}}{{ project.category.nameEn }}{{/if}}
+            - 项目需求 - 儿童@蔻隼 | 想象、编程、分享
         </title>
-
-        <meta name="keywords"
-            content="{{ project.category.nameZh }},{{#each project.topics as |topic|}}{{ topic.name }}{{#unless @last }},{{/unless}}{{/each}}">
-        <meta name="description" content="{{ str-cut project.content 70 }}">
 
         {{> head }}
         <link rel="stylesheet" href="/static/css/night-owl.min.css">
@@ -69,38 +66,32 @@
                             target="_blank">
                             {{ project.user.nickname }}
                         </a>
-                        发布于
+                        {{ lang "project-posted" }}
                         {{ project.updatedAtNyrsq }}
                     </p>
-                    <p class="my6 fs-body1">
-                        <strong>浏览数量：</strong>
-                        {{ project.hits }}
-                        次
-                    </p>
-                    <p class="my6 fs-body1">
-                        <strong>申请人数：</strong>
-                        {{ project.applicants }}
-                        人
+                    <p class="my6 pl4 fs-body1">
+                        <a href="/{{ language }}/project/{{ project.id }}" target="_blank">
+                            <strong>{{ project.hits }}</strong>
+                            {{ lang "project-hits" }}
+                        </a>
+                        <span class="mx4 fc-red-600">/</span>
+                        <a href="/{{ language }}/project/{{ project.id }}" target="_blank">
+                            <strong>{{ project.stars }}</strong>
+                            {{ lang "project-stars" }}
+                        </a>
+                        <span class="mx4 fc-red-600">/</span>
+                        <a href="/{{ language }}/project/{{ project.id }}" target="_blank">
+                            <strong>{{ project.insides }}</strong>
+                            {{ lang "project-insides" }}
+                        </a>
                     </p>
 
                     <p class="my6 p4 fw-bold bg-blue-100 fc-blue-900">
-                        💥 项目描述
+                        💥 {{ lang "project-content" }}
                     </p>
 
                     <p class="my6 fs-body1">
-                        <strong>项目预算：</strong>
-                        {{ project.investment }}
-                        {{ lang project.currencyType }}
-                        <strong>{{#if project.negotiated }}（可议价）{{/if}}</strong>
-                    </p>
-                    <p class="my6 fs-body1">
-                        <strong>开发周期：</strong>
-                        {{ project.duration }}
-                        天
-                        <strong>{{#if project.workday }}（工作日）{{/if}}</strong>
-                    </p>
-                    <p class="my6 fs-body1">
-                        <strong>标签/关键词：</strong>
+                        <strong>{{ lang "project-keys-tags" }}</strong>
                         {{#if project.topics }}
                             {{#each project.topics as |topic|}}
                                 <a class="s-badge ml4 mb2 fs-body1"
@@ -109,71 +100,44 @@
                                 </a>
                             {{/each}}
                         {{else}}
-                            需求方未设定
+                            {{ lang "not-setting" }}
                         {{/if}}
                     </p>
-                    <section class="my6 pl16 py12 ba bar-lg bc-black-200 fs-body2">
-                        {{{ project.contentHtml }}}
-                    </section>
-                    <p class="d-flex my6 fs-body1">
-                        <strong class="flex--item ws-nowrap">项目文件：</strong>
-                        <span class="flex--item">
-                            {{#if project.files }}
-                                {{#each project.files as |file| }}
-                                    <a href="/static/files/{{ file.location }}" target="_blank"
-                                        download="蔻隼智能(kousun.com)-{{ ../project.subject }}-{{ file.name }}">
-                                        {{ add-op @index 1 }}、
-                                        {{ file.name }}
-                                        <br>
-                                    </a>
-                                {{/each}}
-                            {{else}}
-                                无
-                            {{/if}}
+                    <section class="d-grid grid__2 lg:grid__2 sm:grid__1 my6 py12 px8 ba bar-lg bc-black-200 fs-body2">
+                        <img src="/files/projects/{{ project.coverImage.location }}">
+                        <span class="pt6 pl16">
+                            {{{ project.contentHtml }}}
                         </span>
+                    </section>
+                    <p class="my6 fs-body1">
+                        <strong>{{ lang "project-source-file" }}</strong>
+                        <a href="/files/projects/{{ project.sourceFile.location }}" target="_blank"
+                            download='{{ lang "site-name" }}-{{ project.subject }}-{{ project.sourceFile.name }}'>
+                            {{ project.sourceFile.name }}
+                        </a>
                     </p>
 
                     <p class="my6 p4 fw-bold bg-blue-100 fc-blue-900">
-                        💥 招募条件
+                        💥 {{ lang "user-contact" }}
                     </p>
 
                     <p class="my6 fs-body1">
-                        <strong>招募角色：</strong>
-                        {{ lang project.workerType }}
-                    </p>
-                    <p class="d-flex my6 fs-body1">
-                        <strong class="flex--item">招募描述：</strong>
-                        <span class="flex--item">{{{ project.workerInfoHtml }}}</span>
-                    </p>
-
-                    <p class="my6 p4 fw-bold bg-blue-100 fc-blue-900">
-                        💥 联系方式
-                    </p>
-
-                    <p class="my6 fs-body1">
-                        <strong>联系人：</strong>
+                        <strong>{{ lang "project-contact-person" }}</strong>
                         {{ project.contactUser }}
                     </p>
 
-                    {{#unless project.external }}
-                        <p class="my6 fs-body1">
-                            <strong>手机号：</strong>
-                            {{ project.contactPhone }}
-                        </p>
-                        <p class="my6 fs-body1">
-                            <strong>电子邮箱：</strong>
-                            {{ project.contactEmail }}
-                        </p>
-                        <p class="my6 fs-body1">
-                            <strong>聊天工具：</strong>
-                            {{ project.contactIm }}
-                        </p>
-                    {{else}}
-                        <p class="my6 fs-body1">
-                            外部项目，请访问
-                            <a href="{{ project.thirdPartyLink }}" target="_blank">项目来源网站</a>
-                        </p>
-                    {{/unless}}
+                    <p class="my6 fs-body1">
+                        <strong>{{ lang "project-contact-phone" }}</strong>
+                        {{ project.contactPhone }}
+                    </p>
+                    <p class="my6 fs-body1">
+                        <strong>{{ lang "project-contact-email" }}</strong>
+                        {{ project.contactEmail }}
+                    </p>
+                    <p class="my6 fs-body1">
+                        <strong>{{ lang "project-contact-im" }}</strong>
+                        {{ project.contactIm }}
+                    </p>
 
                     <p class="my16">
                         <a class="p6 s-btn s-btn__md s-btn__danger s-btn__outlined"

@@ -25,7 +25,7 @@ pub async fn push_res(app: &mut Server<State>) {
 
     let mut admin = app.at("/admin");
     admin.at("/").get(super::routes::admin::admin_index);
-    admin.at("/projects/:division").get(super::routes::admin::projects_admin);
+    admin.at("/projects").get(super::routes::admin::projects_admin);
     admin.at("/project/:project_id").get(super::routes::admin::project_admin);
     admin
         .at("/project/:project_id/:field_name/:field_val")

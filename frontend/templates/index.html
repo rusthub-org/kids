@@ -450,7 +450,7 @@
                     {{#each recommended_projects as |project|}}
                         <article class="s-card p16 bg-silver-lighter bs-sm bar-md h:bs-md sm:ai-center">
                             <a href="/{{ ../language }}/project/{{ project.id }}" target="_blank">
-                                <img src="/files/projects/{{ project.coverImage.location }}">
+                                <img class="imgs-list" src="/files/projects/{{ project.coverImage.location }}">
                             </a>
                             <h3 class="fw-bold fs-body3 fc-theme-secondary-400 truncate my2">
                                 <a class="va-baseline s-tag mb4"
@@ -522,7 +522,7 @@
                     {{#each published_projects as |project|}}
                         <article class="s-card p16 bg-silver-lighter bs-sm bar-md h:bs-md sm:ai-center">
                             <a href="/{{ ../language }}/project/{{ project.id }}" target="_blank">
-                                <img src="/files/projects/{{ project.coverImage.location }}">
+                                <img class="imgs-list" src="/files/projects/{{ project.coverImage.location }}">
                             </a>
                             <h3 class="fw-bold fs-body3 fc-theme-secondary-400 truncate my2">
                                 <a class="va-baseline s-tag mb4"

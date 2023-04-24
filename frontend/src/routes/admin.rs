@@ -69,28 +69,25 @@ pub async fn projects_admin(req: Request<State>) -> tide::Result {
         insert_user_by_username(sign_status.username, &mut data).await;
 
         let page: Page = req.query()?;
-        let projects_by_external_build_query =
+        let projects_build_query =
             ProjectsData::build_query(projects_data::Variables {
                 from_page: page.from,
                 first_oid: page.first,
                 last_oid: page.last,
                 status: 0,
             });
-        let projects_by_external_query =
-            json!(projects_by_external_build_query);
+        let projects_query = json!(projects_build_query);
 
-        let projects_by_external_resp_body: GqlResponse<serde_json::Value> =
+        let projects_resp_body: GqlResponse<serde_json::Value> =
             surf::post(&gql_uri().await)
-                .body(projects_by_external_query)
+                .body(projects_query)
                 .recv_json()
                 .await
                 .unwrap();
-        let projects_by_external_resp_data =
-            projects_by_external_resp_body.data.expect("无响应数据");
+        let projects_resp_data = projects_resp_body.data.expect("无响应数据");
 
-        let projects_by_external =
-            projects_by_external_resp_data["projectsByExternal"].clone();
-        data.insert("pagination", projects_by_external);
+        let projects = projects_resp_data["projects"].clone();
+        data.insert("pagination", projects);
 
         admin_projects_tpl.render(&data).await
     } else {
