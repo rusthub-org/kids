@@ -49,6 +49,7 @@ projects-management = Projects Management
 all = All
 search = Search
 secret = Secret
+keys-tags = Keys/Tags
 not-setting = Not setting
 user-risk-tip = Contact information is provided by user self, the website assumes no responsibility. 
     Please identify the risks by yourself and beware of being deceived.

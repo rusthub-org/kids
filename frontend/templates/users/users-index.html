@@ -44,25 +44,12 @@
                 {{ user_item.createdAtNyrsq }}
               </p>
               <p class="my6 fs-body1">
-                <strong>{{ lang "features-keys-tags" }}</strong>
+                <strong>{{ lang "keys-tags" }}:</strong>
                 {{#if user_item.keywords }}
                   {{#each user_item.keywords as |keyword|}}
                     <a class="s-badge ml4 mb2 fs-body1" href="/{{ ../../language }}/topic/{{ keyword.slug }}/projects"
                       target="_blank">
                       {{ keyword.name }}
-                    </a>
-                  {{/each}}
-                {{else}}
-                  {{ lang "not-setting" }}
-                {{/if}}
-              </p>
-              <p class="my6 fs-body1">
-                <strong>{{ lang "related-keys-tags" }}</strong>
-                {{#if user_item.topics }}
-                  {{#each user_item.topics as |topic|}}
-                    <a class="s-badge ml4 mb2 fs-body1" href="/{{ ../../language }}/topic/{{ topic.slug }}/projects"
-                      target="_blank">
-                      {{ topic.name }}
                     </a>
                   {{/each}}
                 {{else}}

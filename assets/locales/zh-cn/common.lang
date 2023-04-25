@@ -49,6 +49,7 @@ projects-management = 项目管理
 all = 全部
 search = 查询
 secret = 保密
+keys-tags = 关键词/标签
 not-setting = 未设定
 user-risk-tip = 联系方式由用户自己提供，本网站不负任何法律责任。
     请自行甄别风险，谨防上当受骗。

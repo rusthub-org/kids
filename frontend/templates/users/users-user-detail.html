@@ -89,25 +89,12 @@
                         💥 {{ lang "user-statistics" }}
                     </p>
                     <p class="my6 fs-body1">
-                        <strong>{{ lang "features-keys-tags" }}</strong>
+                        <strong>{{ lang "keys-tags" }}:</strong>
                         {{#if author_user.keywords }}
                             {{#each author_user.keywords as |keyword|}}
                                 <a class="s-badge ml4 mb2 fs-body1"
                                     href="/{{ ../language }}/topic/{{ keyword.slug }}/projects" target="_blank">
                                     {{ keyword.name }}
-                                </a>
-                            {{/each}}
-                        {{else}}
-                            {{ lang "not-setting" }}
-                        {{/if}}
-                    </p>
-                    <p class="my6 fs-body1">
-                        <strong>{{ lang "related-keys-tags" }}</strong>
-                        {{#if author_user.topics }}
-                            {{#each author_user.topics as |topic|}}
-                                <a class="s-badge ml4 mb2 fs-body1"
-                                    href="/{{ ../language }}/topic/{{ topic.slug }}/projects" target="_blank">
-                                    {{ topic.name }}
                                 </a>
                             {{/each}}
                         {{else}}
